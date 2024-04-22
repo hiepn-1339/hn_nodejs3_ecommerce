@@ -1,0 +1,72 @@
+extends ../layoutAdmin
+
+block admin_content 
+  .table-responsive
+    .d-flex.mb-3
+      div.w-50.ms-3
+        label.form-label(for='keyword').pe-2
+          | #{t('admin.user.search')}
+        .input-group
+          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+          span#search-icon-1.input-group-text.p-2
+            i.fa.fa-search
+      div.w-25.px-3
+        label.form-label(for='gender').pe-2
+          | #{t('admin.user.gender')}
+        select#gender.form-select
+          each gender in genders
+            option(value=gender) #{gender}
+      div.w-25.px-2
+        label.form-label(for='status').pe-2
+          | #{t('admin.user.status')}
+        select#status.form-select
+          each status in statuses
+            option(value=status) #{status}
+    .table-wrapper
+      .table-title
+        .row
+          .col-sm-5
+            h2.text-white #{t('admin.user.userManagement')}
+          .col-sm-7
+            a.btn.btn-secondary(href='#')
+              i.fas.fa-plus
+              span #{t('admin.user.addNewUser')}
+            a.btn.btn-secondary(href='#')
+              i.fas.fa-file-export
+              span #{t('admin.user.exportToExcel')}
+      table.table.table-hover
+        thead
+          tr
+            th #{t('admin.user.name')}
+            th #{t('admin.user.email')}
+            th #{t('admin.user.phone')}
+            th #{t('admin.user.gender')}
+            th #{t('admin.user.dateOfBirth')}
+            th #{t('admin.user.address')}
+            th #{t('admin.user.status')}
+            th #{t('admin.user.action')}
+        tbody
+          each user in users
+            tr
+              td.w-250px
+                a(href='#')
+                  img.avatar(src=user.avatar alt='Avatar')
+                  |  #{user.name}
+              td #{user.email}
+              td #{user.phone}
+              td #{user.gender}
+              td #{user.dateOfBirth}
+              td.text-break.w-300px #{user.address}
+              td
+                span.status.text-success &bull;
+                |  #{user.status}
+              td
+                a(href='#' style='color: #0d6efd').px-2
+                  i.fas.fa-pen.fs-24px
+      .col-12
+        .pagination.d-flex.justify-content-center.mt-5
+          each val in Array.from({length: pageLength}, (_, i) => i + 1)
+            if val === page
+              a.active.rounded(href='#') #{val}
+            else
+              a.rounded(href='#') #{val}

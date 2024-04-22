@@ -1,9 +1,12 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import config from './config';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import morgan from 'morgan';
 import { AppDataSource } from './database/dataSource';
+import i18next from 'i18next';
+import Backend from 'i18next-node-fs-backend';
+import i18nextMiddleware from 'i18next-http-middleware';
 
 const app: Express = express();
 
@@ -22,6 +25,33 @@ AppDataSource.initialize()
   .catch((err) => {
     console.error('Error during Data Source initialization', err);
   });
+
+i18next
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    backend: {
+      loadPath: __dirname + '/locales/{{lng}}/{{lng}}.json',
+    },
+    detection: {
+      order: ['querystring', 'cookie'],
+      caches: ['cookie'],
+    },
+    fallbackLng: 'vi',
+    preload: ['vi', 'en'],
+  });
+app.use(i18nextMiddleware.handle(i18next));
+app.use(
+  i18nextMiddleware.handle(i18next, {
+    removeLngFromUrl: false,
+  }),
+);
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const lng = req.query.lng as string || 'vi';
+  i18next.changeLanguage(lng);
+  next();
+});
 
 app.use((err: any, req: Request, res: Response) => {
   if (err) {

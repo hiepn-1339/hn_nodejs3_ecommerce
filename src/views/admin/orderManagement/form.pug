@@ -1,0 +1,104 @@
+extends ../layoutAdmin
+
+block admin_content
+  .px-5
+    .d-flex.justify-content-between
+      h1.mb-4 #{t('admin.order.orderDetails')}
+      .w-50.d-flex
+        label.form-label
+          | #{t('admin.order.status')} 
+          sup.text-danger *
+        select#category.form-select
+          option(value='APPROVED') #{t('admin.order.approved')}
+          option(value='REJECTED') #{t('admin.order.rejected')}
+    form(action='#')
+      .row.g-5
+        .col-md-12.col-lg-6.col-xl-7
+          .row
+            .col-md-12.col-lg-6
+              .form-item.w-100
+                label.form-label.my-3
+                  | #{t('admin.order.firstName')}
+                  sup.text-danger *
+                input.form-control(type='text')
+            .col-md-12.col-lg-6
+              .form-item.w-100
+                label.form-label.my-3
+                  | #{t('admin.order.lastName')}
+                  sup.text-danger *
+                input.form-control(type='text')
+          .form-item
+            label.form-label.my-3
+              | #{t('admin.order.address')} 
+              sup.text-danger *
+            input.form-control(type='text' placeholder='House Number Street Name')
+          .form-item
+            label.form-label.my-3
+              | #{t('admin.order.phone')}
+              sup.text-danger *
+            input.form-control(type='tel')
+          .form-item
+            label.form-label.my-3
+              | #{t('admin.order.email')}
+              sup.text-danger *
+            input.form-control(type='email')
+          .form-item
+            label.form-label.my-3
+              | #{t('admin.order.note')}
+            textarea.form-control(name='text' spellcheck='false' cols='30' rows='11' placeholder='Oreder Notes (Optional)')
+        .col-md-12.col-lg-6.col-xl-5
+          .table-responsive
+            table.table
+              thead
+                tr
+                  th(scope='col') #{t('admin.order.product')}
+                  th(scope='col') #{t('admin.order.name')}
+                  th(scope='col') #{t('admin.order.price')}
+                  th(scope='col') #{t('admin.order.quantity')}
+                  th(scope='col') #{t('admin.order.total')}
+              tbody
+                each item in orderItems
+                tr
+                  th(scope='row')
+                    .d-flex.align-items-center.mt-2
+                      img.img-fluid.rounded-circle(src='img/vegetable-item-2.jpg' style='width: 90px; height: 90px;' alt='')
+                  td.py-5 #{item.product.name}
+                  td.py-5 $#{item.price}
+                  td.py-5 #{item.quantity}
+                  - let total = item.price * item.quantity
+                  td.py-5 $#{total}
+                tr
+                  th(scope='row')
+                  td.py-5
+                  td.py-5
+                  td.py-5
+                    p.mb-0.text-dark.py-3  #{t('admin.order.subtotal')}
+                  td.py-5
+                    .py-3.border-bottom.border-top
+                      p.mb-0.text-dark $#{subtotal}
+                tr
+                  th(scope='row')
+                  td.py-5
+                    p.mb-0.text-dark.py-4 #{t('admin.order.coupon')}
+                  td.py-5(colspan='3')
+                    .form-check.text-start
+                      input#Shipping-1.form-check-input.bg-primary.border-0(type='checkbox' name='Shipping-1' value='Shipping')
+                      label.form-check-label(for='Shipping-1') #{order.coupon}
+                tr
+                  th(scope='row')
+                  td.py-5
+                    p.mb-0.text-dark.py-4 #{t('admin.order.paymentMethod')}
+                  td.py-5(colspan='3')
+                    .form-check.text-start
+                      input#Shipping-1.form-check-input.bg-primary.border-0(type='checkbox' name='Shipping-1' value='Shipping')
+                      label.form-check-label(for='Shipping-1') #{order.paymentMethod}
+                tr
+                  th(scope='row')
+                  td.py-5
+                    p.mb-0.text-dark.text-uppercase.py-3 #{t('admin.order.total')}
+                  td.py-5
+                  td.py-5
+                  td.py-5
+                    .py-3.border-bottom.border-top
+                      p.mb-0.text-dark $#{total}
+            button.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='button') #{t('admin.order.submit')}

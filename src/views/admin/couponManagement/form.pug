@@ -1,0 +1,28 @@
+extends ../layoutAdmin
+
+block admin_content
+  .row.mt-5
+    .col-md-6.offset-md-3
+      h1 {{Action}} #{t('admin.coupon.coupon')}
+      form
+        .mb-3
+          label.form-label(for='name') 
+            | #{t('admin.coupon.name')}
+            sup.text-danger *
+          input#name.form-control(type='text' required)
+        .mb-3
+          label.form-label(for='percentage') 
+            | #{t('admin.coupon.percentage')}
+            sup.text-danger *
+          input#percentage.form-control(type='number' required)
+        .mb-3
+          label.form-label(for='startDate')
+            | #{t('admin.coupon.startDate')}
+            sup.text-danger *
+          input#startDate.form-control(type='date' required)
+        .mb-3
+          label.form-label(for='endDate')
+            | #{t('admin.coupon.endDate')}
+            sup.text-danger *
+          input#endDate.form-control(type='date' required)
+        button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') {{action}}

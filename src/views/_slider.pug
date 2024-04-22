@@ -1,0 +1,19 @@
+.container-fluid.py-5.mb-5.hero-header
+  .container.py-5
+    .row.g-5.align-items-center
+      .col-md-12.col-lg-7
+        h4.mb-3.text-secondary #{t('slider.'organicFoods)}
+        h1.mb-5.display-3.text-primary #{t('slider.title')}
+      .col-md-12.col-lg-5
+        #carouselId.carousel.slide.position-relative(data-bs-ride='carousel')
+          .carousel-inner(role='listbox')
+            .carousel-item.active.rounded
+              img.img-fluid.w-100.h-100.bg-secondary.rounded(src='img/hero-img-1.png' alt='First slide')
+            .carousel-item.rounded
+              img.img-fluid.w-100.h-100.rounded(src='img/hero-img-2.jpg' alt='Second slide')
+          button.carousel-control-prev(type='button' data-bs-target='#carouselId' data-bs-slide='prev')
+            span.carousel-control-prev-icon(aria-hidden='true')
+            span.visually-hidden
+          button.carousel-control-next(type='button' data-bs-target='#carouselId' data-bs-slide='next')
+            span.carousel-control-next-icon(aria-hidden='true')
+            span.visually-hidden

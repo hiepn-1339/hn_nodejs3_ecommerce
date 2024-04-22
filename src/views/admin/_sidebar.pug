@@ -1,0 +1,14 @@
+mixin sidebar()
+  .col-lg-2.d-flex.flex-column.border-right-2.vh-100.pt-5
+    a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/user')
+      i.fas.fa-user.fa-2x
+      |  #{t('admin.user.user')}
+    a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/category')
+      i.fas.fa-list.fa-2x
+      |  #{t('admin.category.category')}
+    a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/product')
+      i.fab.fa-product-hunt.fa-2x
+      |  #{t('admin.product.product')}
+    a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/order')
+      i.fas.fa-file-invoice.fa-2x
+      |  #{t('admin.order.order')}

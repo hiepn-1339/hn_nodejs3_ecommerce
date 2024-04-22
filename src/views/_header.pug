@@ -1,0 +1,20 @@
+.container-fluid.fixed-top.shadow
+  .container.px-0
+    nav.navbar.navbar-light.bg-white.navbar-expand-xl
+      a.navbar-brand(href='/')
+        h1.text-primary.display-6 #{t('header.title')}
+      button.navbar-toggler.py-2.px-3(type='button', data-bs-toggle='collapse', data-bs-target='#navbarCollapse')
+        span.fa.fa-bars.text-primary
+      #navbarCollapse.collapse.navbar-collapse.bg-white
+        .navbar-nav.mx-auto
+        .d-flex.m-3.me-0
+          a.position-relative.me-4.my-auto(href='/cart')
+            i.fa.fa-shopping-bag.fa-2x
+            span.position-absolute.bg-secondary.rounded-circle.d-flex.align-items-center.justify-content-center.text-dark.px-1.num-cart-item 3
+          .nav-item.dropdown
+            a.nav-link(href='#', data-bs-toggle='dropdown')
+              i.fas.fa-user.fa-2x
+            .dropdown-menu.m-0.bg-secondary.rounded-0
+              a.dropdown-item(href='/profile') #{t('header.profile')}
+              a.dropdown-item(href='/order') #{t('header.order')}
+              a.dropdown-item(href='/signout') #{t('header.signout')}

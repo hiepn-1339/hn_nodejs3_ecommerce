@@ -1,0 +1,37 @@
+extends ../layoutAdmin
+
+block admin_content 
+  .table-responsive
+    .row
+      .col-sm-9 
+      .col-sm-3 
+        .input-group
+          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+          span#search-icon-1.input-group-text.p-2
+            i.fa.fa-search
+    .table-wrapper
+      .table-title
+        .row
+          .col-sm-12
+            h2.text-white #{t('admin.category.categoryManagment')}
+      table.table.table-hover
+        thead
+          tr
+            th.w-25 #{t('admin.category.id')}
+            th.w-50 #{t('admin.category.name')}
+            th.w-25 #{t('admin.category.action')}
+        tbody
+          each category in categories
+            tr
+              td #{category.id}
+              td #{category.name}
+              td
+                a(href='#').px-2.text-success
+                  i.fas.fa-pen.fs-24px
+      .col-12
+        .pagination.d-flex.justify-content-center.mt-5
+          each val in Array.from({length: pageLength}, (_, i) => i + 1)
+            if val === page
+              a.active.rounded(href='#') #{val}
+            else
+              a.rounded(href='#') #{val}

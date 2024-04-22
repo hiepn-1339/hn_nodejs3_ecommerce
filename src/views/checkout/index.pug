@@ -1,0 +1,102 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('checkout.checkout'), [
+    {
+      href: '/',
+      text: t('header.home')
+    },
+    {
+      href: '',
+      text: t('checkout.checkout')
+    },
+  ])
+
+  .container-fluid.py-5
+    .container.py-5
+      h1.mb-4 #{t('checkout.title')}
+      form(action='#')
+        .row.g-5
+          .col-md-12.col-lg-6.col-xl-7
+            .row
+              .col-md-12.col-lg-6
+                .form-item.w-100
+                  label.form-label.my-3
+                    | #{t('checkout.firstName')}
+                    sup.text-danger *
+                  input.form-control(type='text')
+              .col-md-12.col-lg-6
+                .form-item.w-100
+                  label.form-label.my-3
+                    | #{t('checkout.lastName')}
+                    sup.text-danger *
+                  input.form-control(type='text')
+            .form-item
+              label.form-label.my-3
+                | #{t('checkout.address')} 
+                sup.text-danger *
+              input.form-control(type='text' placeholder='House Number Street Name')
+            .form-item
+              label.form-label.my-3
+                | #{t('checkout.phone')}
+                sup.text-danger *
+              input.form-control(type='tel')
+            .form-item
+              label.form-label.my-3
+                | #{t('checkout.Email')}
+                sup.text-danger *
+              input.form-control(type='email')
+            .form-item
+              label.form-label.my-3
+               | #{t('checkout.note')}
+              textarea.form-control(name='text' spellcheck='false' cols='30' rows='11' placeholder='Oreder Notes (Optional)')
+          .col-md-12.col-lg-6.col-xl-5
+            .table-responsive
+              table.table
+                thead
+                  tr
+                    th(scope='col') #{t('checkout.products')}
+                    th(scope='col') #{t('checkout.name')}
+                    th(scope='col') #{t('checkout.price')}
+                    th(scope='col') #{t('checkout.quantity')}
+                    th(scope='col') #{t('checkout.total')}
+                tbody
+                  each item in cart.items
+                    tr
+                      th(scope='row')
+                        .d-flex.align-items-center.mt-2
+                          img.img-fluid.rounded-circle.w-90px.h-90px(src='img/vegetable-item-2.jpg' alt='')
+                      td.py-5 #{item.name}
+                      td.py-5 $#{item.price}
+                      td.py-5 #{item.quantity}
+                      - let total = item.price * item.quantity
+                      td.py-5 $#{total}
+                  tr
+                    th(scope='row')
+                    td.py-5
+                    td.py-5
+                    td.py-5
+                      p.mb-0.text-dark.py-3 #{t('checkout.subtotal')}
+                    td.py-5
+                      .py-3.border-bottom.border-top
+                        p.mb-0.text-dark $#{subtotal}
+                  tr
+                    th(scope='row')
+                    td.py-5
+                      p.mb-0.text-dark.py-4 #{t('checkout.paymentMethod')}
+                    td.py-5(colspan='3')
+                      each method in paymentMethods
+                        .form-check.text-start
+                          input#Shipping-1.form-check-input.bg-primary.border-0(type='checkbox' name='Shipping-1' value='Shipping')
+                          label.form-check-label(for='Shipping-1') #{method}
+                  tr
+                    th(scope='row')
+                    td.py-5
+                      p.mb-0.text-dark.text-uppercase.py-3 #{t('checkout.total')}
+                    td.py-5
+                    td.py-5
+                    td.py-5
+                      .py-3.border-bottom.border-top
+                        p.mb-0.text-dark $#{total}
+              button.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='button') #{t('checkout.placeOrder')}

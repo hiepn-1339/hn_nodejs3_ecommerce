@@ -5,10 +5,6 @@ import { BaseEntity } from './base.entity';
 
 @Entity()
 export class Rating extends BaseEntity {
-  @Column({ nullable: false })
-  @JoinColumn({ name: 'product_id' })
-  productId: number | undefined;
-
   @ManyToOne(() => Product, (product) => product.ratings)
   @JoinColumn({ name: 'product_id' })
   product: Product | undefined;
