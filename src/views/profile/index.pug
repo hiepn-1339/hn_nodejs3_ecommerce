@@ -1,0 +1,54 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('profile.title'), [])
+
+  .container-fluid.py-5
+    .container.py-5
+      .row
+        .col-md-6.offset-md-3
+          form
+            .mb-3
+              label.form-label(for='avatar')
+                | #{t('profile.avatar')}
+                sup.text-danger *
+              .col-sm-3.imgUp
+                .imagePreview
+                label.btn.btn-primary.text-white
+                  | #{t('profile.upload')}
+                  input.uploadFile.img.w-0px.h-0px.overflow-hidden(type='file' value='Upload Photo')
+            .mb-3
+              label.form-label(for='name') 
+                | #{t('profile.name')}
+                sup.text-danger *
+              input#name.form-control(type='text' required='')
+            .mb-3
+              label.form-label(for='email') 
+                | #{t('profile.email')}
+                sup.text-danger *
+              input#email.form-control(type='email' required='' disabled)
+            .mb-3
+              label.form-label(for='phone')
+                | #{t('profile.phone')}
+                sup.text-danger *
+              input#phone.form-control(type='tel' required='')
+            .mb-3
+              label.form-label(for='gender')
+                | #{t('profile.gender')}
+                sup.text-danger *
+              select#gender.form-select
+                each gender in genders
+                  option(value=gender) #{gender}
+            .mb-3
+              label.form-label(for='dateOfBirth')
+                | #{t('profile.dateOfBirth')}
+                sup.text-danger *
+              input#dateOfBirth.form-control(type='date')
+            .mb-3
+              label.form-label(for='address')
+                | #{t('profile.address')}
+                sup.text-danger *
+              textarea#address.form-control(rows='3' required='')
+            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('profile.submit')}
+

@@ -1,0 +1,15 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('error.title'), [])
+
+  .container-fluid.py-5
+  .container.py-5.text-center
+    .row.justify-content-center
+      .col-lg-6
+        i.bi.bi-exclamation-triangle.display-1.text-secondary
+        h1.display-1 #{error.code}
+        h1.mb-4 #{error.message}
+        p.mb-4 #{error.description}
+        a.btn.border-secondary.rounded-pill.py-3.px-5(href='/') #{t('error.goBackToHome')}

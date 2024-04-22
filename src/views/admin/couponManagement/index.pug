@@ -1,0 +1,64 @@
+extends ../layoutAdmin
+
+block admin_content 
+  .table-responsive
+    .d-flex.mb-3
+      div.w-50.ms-3
+        label.form-label(for='keyword').pe-2
+          | #{t('admin.coupon.search')}
+        .input-group
+          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+          span#search-icon-1.input-group-text.p-2
+            i.fa.fa-search
+    .d-flex.mb-3
+      div.w-25.px-3
+        label.form-label(for='percentage').pe-2
+          | #{t('admin.coupon.percentage')}
+        input#percentage.form-control(type='number' placeholder='Percentage' aria-describedby='search-icon-1')
+      div.w-25.px-3
+        label.form-label(for='startDate').pe-2
+          | #{t('admin.coupon.startDate')}
+        input#startDate.form-control(type='date' aria-describedby='search-icon-1')
+      div.w-25.px-3
+        label.form-label(for='endDate').pe-2
+          | #{t('admin.coupon.endDate')}
+        input#endDate.form-control(type='date' aria-describedby='search-icon-1')
+    .table-wrapper
+      .table-title
+        .row
+          .col-sm-5
+            h2.text-white #{t('admin.coupon.couponManagement')}
+          .col-sm-7
+            a.btn.btn-secondary(href='#')
+              i.fas.fa-plus
+              span #{t('admin.coupon.addNewCoupon')}
+            a.btn.btn-secondary(href='#')
+              i.fas.fa-file-export
+              span #{t('admin.coupon.exportToExcel')}
+      table.table.table-hover
+        thead
+          tr
+            th #{t('admin.coupon.name')}
+            th #{t('admin.coupon.percentage')}
+            th #{t('admin.coupon.startDate')}
+            th #{t('admin.coupon.endDate')}
+            th #{t('admin.coupon.action')}
+        tbody
+          each coupon in coupons
+            tr
+              td.w-250px #{coupon.name}
+              td #{coupon.percentage}
+              td #{coupon.startDate}
+              td #{coupon.endDate}
+              td
+                a(href='#').text-success.px-2
+                  i.fas.fa-pen.fs-24px
+                a(href='#').text-danger
+                  i.fas.fa-trash.fs-24px
+      .col-12
+        .pagination.d-flex.justify-content-center.mt-5
+          each val in Array.from({length: pageLength}, (_, i) => i + 1)
+            if val === page
+              a.active.rounded(href='#') #{val}
+            else
+              a.rounded(href='#') #{val}

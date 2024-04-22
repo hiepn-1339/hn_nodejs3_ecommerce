@@ -1,0 +1,109 @@
+extends ../layoutAdmin
+
+block admin_content 
+  .table-responsive
+    .d-flex.mb-3
+      div.w-50.ms-3
+        label.form-label(for='keyword').pe-2
+          | #{t('admin.order.search')}
+        .input-group
+          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+          span#search-icon-1.input-group-text.p-2
+            i.fa.fa-search
+      div.w-25.px-3
+        label.form-label(for='pricemin').pe-2
+          | #{t('admin.order.totalMin')}
+        input#pricemin.form-control(type='number' placeholder='Total min' aria-describedby='search-icon-1')
+      div.w-25.px-3
+        label.form-label(for='pricemax').pe-2
+          | #{t('admin.order.totalMax')}
+        input#pricemin.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1')
+    .d-flex.mb-3
+      div.w-25.px-3
+        label.form-label(for='coupon').pe-2
+          | #{t('admin.order.coupon')}
+        select#coupon.form-select
+          each gender in genders
+            option(value=gender) #{gender}
+      div.w-25.px-3
+        label.form-label(for='Payment').pe-2
+          | #{t('admin.order.paymentMethod')}
+        select#Payment.form-select
+          each method in paymentMethods
+            option(value=method) #{method}
+      div.w-25.px-3
+        label.form-label(for='status').pe-2
+          | #{t('admin.order.status')}
+        select#status.form-select
+          each status in statuses
+            option(value=status) #{status}
+    .table-wrapper
+      .table-title
+        .row
+          .col-sm-5
+            h2.text-white #{t('admin.order.orderManagement')}
+          .col-sm-7
+            a.btn.btn-secondary(href='#')
+              i.fas.fa-file-export
+              span #{t('admin.order.exportToExcel')}
+      table.table.table-hover
+        thead
+          tr
+            th #{t('admin.order.id')}
+            th #{t('admin.order.user')}
+            th #{t('admin.order.coupon')}
+            th #{t('admin.order.total')}
+            th #{t('admin.order.paymentMethod')}
+            th #{t('admin.order.address')}
+            th #{t('admin.order.status')}
+            th #{t('admin.order.action')}
+        tbody
+          each order in orders
+            tr
+              td #{order.id}
+              td.w-250px
+                a(href='#')
+                  img.avatar(src=order.user.avatar alt='Product')
+                  |  #{order.user.name}
+              td #{order.coupon.name}
+              td #{order.total}
+              td #{order.paymentMethod} 
+              td.text-break.w-300px#{order.address}
+              td
+                span.status.text-success &bull;
+                |  #{order.status}
+              td
+                if order.status === "PENDING"
+                  button#cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalApprovedOrder" data-order-id=order.id) #{t('order.approved')}
+                  button#cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalRejectOrder" data-order-id=order.id) #{t('order.reject')}
+                else if order.status === "COMPLETED"
+                  button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.rating')}
+      .col-12
+        .pagination.d-flex.justify-content-center.mt-5
+          each val in Array.from({length: pageLength}, (_, i) => i + 1)
+            if val === page
+              a.active.rounded(href='#') #{val}
+            else
+              a.rounded(href='#') #{val}
+  #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header
+          h1#modalCancelOrder.modal-title.fs-5 #{t('order.titleModal')}
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+        .modal-body
+          | #{t('order.areYouSureYouWantToCancelTheOrderWithId')} <span id="orderId"></span>
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-bs-dismiss='modal') #{t('order.no')}
+          button.btn.btn-primary(type='button') #{t('order.yes')}
+  #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header
+          h1#modalCancelOrder.modal-title.fs-5 #{t('order.titleModal')}
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+        .modal-body
+          | #{t('order.areYouSureYouWantToCancelTheOrderWithId')} <span id="orderId"></span>
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-bs-dismiss='modal') #{t('order.no')}
+          button.btn.btn-primary(type='button') #{t('order.yes')}

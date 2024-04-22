@@ -1,0 +1,26 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('login.login'), [])
+
+  .container-fluid.py-5
+    .container.py-5
+      .row
+        .col-md-6.offset-md-3
+          form
+            .mb-3
+              label.form-label(for='email') 
+                | #{t('login.email')}
+                sup.text-danger *
+              input#email.form-control(type='email' required='')
+            .mb-3
+              label.form-label(for='password') 
+                | #{t('login.password')}
+                sup.text-danger *
+              input#password.form-control(type='password' required='')
+            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('login.login')}
+            .d-flex.justify-content-end 
+              a(href='/register').mt-2 #{t('login.createANewAccount')}
+            .d-flex.justify-content-end 
+              a(href='/forgot-password').mt-2 #{t('login.forgotPassword')}

@@ -1,0 +1,61 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('register.register'), [])
+
+  .container-fluid.py-5
+    .container.py-5
+      .row
+        .col-md-6.offset-md-3
+          form
+            .mb-3
+              label.form-label(for='name') 
+                | #{t('register.name')}
+                sup.text-danger *
+              input#name.form-control(type='text' required='')
+            .mb-3
+              label.form-label(for='email') 
+                | #{t('register.email')}
+                sup.text-danger *
+              input#email.form-control(type='email' required='')
+            .mb-3
+              label.form-label(for='password') 
+                | #{t('register.password')}
+                sup.text-danger *
+              input#password.form-control(type='password' required='')
+            .mb-3
+              label.form-label(for='passwordConfirm')
+                | #{t('register.passwordConfirm')}
+                sup.text-danger *
+              input#passwordConfirm.form-control(type='password' required='')
+            .mb-3
+              label.form-label(for='phone')
+                | #{t('register.phone')}
+                sup.text-danger *
+              input#phone.form-control(type='tel' required='')
+            .mb-3
+              label.form-label(for='gender')
+                | #{t('register.gender')}
+                sup.text-danger *
+              select#gender.form-select
+                each gender in genders
+                  option(value=gender) #{gender}
+            .mb-3
+              label.form-label(for='dateOfBirth')
+                | #{t('register.dateOfBirth')}
+                sup.text-danger *
+              input#dateOfBirth.form-control(type='date')
+            .mb-3
+              label.form-label(for='avatar')
+                | #{t('register.avatar')}
+                sup.text-danger *
+              input#avatar.form-control(type='file')
+            .mb-3
+              label.form-label(for='address')
+                | #{t('register.address')}
+                sup.text-danger *
+              textarea#address.form-control(rows='3' required='')
+            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('register.register')}
+            .d-flex.justify-content-end 
+              a(href='/Login').mt-2 #{t('register.login')}

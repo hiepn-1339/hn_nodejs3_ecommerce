@@ -1,0 +1,27 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('changePassword.changePassword'), [])
+
+  .container-fluid.py-5
+    .container.py-5
+      .row
+        .col-md-6.offset-md-3
+          form
+            .mb-3
+              label.form-label(for='oldPassword') 
+                | #{t('changePassword.oldPassword')}
+                sup.text-danger *
+              input#oldPassword.form-control(type='Password' required='')
+            .mb-3
+              label.form-label(for='newPassword') 
+                | #{t('changePassword.newPassword')}
+                sup.text-danger *
+              input#newPassword.form-control(type='password' required='')
+            .mb-3
+              label.form-label(for='newPasswordConfirm') 
+                | #{t('changePassword.newPasswordConfirm')}
+                sup.text-danger *
+              input#newPasswordConfirm.form-control(type='password' required='')
+            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('changePassword.submit')}

@@ -1,0 +1,22 @@
+extends ../layout
+
+block content 
+  include ../mixins/_breadcrumb
+  +breadcurmb(t('resetPassword.resetPassword'), [])
+
+  .container-fluid.py-5
+    .container.py-5
+      .row
+        .col-md-6.offset-md-3
+          form
+            .mb-3
+              label.form-label(for='password') 
+                | #{t('resetPassword.password')}
+                sup.text-danger *
+              input#password.form-control(type='password' required='')
+            .mb-3
+              label.form-label(for='passwordConfirm') 
+                | #{t('resetPassword.passwordConfirm')}
+                sup.text-danger *
+              input#passwordConfirm.form-control(type='password' required='')
+            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('resetPassword.submit')}

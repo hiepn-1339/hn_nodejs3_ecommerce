@@ -1,0 +1,39 @@
+extends ../layoutAdmin
+
+block admin_content
+  .row.mt-5
+    .col-md-6.offset-md-3
+      h1 {{Action}} #{t('admin.product.product')}
+      form
+        .mb-3
+          label.form-label(for='avatar')
+            | #{t('admin.product.productImages')}
+            sup.text-danger *
+          .col-sm-3.imgUp
+            .imagePreview
+            label.btn.btn-primary.text-white
+              | #{t('admin.product.upload')}
+              input.uploadFile.img(type='file' value='Upload Photo' style='width: 0px;height: 0px;overflow: hidden;')
+        .mb-3
+          label.form-label(for='category')
+            | #{t('admin.product.category')}
+            sup.text-danger *
+          select#category.form-select
+            each category in categories
+              option(value=category) #{category}
+        .mb-3
+          label.form-label(for='name') 
+            | #{t('admin.product.name')}
+            sup.text-danger *
+          input#name.form-control(type='text' required)
+        .mb-3
+          label.form-label(for='price') 
+            | #{t('admin.product.price')}
+            sup.text-danger *
+          input#price.form-control(type='text' required)
+        .mb-3
+          label.form-label(for='description')
+            | #{t('admin.product.description')}
+            sup.text-danger *
+          textarea#description.form-control(rows='3' required)
+        button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') {{action}}

@@ -27,8 +27,8 @@ export class Order extends BaseEntity {
   @Column({ nullable: false })
   email: string | undefined;
 
-  @Column({ type: 'enum', enum: PaymentMethod, default: PaymentMethod.CASH_ON_DELIVERY })
-  payment_method: string | undefined;
+  @Column({ type: 'enum', enum: PaymentMethod, default: PaymentMethod.CASH_ON_DELIVERY, name: 'payment_method'})
+  paymentMethod: string | undefined;
 
   @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.PENDING })
   status: OrderStatus | undefined;

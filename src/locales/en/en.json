@@ -1,0 +1,226 @@
+{
+  "header": {
+    "title": "Fruitables",
+    "home": "Home",
+    "cart": "Cart",
+    "order": "Order",
+    "profile": "Profile",
+    "signout": "Signout"
+  },
+  "footer": {
+    "freshProducts": "Fresh products"
+  },
+  "slider": {
+    "organicFoods": "100% Organic Foods",
+    "title": "Organic Veggies & Fruits Foods"
+  },
+  "home": {
+    "title": "Fresh fruits shop",
+    "categories": "Categories",
+    "price": "Price",
+    "addToCart": "Add to cart"
+  },
+  "product": {
+    "category": "Category",
+    "reviews": "Reviews",
+    "featuredProducts": "Featured products",
+    "viewMore": "View More",
+    "product": "Product"
+  },
+  "cart": {
+    "products": "Products",
+    "name": "Name",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "handle": "Handle",
+    "applyCoupon": "Apply Coupon",
+    "coupon": "Coupon",
+    "cart": "Cart",
+    "subtotal": "Subtotal",
+    "proceedCheckout": "Proceed Checkout"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "createANewAccount": "Create a new account?",
+    "forgotPassword": "Forgot password",
+    "login": "Login"
+  },
+  "register": {
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "passwordConfirm": "Password Confirm",
+    "phone": "phone",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "avatar": "Avatar",
+    "address": "Address",
+    "register": "Register",
+    "login": "Login"
+  },
+  "forgotPassword": {
+    "forgotPassword": "Forgot password",
+    "email": "Email",
+    "submit": "Submit"
+  },
+  "changePassword": {
+    "changePassword": "Change Password",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "newPasswordConfirm": "New Password Confirm",
+    "submit": "Submit"
+  },
+  "resetPassword": {
+    "resetPassword": "Reset Password",
+    "password": "Password",
+    "passwordConfirm": "Password Confirm",
+    "submit": "Submit"
+  },
+  "error": {
+    "title": "Error",
+    "goBackToHome": "Go Back To Home"
+  },
+  "profile": {
+    "title": "Profile",
+    "avatar": "Avatar",
+    "upload": "Upload",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "gender": "Gender",
+    "dateOfBirth": "Date Of Birth",
+    "address": "Address",
+    "submit": "Submit"
+  },
+  "checkout": {
+    "checkout": "Checkout",
+    "title": "Billing details",
+    "firstName": "FirstName",
+    "lastName": "LastName",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "note": "Note",
+    "products": "Products",
+    "name": "Name",
+    "price": "Price",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "paymentMethod": "Payment Method",
+    "total": "Total",
+    "placeOrder": "Place Order"
+  },
+  "order": {
+    "title": "Order",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "orderManagement": "Order Management",
+    "createdAt": "Created At",
+    "coupon": "Coupon",
+    "total": "Total",
+    "paymentMethod": "Payment Method",
+    "address": "Address",
+    "status": "Status",
+    "action": "Action",
+    "cancel": "Cancel",
+    "rating": "Rating",
+    "titleModal": "Cancel Order",
+    "areYouSureYouWantToCancelTheOrderWithId": "Are you sure you want to cancel the order with id: ",
+    "no": "No",
+    "yes": "Yes"
+  },
+  "rating": {
+    "rating": "Rating",
+    "comment": "comment"
+  },
+  "admin": {
+    "order": {
+      "search": "Search",
+      "totalMin": "Total Min",
+      "totalMax": "Total Max",
+      "coupon": "Coupon",
+      "paymentMethod": "Payment Method",
+      "status": "Status",
+      "orderManagement": "Order Management",
+      "exportToExcel": "Export To Excel",
+      "id": "Id",
+      "user": "User",
+      "total": "Total",
+      "address": "Address",
+      "action": "Action",
+      "orderDetails": "Order Details",
+      "approved": "APPROVED",
+      "rejected": "REJECTED",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phone": "Phone",
+      "email": "Email",
+      "note": "Note",
+      "product": "Product",
+      "name": "Name",
+      "price": "Price",
+      "quantity": "Quantity",
+      "subtotal": "Subtotal",
+      "submit": "Submit"
+    },
+    "category": {
+      "category": "Category",
+      "categoryManagment": "Category Managment",
+      "id": "Id",
+      "name": "Name",
+      "action": "Action"
+    },
+    "coupon": {
+      "search": "Search",
+      "percentage": "Percentage",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "couponManagement": "Coupon Management",
+      "addNewCoupon": "Add New Coupon",
+      "exportToExcel": "Export To Excel",
+      "name": "Name",
+      "action": "Action",
+      "coupon": "Coupon"
+    },
+    "product": {
+      "search": "Search",
+      "priceMin": "Price Min",
+      "priceMax": "Price Max",
+      "category": "Category",
+      "ratingAvg": "Rating Avg",
+      "status": "Status",
+      "productManagement": "Product Management",
+      "addNewProduct": "Add New Product",
+      "exportToExcel": "Export To Excel",
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "action": "Action",
+      "product": "Product",
+      "productImages": "Product Images",
+      "upload": "Upload"
+    },
+    "user": {
+      "search": "Search",
+      "gender": "Gender",
+      "status": "Status",
+      "userManagement": "User Management",
+      "addNewUser": "Add New User",
+      "exportToExcel": "Export To Excel",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "dateOfBirth": "Date Of Birth",
+      "address": "Address",
+      "action": "Action",
+      "user": "User",
+      "password": "Password",
+      "passwordConfirm": "Password Confirm",
+      "genre": "Genre",
+      "avatar": "Avatar",
+      "update": "Update"
+    }
+  }
+}

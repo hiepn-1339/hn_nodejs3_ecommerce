@@ -3,6 +3,7 @@ import { BaseEntity } from './base.entity';
 import { Rating } from './rating.entity';
 import { Cart } from './cart.entity';
 import { Order } from './order.entity';
+import { Gender } from '../constants';
 
 @Entity()
 export class User extends BaseEntity {
@@ -21,7 +22,7 @@ export class User extends BaseEntity {
   @Column({ nullable: false })
   phone: string | undefined;
 
-  @Column({ nullable: true })
+  @Column({ type: 'enum', enum: Gender, nullable: true })
   gender: boolean | undefined;
 
   @Column({ type: 'date', nullable: true, name: 'date_of_birth' })

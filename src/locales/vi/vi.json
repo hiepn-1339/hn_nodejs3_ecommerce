@@ -1,0 +1,226 @@
+{
+  "header": {
+    "title": "Fruitables",
+    "home": "Trang chủ",
+    "cart": "Giỏ hàng",
+    "order": "Đặt hàng",
+    "profile": "Hồ sơ",
+    "signout": "Đăng xuất"
+  },
+  "footer": {
+    "freshProducts": "Sản phẩm mới"
+  },
+  "slider": {
+    "organicFoods": "Thực phẩm 100% hữu cơ",
+    "title": "Thực Phẩm Hữu Cơ Rau Quả"
+  },
+  "home": {
+    "title": "Cửa hàng trái cây tươi",
+    "categories": "Danh mục",
+    "price": "Giá",
+    "addToCart": "Thêm vào giỏ hàng"
+  },
+  "product": {
+    "category": "Danh mục",
+    "reviews": "Đánh giá",
+    "featuredProducts": "Sản phẩm nổi bật",
+    "viewMore": "Xem thêm",
+    "product": "Sản phẩm"
+  },
+  "cart": {
+    "products": "Sản phẩm",
+    "name": "Tên",
+    "price": "Giá",
+    "quantity": "Số lượng",
+    "total": "Tổng cộng",
+    "handle": "Xử lý",
+    "applyCoupon": "Áp dụng mã giảm giá",
+    "coupon": "Mã giảm giá",
+    "cart": "Giỏ hàng",
+    "subtotal": "Tổng phụ",
+    "proceedCheckout": "Tiến hành thanh toán"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Mật khẩu",
+    "createANewAccount": "Tạo tài khoản mới?",
+    "forgotPassword": "Quên mật khẩu",
+    "login": "Đăng nhập"
+  },
+  "register": {
+    "email": "Email",
+    "name": "Tên",
+    "password": "Mật khẩu",
+    "passwordConfirm": "Xác nhận mật khẩu",
+    "phone": "Điện thoại",
+    "gender": "Giới tính",
+    "dateOfBirth": "Ngày sinh",
+    "avatar": "Hình đại diện",
+    "address": "Địa chỉ",
+    "register": "Đăng ký",
+    "login": "Đăng nhập"
+  },
+  "forgotPassword": {
+    "forgotPassword": "Quên mật khẩu",
+    "email": "Email",
+    "submit": "Gửi"
+  },
+  "changePassword": {
+    "changePassword": "Đổi mật khẩu",
+    "oldPassword": "Mật khẩu cũ",
+    "newPassword": "Mật khẩu mới",
+    "newPasswordConfirm": "Xác nhận mật khẩu mới",
+    "submit": "Gửi"
+  },
+  "resetPassword": {
+    "resetPassword": "Đặt lại mật khẩu",
+    "password": "Mật khẩu",
+    "passwordConfirm": "Xác nhận mật khẩu",
+    "submit": "Gửi"
+  },
+  "error": {
+    "title": "Lỗi",
+    "goBackToHome": "Quay lại trang chủ"
+  },
+  "profile": {
+    "title": "Hồ sơ",
+    "avatar": "Hình đại diện",
+    "upload": "Tải lên",
+    "name": "Tên",
+    "email": "Email",
+    "phone": "Điện thoại",
+    "gender": "Giới tính",
+    "dateOfBirth": "Ngày sinh",
+    "address": "Địa chỉ",
+    "submit": "Gửi"
+  },
+  "checkout": {
+    "checkout": "Thanh toán",
+    "title": "Chi tiết thanh toán",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "address": "Địa chỉ",
+    "phone": "Điện thoại",
+    "email": "Email",
+    "note": "Ghi chú",
+    "products": "Sản phẩm",
+    "name": "Tên",
+    "price": "Giá",
+    "quantity": "Số lượng",
+    "subtotal": "Tổng phụ",
+    "paymentMethod": "Phương thức thanh toán",
+    "total": "Tổng cộng",
+    "placeOrder": "Đặt hàng"
+  },
+  "order": {
+    "title": "Đơn hàng",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "orderManagement": "Quản lý đơn hàng",
+    "createdAt": "Tạo lúc",
+    "coupon": "Mã giảm giá",
+    "total": "Tổng cộng",
+    "paymentMethod": "Phương thức thanh toán",
+    "address": "Địa chỉ",
+    "status": "Trạng thái",
+    "action": "Hành động",
+    "cancel": "Hủy",
+    "rating": "Đánh giá",
+    "titleModal": "Hủy Đơn Hàng",
+    "areYouSureYouWantToCancelTheOrderWithId": "Bạn có chắc muốn hủy đơn hàng có id: ",
+    "no": "Không",
+    "yes": "Có"
+  },
+  "rating": {
+    "rating": "Đánh giá",
+    "comment": "Bình luận"
+  },
+  "admin": {
+    "order": {
+      "search": "Tìm kiếm",
+      "totalMin": "Tổng tối thiểu",
+      "totalMax": "Tổng tối đa",
+      "coupon": "Mã giảm giá",
+      "paymentMethod": "Phương thức thanh toán",
+      "status": "Trạng thái",
+      "orderManagement": "Quản lý đơn hàng",
+      "exportToExcel": "Xuất ra Excel",
+      "id": "Id",
+      "user": "Người dùng",
+      "total": "Tổng cộng",
+      "address": "Địa chỉ",
+      "action": "Hành động",
+      "orderDetails": "Chi tiết đơn hàng",
+      "approved": "ĐÃ DUYỆT",
+      "rejected": "TỪ CHỐI",
+      "firstName": "Tên",
+      "lastName": "Họ",
+      "phone": "Điện thoại",
+      "email": "Email",
+      "note": "Ghi chú",
+      "product": "Sản phẩm",
+      "name": "Tên",
+      "price": "Giá",
+      "quantity": "Số lượng",
+      "subtotal": "Tổng phụ",
+      "submit": "Gửi"
+    },
+    "category": {
+      "category": "Danh mục",
+      "categoryManagment": "Quản lý danh mục",
+      "id": "Id",
+      "name": "Tên",
+      "action": "Hành động"
+    },
+    "coupon": {
+      "search": "Tìm kiếm",
+      "percentage": "Phần trăm",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc",
+      "couponManagement": "Quản lý mã giảm giá",
+      "addNewCoupon": "Thêm mã giảm giá mới",
+      "exportToExcel": "Xuất ra Excel",
+      "name": "Tên",
+      "action": "Hành động",
+      "coupon": "Mã giảm giá"
+    },
+    "product": {
+      "search": "Tìm kiếm",
+      "priceMin": "Giá tối thiểu",
+      "priceMax": "Giá tối đa",
+      "category": "Danh mục",
+      "ratingAvg": "Đánh giá trung bình",
+      "status": "Trạng thái",
+      "productManagement": "Quản lý sản phẩm",
+      "addNewProduct": "Thêm sản phẩm mới",
+      "exportToExcel": "Xuất ra Excel",
+      "name": "Tên",
+      "description": "Mô tả",
+      "price": "Giá",
+      "action": "Hành động",
+      "product": "Sản phẩm",
+      "productImages": "Hình ảnh sản phẩm",
+      "upload": "Tải lên"
+    },
+    "user": {
+      "search": "Tìm kiếm",
+      "gender": "Giới tính",
+      "status": "Trạng thái",
+      "userManagement": "Quản lý người dùng",
+      "addNewUser": "Thêm người dùng mới",
+      "exportToExcel": "Xuất ra Excel",
+      "name": "Tên",
+      "email": "Email",
+      "phone": "Điện thoại",
+      "dateOfBirth": "Ngày sinh",
+      "address": "Địa chỉ",
+      "action": "Hành động",
+      "user": "Người dùng",
+      "password": "Mật khẩu",
+      "passwordConfirm": "Xác nhận mật khẩu",
+      "genre": "Giới tính",
+      "avatar": "Hình đại diện",
+      "update": "Cập nhật"
+    }
+  }
+}
