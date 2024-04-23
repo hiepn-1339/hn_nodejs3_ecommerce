@@ -24,6 +24,7 @@ const config: {
   awsSecretAccessKey: string;
   awsS3Region: string;
   bucketName: string;
+  sessionSecret: string;
 } = {
   port: Number(process.env.PORT) || 3000,
   dbHost: process.env.DB_HOST || '',
@@ -40,6 +41,7 @@ const config: {
   awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
   awsS3Region: process.env.AWS_S3_REGION || '',
   bucketName: process.env.BUCKET_NAME || '',
+  sessionSecret: process.env.SESSION_SECRET || '',
 };
 
 export default config;

@@ -8,6 +8,8 @@ import i18next from 'i18next';
 import Backend from 'i18next-node-fs-backend';
 import i18nextMiddleware from 'i18next-http-middleware';
 import routes from './routes';
+import session from 'express-session';
+import { Role } from './constants';
 
 const app: Express = express();
 
@@ -48,6 +50,26 @@ app.use(
   }),
 );
 
+app.use(
+  session({
+    saveUninitialized: true,
+    resave: false,
+    secret: config.sessionSecret,
+  }),
+);
+
+app.use((req: any, res, next) => {
+  const user = req.session.user || null;
+  let isAdmin = false;
+
+  if (user && user.role == Role.ADMIN) {
+    isAdmin = true;
+  }
+  res.locals.isAdmin = isAdmin;
+  res.locals.user = user;
+  next();
+});
+
 app.use('', routes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -55,6 +77,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   i18next.changeLanguage(lng);
   next();
 });
+
+app.use(session({
+  secret: config.sessionSecret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true },
+}));
 
 app.use((err: any, req: Request, res: Response) => {
   if (err) {

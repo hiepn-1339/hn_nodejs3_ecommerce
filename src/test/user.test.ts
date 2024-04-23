@@ -119,3 +119,19 @@ describe('activeUser function', () => {
     expect(user.tokenActiveExpires).toBeNull();
   });
 });
+
+describe('getUserByEmail', () => {
+  it('should return user when email is found', async () => {
+    const email = 'Annabel.Lind@yahoo.com';
+    const user = await userService.getUserByEmail(email);
+    
+    expect(user.email).toEqual(email);
+  });
+
+  it('should return null when email is not found', async () => {
+    const email = 'nonexistent@example.com';
+    const user = await userService.getUserByEmail(email);
+    
+    expect(user).toBeNull();
+  });
+});
