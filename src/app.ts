@@ -7,13 +7,14 @@ import { AppDataSource } from './database/dataSource';
 import i18next from 'i18next';
 import Backend from 'i18next-node-fs-backend';
 import i18nextMiddleware from 'i18next-http-middleware';
+import routes from './routes';
 
 const app: Express = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.use(morgan('combined'));
 app.set('view engine', 'pug');
@@ -47,6 +48,8 @@ app.use(
   }),
 );
 
+app.use('', routes);
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   const lng = req.query.lng as string || 'vi';
   i18next.changeLanguage(lng);
@@ -55,7 +58,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use((err: any, req: Request, res: Response) => {
   if (err) {
-    console.error(err.stack);
+    console.error(err.message);
   } else {
     res.status(500).send('Something went wrong!');
   }

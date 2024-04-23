@@ -1,6 +1,12 @@
 import dotenv from 'dotenv';
 
-dotenv.config({ path: './.env' });
+if (process.env.NODE_ENV === 'dev') {
+  dotenv.config({ path: './.env' });
+}
+
+if (process.env.NODE_ENV === 'test') {
+  dotenv.config({ path: './.env.test' });
+}
 
 const config: {
   port: number;
@@ -14,6 +20,10 @@ const config: {
   smtpPort: number;
   smtpUsername: string;
   smtpPassword: string;
+  awsAccessKeyId: string;
+  awsSecretAccessKey: string;
+  awsS3Region: string;
+  bucketName: string;
 } = {
   port: Number(process.env.PORT) || 3000,
   dbHost: process.env.DB_HOST || '',
@@ -26,6 +36,10 @@ const config: {
   smtpPort: Number(process.env.SMTP_PORT) || 0,
   smtpUsername: process.env.SMTP_USERNAME || '',
   smtpPassword: process.env.SMTP_PASSWORD || '',
+  awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+  awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  awsS3Region: process.env.AWS_S3_REGION || '',
+  bucketName: process.env.BUCKET_NAME || '',
 };
 
 export default config;

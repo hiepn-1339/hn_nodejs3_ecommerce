@@ -80,7 +80,17 @@
   },
   "error": {
     "title": "Lỗi",
-    "goBackToHome": "Quay lại trang chủ"
+    "goBackToHome": "Quay lại Trang chủ",
+    "passwordsDoNotMatchPasswordConfirm": "Mật khẩu không khớp với mật khẩu xác nhận!",
+    "cantUploadAvatar": "Không thể tải lên hình đại diện!",
+    "activeTokenIsInvalidOrHasExpired": "Token kích hoạt không hợp lệ hoặc đã hết hạn!",
+    "emailAlreadyExists": "Email đã tồn tại!",
+    "nameLengthError": "Tên phải từ 6 đến 10 ký tự",
+    "passwordLengthError": "Mật khẩu phải từ 6 đến 20 ký tự",
+    "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+    "phoneLengthError": "Số điện thoại phải từ 8 đến 20 ký tự",
+    "addressLengthError": "Địa chỉ phải từ 1 đến 255 ký tự",
+    "dateOfBirthMustBeBeforeCurrentDate": "Ngày sinh phải trước ngày hiện tại"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -222,5 +232,24 @@
       "avatar": "Hình đại diện",
       "update": "Cập nhật"
     }
+  },
+  "email": {
+    "active": {
+      "subject": "Kích hoạt Tài khoản",
+      "welcome": "Chào mừng bạn đến với Fruitables!",
+      "text": "Cảm ơn bạn đã chọn Fruitables. Đầu tiên, bạn cần xác nhận tài khoản của mình. Chỉ cần nhấn nút bên dưới.",
+      "autoGenerate": "Đây là email được tạo tự động. Vui lòng không trả lời email này.",
+      "cheers": "Chúc mừng",
+      "fruitablesTeam": "Đội ngũ Fruitables",
+      "confirmAccount": "Xác nhận Tài khoản"
+    }
+  },
+  "emailConfirm": {
+    "emailConfirm": "Xác nhận Email",
+    "text": "Chúng tôi đã gửi email đến {{email}} để xác nhận tính hợp lệ của địa chỉ email của bạn. Sau khi nhận được email, hãy làm theo liên kết được cung cấp để hoàn tất việc đăng ký của bạn."
+  },
+  "successConfirm": {
+    "successConfirm": "Xác nhận thành công",
+    "text": "Tài khoản của bạn đã được xác nhận thành công. Bây giờ bạn có thể đăng nhập vào tài khoản của mình."
   }
 }

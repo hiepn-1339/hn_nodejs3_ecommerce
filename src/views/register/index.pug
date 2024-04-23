@@ -8,54 +8,84 @@ block content
     .container.py-5
       .row
         .col-md-6.offset-md-3
-          form
+          form(method='POST' enctype='multipart/form-data')
             .mb-3
               label.form-label(for='name') 
                 | #{t('register.name')}
                 sup.text-danger *
-              input#name.form-control(type='text' required='')
+              input#name.form-control(type='text' name='name')
+              if errors
+                - let error = errors.find(e => e.path == 'name')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='email') 
                 | #{t('register.email')}
                 sup.text-danger *
-              input#email.form-control(type='email' required='')
+              input#email.form-control(type='email' name='email')
+              if errors
+                - let error = errors.find(e => e.path == 'email')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='password') 
                 | #{t('register.password')}
                 sup.text-danger *
-              input#password.form-control(type='password' required='')
+              input#password.form-control(type='password' name='password')
+              if errors
+                - let error = errors.find(e => e.path == 'password')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='passwordConfirm')
                 | #{t('register.passwordConfirm')}
                 sup.text-danger *
-              input#passwordConfirm.form-control(type='password' required='')
+              input#passwordConfirm.form-control(type='password' name='passwordConfirm')
+              if errors
+                - let error= errors.find(e => e.path == 'passwordConfirm')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='phone')
                 | #{t('register.phone')}
                 sup.text-danger *
-              input#phone.form-control(type='tel' required='')
+              input#phone.form-control(type='tel' name='phone')
+              if errors
+                - let error= errors.find(e => e.path == 'phone')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='gender')
                 | #{t('register.gender')}
                 sup.text-danger *
-              select#gender.form-select
+              select#gender.form-select(name='gender')
                 each gender in genders
                   option(value=gender) #{gender}
             .mb-3
               label.form-label(for='dateOfBirth')
                 | #{t('register.dateOfBirth')}
                 sup.text-danger *
-              input#dateOfBirth.form-control(type='date')
+              input#dateOfBirth.form-control(type='date' name='dateOfBirth')
+              if errors
+                - let error= errors.find(e => e.path == 'dateOfBirth')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='avatar')
                 | #{t('register.avatar')}
                 sup.text-danger *
-              input#avatar.form-control(type='file')
+              input#avatar.form-control(type='file' name='avatar')
+              if avatarError
+                p.text-danger #{avatarError}
             .mb-3
               label.form-label(for='address')
                 | #{t('register.address')}
                 sup.text-danger *
-              textarea#address.form-control(rows='3' required='')
+              textarea#address.form-control(rows='3' name='address')
+              if errors
+                - let error= errors.find(e => e.path == 'address')
+                if error
+                  p.text-danger #{error.msg}
             button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('register.register')}
             .d-flex.justify-content-end 
-              a(href='/Login').mt-2 #{t('register.login')}
+              a(href='/auth/login').mt-2 #{t('register.login')}

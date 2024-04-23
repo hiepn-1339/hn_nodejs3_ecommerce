@@ -3,7 +3,7 @@ import { BaseEntity } from './base.entity';
 import { Rating } from './rating.entity';
 import { Cart } from './cart.entity';
 import { Order } from './order.entity';
-import { Gender } from '../constants';
+import { Gender, Role } from '../constants';
 
 @Entity()
 export class User extends BaseEntity {
@@ -16,7 +16,7 @@ export class User extends BaseEntity {
   @Column({ nullable: false })
   password: string | undefined;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: 'enum', enum: Role, default: Role.USER })
   role: string | undefined;
 
   @Column({ nullable: false })
@@ -40,8 +40,14 @@ export class User extends BaseEntity {
   @Column({nullable: true, name: 'token_active'})
   tokenActive: string | undefined;
 
+  @Column({nullable: true, name: 'token_active_expires'})
+  tokenActiveExpires: Date | undefined;
+
   @Column({nullable: true, name: 'token_reset_password'})
   tokenResetPassword: string | undefined;
+
+  @Column({nullable: true, name: 'token_reset_password_expires'})
+  tokenResetPasswordExpires: Date | undefined;
 
   @OneToMany(() => Rating, (rating) => rating.product)
   ratings: Rating[] | undefined;
