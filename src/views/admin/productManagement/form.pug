@@ -13,7 +13,7 @@ block admin_content
             .imagePreview
             label.btn.btn-primary.text-white
               | #{t('admin.product.upload')}
-              input.uploadFile.img(type='file' value='Upload Photo' style='width: 0px;height: 0px;overflow: hidden;')
+              input.uploadFile.img.w-0px.h-0px.over(type='file' value='Upload Photo')
         .mb-3
           label.form-label(for='category')
             | #{t('admin.product.category')}

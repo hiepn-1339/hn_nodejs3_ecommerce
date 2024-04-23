@@ -21,6 +21,7 @@
     "@typescript-eslint/no-unsafe-call": 0,
     "@typescript-eslint/no-unsafe-member-access": 0,
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-unsafe-return": 0,
     "comma-dangle": [
       "warn",
       "always-multiline"
@@ -41,7 +42,8 @@
       }
     ],
     "node/no-missing-import": 0,
-    "node/no-unpublished-import": 0
+    "node/no-unpublished-import": 0,
+    "node/no-extraneous-import": "off"
   },
   "settings": {
     "node": {

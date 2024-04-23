@@ -52,7 +52,7 @@
     "name": "Name",
     "password": "Password",
     "passwordConfirm": "Password Confirm",
-    "phone": "phone",
+    "phone": "Phone",
     "gender": "Gender",
     "dateOfBirth": "Date of Birth",
     "avatar": "Avatar",
@@ -80,7 +80,17 @@
   },
   "error": {
     "title": "Error",
-    "goBackToHome": "Go Back To Home"
+    "goBackToHome": "Go Back To Home",
+    "passwordsDoNotMatchPasswordConfirm": "Passwords do not match passwordConfirm!",
+    "cantUploadAvatar": "Cant upload avatar!",
+    "activeTokenIsInvalidOrHasExpired": "Active Token is invalid or has expired!",
+    "emailAlreadyExists": "Email already exists!",
+    "nameLengthError": "The name must be between 6 and 10 characters",
+    "passwordLengthError": "The password must be between 6 and 20 characters",
+    "invalidEmail": "Please enter a valid email address",
+    "phoneLengthError": "The phone must be between 8 and 20 characters",
+    "addressLengthError": "The address must be between 1 and 255 characters",
+    "dateOfBirthMustBeBeforeCurrentDate": "Date of birth must be before current date"
   },
   "profile": {
     "title": "Profile",
@@ -222,5 +232,24 @@
       "avatar": "Avatar",
       "update": "Update"
     }
+  },
+  "email": {
+    "active": {
+      "subject": "Active Account",
+      "welcome": "Welcome To Fruitables!",
+      "text": "Thank you for choosing fruitables. First, you need to confirm your account. Just press the button below.",
+      "autoGenerate": "This is an auto-generated email. Please do not reply to this email.",
+      "cheers": "Cheers",
+      "fruitablesTeam": "Fruitables Team",
+      "confirmAccount": "Confirm Account"
+    }
+  },
+  "emailConfirm": {
+    "emailConfirm": "Email Confirm",
+    "text": "We have sent email to {{email}} to confirm the validity of our email address. After receiving the email, follow the link provided to complete your registration."
+  },
+  "sucessConfirm": {
+    "sucessConfirm": "Sucess Confirm",
+    "text": "Your account has been successfully confirmed. You can now login to your account."
   }
 }

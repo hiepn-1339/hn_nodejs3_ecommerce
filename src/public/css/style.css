@@ -699,3 +699,15 @@ table.table .avatar {
 .fs-24px {
   font-size: 24px !important;
 }
+
+.fs-200px {
+  font-size: 200px !important;
+}
+
+.color-primary {
+  color: var(--bs-primary)!important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
