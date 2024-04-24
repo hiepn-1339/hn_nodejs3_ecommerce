@@ -13,7 +13,7 @@ block content
               label.form-label(for='name') 
                 | #{t('register.name')}
                 sup.text-danger *
-              input#name.form-control(type='text' name='name')
+              input#name.form-control(type='text' required='' name='name')
               if errors
                 - let error = errors.find(e => e.path == 'name')
                 if error
@@ -22,7 +22,7 @@ block content
               label.form-label(for='email') 
                 | #{t('register.email')}
                 sup.text-danger *
-              input#email.form-control(type='email' name='email')
+              input#email.form-control(type='email' required='' name='email')
               if errors
                 - let error = errors.find(e => e.path == 'email')
                 if error
@@ -31,7 +31,7 @@ block content
               label.form-label(for='password') 
                 | #{t('register.password')}
                 sup.text-danger *
-              input#password.form-control(type='password' name='password')
+              input#password.form-control(type='password' required='' name='password')
               if errors
                 - let error = errors.find(e => e.path == 'password')
                 if error
@@ -40,7 +40,7 @@ block content
               label.form-label(for='passwordConfirm')
                 | #{t('register.passwordConfirm')}
                 sup.text-danger *
-              input#passwordConfirm.form-control(type='password' name='passwordConfirm')
+              input#passwordConfirm.form-control(type='password' required='' name='passwordConfirm')
               if errors
                 - let error= errors.find(e => e.path == 'passwordConfirm')
                 if error
@@ -49,7 +49,7 @@ block content
               label.form-label(for='phone')
                 | #{t('register.phone')}
                 sup.text-danger *
-              input#phone.form-control(type='tel' name='phone')
+              input#phone.form-control(type='tel' required='' name='phone')
               if errors
                 - let error= errors.find(e => e.path == 'phone')
                 if error
@@ -58,14 +58,14 @@ block content
               label.form-label(for='gender')
                 | #{t('register.gender')}
                 sup.text-danger *
-              select#gender.form-select(name='gender')
+              select#gender.form-select(required='' name='gender')
                 each gender in genders
                   option(value=gender) #{gender}
             .mb-3
               label.form-label(for='dateOfBirth')
                 | #{t('register.dateOfBirth')}
                 sup.text-danger *
-              input#dateOfBirth.form-control(type='date' name='dateOfBirth')
+              input#dateOfBirth.form-control(type='date' required='' name='dateOfBirth')
               if errors
                 - let error= errors.find(e => e.path == 'dateOfBirth')
                 if error
@@ -74,14 +74,14 @@ block content
               label.form-label(for='avatar')
                 | #{t('register.avatar')}
                 sup.text-danger *
-              input#avatar.form-control(type='file' name='avatar')
+              input#avatar.form-control(type='file' required='' name='avatar')
               if avatarError
                 p.text-danger #{avatarError}
             .mb-3
               label.form-label(for='address')
                 | #{t('register.address')}
                 sup.text-danger *
-              textarea#address.form-control(rows='3' name='address')
+              textarea#address.form-control(rows='3' required='' name='address')
               if errors
                 - let error= errors.find(e => e.path == 'address')
                 if error

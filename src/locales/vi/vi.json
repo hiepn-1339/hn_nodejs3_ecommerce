@@ -5,7 +5,9 @@
     "cart": "Giỏ hàng",
     "order": "Đặt hàng",
     "profile": "Hồ sơ",
-    "signout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "login": "Đăng nhập",
+    "register": "Đăng ký"
   },
   "footer": {
     "freshProducts": "Sản phẩm mới"
@@ -85,12 +87,13 @@
     "cantUploadAvatar": "Không thể tải lên hình đại diện!",
     "activeTokenIsInvalidOrHasExpired": "Token kích hoạt không hợp lệ hoặc đã hết hạn!",
     "emailAlreadyExists": "Email đã tồn tại!",
-    "nameLengthError": "Tên phải từ 6 đến 10 ký tự",
+    "nameLengthError": "Tên phải từ 6 đến 20 ký tự",
     "passwordLengthError": "Mật khẩu phải từ 6 đến 20 ký tự",
     "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
-    "phoneLengthError": "Số điện thoại phải từ 8 đến 20 ký tự",
+    "phoneLengthError": "Số điện thoại phải từ 6 đến 20 ký tự",
     "addressLengthError": "Địa chỉ phải từ 1 đến 255 ký tự",
-    "dateOfBirthMustBeBeforeCurrentDate": "Ngày sinh phải trước ngày hiện tại"
+    "dateOfBirthMustBeBeforeCurrentDate": "Ngày sinh phải trước ngày hiện tại",
+    "wrongEmailOrPassword": "Sai email hoặc password"
   },
   "profile": {
     "title": "Hồ sơ",

@@ -1,4 +1,5 @@
 import { IsEmail, Length, ValidatorConstraint, ValidatorConstraintInterface, Validate, ValidationArguments } from 'class-validator';
+import { LengthInput } from '../../constants';
 
 @ValidatorConstraint({ name: 'isBeforeCurrentDate', async: false })
 class IsBeforeCurrentDate implements ValidatorConstraintInterface {
@@ -26,10 +27,10 @@ class IsPasswordMatch implements ValidatorConstraintInterface {
 }
 
 class RegisterDTO {
-  @Length(6, 10, { message: 'error.nameLengthError' })
+  @Length(LengthInput.MIN_LENGTH, LengthInput.MAX_LENGTH, { message: 'error.nameLengthError' })
   name: string;
 
-  @Length(6, 20, { message: 'error.passwordLengthError' })
+  @Length(LengthInput.MIN_LENGTH, LengthInput.MAX_LENGTH, { message: 'error.passwordLengthError' })
   password: string;
 
   @Validate(IsPasswordMatch)
@@ -38,13 +39,13 @@ class RegisterDTO {
   @Validate(IsBeforeCurrentDate)
   dateOfBirth: Date;
 
-  @Length(8, 20, { message: 'error.phoneLengthError' })
+  @Length(LengthInput.MIN_LENGTH, LengthInput.MAX_LENGTH, { message: 'error.phoneLengthError' })
   phone: string;
 
   @IsEmail({}, { message: 'error.invalidEmail' })
   email: string;
 
-  @Length(1, 255, { message: 'error.addressLengthError' })
+  @Length(LengthInput.MIN_LENGTH_TEXT, LengthInput.MAX_LENGTH_TEXT, { message: 'error.addressLengthError' })
   address: string;
 
   constructor(data: any) {

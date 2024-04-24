@@ -21,3 +21,11 @@ export enum Role {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
+
+export enum LengthInput {
+  MIN_LENGTH = 6,
+  MAX_LENGTH = 20,
+
+  MIN_LENGTH_TEXT = 1,
+  MAX_LENGTH_TEXT = 255,
+}
