@@ -29,3 +29,8 @@ export enum LengthInput {
   MIN_LENGTH_TEXT = 1,
   MAX_LENGTH_TEXT = 255,
 }
+
+export enum Query {
+  PAGE_DEFAULT = 1,
+  LIMIT_DEFAULT = 9,
+}
