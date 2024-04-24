@@ -27,3 +27,9 @@ export const postLogin = [
     res.redirect('/');
   }),
 ];
+
+export const getLogout = (req: any, res: Response) => {
+  req.session.destroy(() => {
+    res.redirect('/auth/login');
+  });
+};
