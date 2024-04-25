@@ -21,8 +21,8 @@ export const getRegister = (req: Request, res: Response) => {
 };
 
 export const postRegister = [
-  validateRegisterUser,
   uploadImage.single('avatar'),
+  validateRegisterUser,
   asyncHandler(async (req: IUserRequest, res: Response) => {
     const existsUser = await userService.getUserByEmail(req.body.email);
 

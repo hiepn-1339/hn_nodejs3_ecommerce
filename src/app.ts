@@ -10,6 +10,7 @@ import i18nextMiddleware from 'i18next-http-middleware';
 import routes from './routes';
 import session from 'express-session';
 import { Role } from './constants';
+import { setPaginateQuery } from './middlewares';
 
 const app: Express = express();
 
@@ -69,6 +70,8 @@ app.use((req: any, res, next) => {
   res.locals.user = user;
   next();
 });
+
+app.use(setPaginateQuery);
 
 app.use('', routes);
 

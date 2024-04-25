@@ -9,7 +9,8 @@ block content
     .row.justify-content-center
       .col-lg-6
         i.bi.bi-exclamation-triangle.display-1.text-secondary
-        h1.display-1 #{error.code}
-        h1.mb-4 #{error.message}
-        p.mb-4 #{error.description}
+        if error
+          h1.display-1 #{error.code}
+          h1.mb-4 #{error.title}
+          p.mb-4 #{error.message}
         a.btn.border-secondary.rounded-pill.py-3.px-5(href='/') #{t('error.goBackToHome')}
