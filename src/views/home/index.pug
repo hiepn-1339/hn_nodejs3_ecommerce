@@ -11,8 +11,8 @@ block content
           .row.g-4
             .col-xl-3
               .input-group.w-100.mx-auto.d-flex
-                input.form-control.p-3(type='search' placeholder='keywords' aria-describedby='search-icon-1')
-                span#search-icon-1.input-group-text.p-3
+                input#keyword.form-control.p-3(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+                span#searchProduct.input-group-text.p-3
                   i.fa.fa-search
             .col-6
             .col-xl-3
@@ -26,16 +26,19 @@ block content
                       each category in categories
                         li
                           .d-flex.justify-content-between.fruite-name
-                            a(href='#')
+                            a(href=`?category=${category.id}`)
                               i.fas.fa-apple-alt.me-2
-                              | #{categorie.name}
+                              | #{category.name}
                             - let num = category.products.length
                             span (#{num})
                 .col-lg-12
                   .mb-3
-                    h4.mb-2 #{t('home.price')}
-                    input#rangeInput.form-range.w-100(type='range' name='rangeInput' min='0' max='500' value='0' oninput='amount.value=rangeInput.value')
-                    output#amount(name='amount' min-velue='0' max-value='500' for='rangeInput') 0
+                    label.form-label(for='minPrice') 
+                      | #{t('home.minPrice')}
+                    input#minPrice.mb-3.form-control(type='number' required='')
+                    label.form-label(for='maxPrice') 
+                      | #{t('home.maxPrice')}
+                    input#maxPrice.form-control(type='number' required='')
             .col-lg-9
               .row.g-4.justify-content-center
                 each product in products
@@ -43,7 +46,8 @@ block content
                     .rounded.position-relative.fruite-item
                       .fruite-img
                         img.img-fluid.w-100.rounded-top(src='img/fruite-item-5.jpg' alt='')
-                      .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
+                      if product.category
+                        .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
                       .p-4.border.border-secondary.border-top-0.rounded-bottom
                         h4 #{product.name}
                         p
@@ -55,8 +59,8 @@ block content
                             |  #{t('home.addToCart')}
                 .col-12
                   .pagination.d-flex.justify-content-center.mt-5
-                    each val in Array.from({length: pageLength}, (_, i) => i + 1)
-                      if val === page
-                        a.active.rounded(href='#') #{val}
+                    each val in Array.from({length: pages}, (_, i) => i + 1)
+                      if val == page
+                        a.page.active.rounded(value=val) #{val}
                       else
-                        a.rounded(href='#') #{val}
+                        a.page.rounded(value=val) #{val}

@@ -11,10 +11,55 @@
   };
   spinner(0);
 
+  function buildURLWithQuery(currentURL, newQueryObject) {
+    const parsedURL = new URL(currentURL);
+
+    const mergedQuery = { ...Object.fromEntries(parsedURL.searchParams), ...newQueryObject };
+
+    const newSearchParams = new URLSearchParams(mergedQuery);
+
+    const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+    return newURL;
+  }
+
   $(document).ready(function() {
+    var pages = $('.page');
+
+    pages.each(function() {
+      var query = {page: $(this).attr('value')};
+      var url = buildURLWithQuery(window.location.href, query);
+
+      $(this).attr('href', url);
+    });
+
     $('#cancelOrder').click(function() {
       var orderId = $(this).data('order-id');
       $('#orderId').text(orderId);
+    });
+
+    $('#searchProduct').click(function() {
+      var keyword = $('#keyword').val();
+      var minPrice = $('#minPrice').val();
+      var maxPrice = $('#maxPrice').val();
+
+      var query = {
+        page: 1,
+      };
+
+      if (keyword) {
+        query.keyword = keyword;
+      }
+      if (minPrice) {
+        query.minPrice = minPrice;
+      }
+      if (maxPrice) {
+        query.maxPrice = maxPrice;
+      }
+
+      var url = buildURLWithQuery(window.location.href, query);
+
+      window.location.href = url;
     });
   });
 

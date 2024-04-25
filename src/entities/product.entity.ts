@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany, Index } from 'typeorm';
 import { Category } from './category.entity';
 import { BaseEntity } from './base.entity';
 import { ProductImage } from './productImage.entity';
@@ -9,6 +9,7 @@ import { OrderItem } from './orderItem.entity';
 @Entity()
 export class Product extends BaseEntity {
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   name: string | undefined;
 
   @ManyToOne(() => Category, (category) => category.products)
@@ -19,9 +20,13 @@ export class Product extends BaseEntity {
   price: number | undefined;
 
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   description: string | undefined;
 
-  @Column({ nullable: false, type: 'float', name: 'rating_avg' })
+  @Column({ nullable: false })
+  quantity: number | undefined;
+
+  @Column({ nullable: false, type: 'float', name: 'rating_avg', default: 5 })
   ratingAvg: number | undefined;
 
   @OneToMany(() => ProductImage, (productImage) => productImage.product)
