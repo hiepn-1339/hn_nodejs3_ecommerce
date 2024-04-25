@@ -7,14 +7,17 @@
     "test": "NODE_ENV=test jest ./test",
     "build": "npx tsc",
     "start": "node dist/app.js",
-    "dev": "NODE_ENV=dev nodemon src/app.ts",
+    "dev": "nodemon src/app.ts",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts",
     "migration:generate": "ts-node --esm ./node_modules/typeorm/cli.js migration:generate -d ./src/database/dataSource.ts ./src/migrations/create_table",
-    "migration:run": "ts-node --esm ./node_modules/typeorm/cli.js migration:run -d /src/database/dataSource.ts",
-    "migration:revert": "ts-node --esm ./node_modules/typeorm/cli.js migration:revert -d /src/database/dataSource.ts"
+    "migration:run": "ts-node --esm ./node_modules/typeorm/cli.js migration:run -d ./src/database/dataSource.ts",
+    "migration:revert": "ts-node --esm ./node_modules/typeorm/cli.js migration:revert -d ./src/database/dataSource.ts"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "aws-sdk": "^2.1603.0",

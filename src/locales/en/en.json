@@ -20,7 +20,9 @@
     "title": "Fresh fruits shop",
     "categories": "Categories",
     "price": "Price",
-    "addToCart": "Add to cart"
+    "addToCart": "Add to cart",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price"
   },
   "product": {
     "category": "Category",

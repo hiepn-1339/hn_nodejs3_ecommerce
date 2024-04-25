@@ -20,7 +20,9 @@
     "title": "Cửa hàng trái cây tươi",
     "categories": "Danh mục",
     "price": "Giá",
-    "addToCart": "Thêm vào giỏ hàng"
+    "addToCart": "Thêm vào giỏ hàng",
+    "minPrice": "Giá thấp nhất",
+    "maxPrice": "Giá cao nhất"
   },
   "product": {
     "category": "Danh mục",
