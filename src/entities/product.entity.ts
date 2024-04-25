@@ -29,6 +29,9 @@ export class Product extends BaseEntity {
   @Column({ nullable: false, type: 'float', name: 'rating_avg', default: 5 })
   ratingAvg: number | undefined;
 
+  @Column({ nullable: false, name: 'quantity_sold', default: 0})
+  quantitySold: number | undefined;
+
   @OneToMany(() => ProductImage, (productImage) => productImage.product)
   images: ProductImage[] | undefined;
 

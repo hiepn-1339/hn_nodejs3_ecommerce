@@ -95,7 +95,10 @@
     "phoneLengthError": "Số điện thoại phải từ 6 đến 20 ký tự",
     "addressLengthError": "Địa chỉ phải từ 1 đến 255 ký tự",
     "dateOfBirthMustBeBeforeCurrentDate": "Ngày sinh phải trước ngày hiện tại",
-    "wrongEmailOrPassword": "Sai email hoặc password"
+    "wrongEmailOrPassword": "Sai email hoặc password",
+    "noProductFoundWithId": "Không tìm thấy sản phẩm với id: {{id}}",
+    "invalidId": "Id không hợp lệ",
+    "idMustBeANumber": "Id phải là số"
   },
   "profile": {
     "title": "Hồ sơ",

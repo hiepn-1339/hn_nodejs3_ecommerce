@@ -42,21 +42,22 @@ block content
             .col-lg-9
               .row.g-4.justify-content-center
                 each product in products
-                  .col-md-6.col-lg-6.col-xl-4
-                    .rounded.position-relative.fruite-item
-                      .fruite-img
-                        img.img-fluid.w-100.rounded-top(src='img/fruite-item-5.jpg' alt='')
-                      if product.category
-                        .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
-                      .p-4.border.border-secondary.border-top-0.rounded-bottom
-                        h4 #{product.name}
-                        p
-                          | #{product.description}
-                        .d-flex.justify-content-between.flex-lg-wrap
-                          p.text-dark.fs-5.fw-bold.mb-0 $#{product.price} / kg
-                          a.btn.border.border-secondary.rounded-pill.px-3.text-primary(href='#')
-                            i.fa.fa-shopping-bag.me-2.text-primary
-                            |  #{t('home.addToCart')}
+                  a(href=`/product/${product.id}`)
+                    .col-md-6.col-lg-6.col-xl-4
+                      .rounded.position-relative.fruite-item
+                        .fruite-img
+                          img.img-fluid.w-100.rounded-top(src=product.images[0] alt='')
+                        if product.category
+                          .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
+                        .p-4.border.border-secondary.border-top-0.rounded-bottom
+                          h4 #{product.name}
+                          p
+                            | #{product.description}
+                          .d-flex.justify-content-between.flex-lg-wrap
+                            p.text-dark.fs-5.fw-bold.mb-0 $#{product.price} / kg
+                            a.btn.border.border-secondary.rounded-pill.px-3.text-primary(href='#')
+                              i.fa.fa-shopping-bag.me-2.text-primary
+                              |  #{t('home.addToCart')}
                 .col-12
                   .pagination.d-flex.justify-content-center.mt-5
                     each val in Array.from({length: pages}, (_, i) => i + 1)

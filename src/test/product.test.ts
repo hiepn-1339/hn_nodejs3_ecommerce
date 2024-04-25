@@ -1,4 +1,5 @@
 import { AppDataSource } from '../database/dataSource';
+import { Product } from '../entities/product.entity';
 import * as productService from '../services/product.service';
 
 let connection;
@@ -34,6 +35,29 @@ describe('getProducts', () => {
       const nameContainsKeyword = words.some(word => product.name.toLocaleLowerCase().includes(word));
       const descriptionContainsKeyword = words.some(word => product.description.toLocaleLowerCase().includes(word));
       expect(nameContainsKeyword || descriptionContainsKeyword).toBe(true);
+    });
+  });
+});
+
+describe('getProductById', () => {
+  it('should return product with given id', async () => {
+    const id = 1; 
+    const product = await productService.getProductById(id);
+    expect(product.id).toEqual(id);
+  });
+
+  it('should return null if no product found with given id', async () => {
+    const id = -1;
+    const product = await productService.getProductById(id);
+    expect(product).toBeNull();
+  });
+});
+
+describe('getFeaturedProduct', () => {
+  it('should return an array of featured products', async () => {
+    const featuredProducts = await productService.getFeaturedProduct();
+    featuredProducts.forEach(product => {
+      expect(product).toBeInstanceOf(Product);
     });
   });
 });

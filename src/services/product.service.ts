@@ -43,3 +43,23 @@ export const getProducts = async (data: any) => {
 
   return { count, products };
 };
+
+export const getProductById = async (id: number) => {
+  return await productRepository.findOne({
+    where: {
+      id: id,
+    },
+    relations: ['category', 'images', 'ratings'],
+  });
+};
+
+export const getFeaturedProduct = async () => {
+  return await productRepository.find({
+    order: {
+      quantitySold: 'DESC',
+    },
+    relations: ['images'],
+    take: Query.LIMIT_DEFAULT,
+    skip: 0,
+  });
+};

@@ -23,6 +23,18 @@
     return newURL;
   }
 
+  function formatDate(inputDate) {
+    let date = new Date(inputDate);
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let formattedDate = `${day}/${month}/${year}`;
+
+    return formattedDate;
+  }
+
   $(document).ready(function() {
     var pages = $('.page');
 
@@ -31,6 +43,12 @@
       var url = buildURLWithQuery(window.location.href, query);
 
       $(this).attr('href', url);
+    });
+
+    var dates = $('.date');
+
+    dates.each(function() {
+      $(this).text(formatDate($(this).attr('value')));
     });
 
     $('#cancelOrder').click(function() {
