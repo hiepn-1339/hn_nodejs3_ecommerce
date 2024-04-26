@@ -32,10 +32,16 @@ export enum LengthInput {
 
 export enum Query {
   PAGE_DEFAULT = 1,
-  LIMIT_DEFAULT = 9,
+  LIMIT_DEFAULT = 10,
 }
 
 export enum ErrorCode {
   NOT_FOUND = 404,
   BAD_REQUEST = 400
+}
+
+export enum Status {
+  SUCCESS = 'Success',
+  FAIL = 'Fail',
+  ERROR = 'Error',
 }

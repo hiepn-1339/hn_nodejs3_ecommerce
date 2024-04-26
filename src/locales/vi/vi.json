@@ -98,7 +98,9 @@
     "wrongEmailOrPassword": "Sai email hoặc password",
     "noProductFoundWithId": "Không tìm thấy sản phẩm với id: {{id}}",
     "invalidId": "Id không hợp lệ",
-    "idMustBeANumber": "Id phải là số"
+    "idMustBeANumber": "Id phải là số",
+    "addItemToCartFail": "Thêm sản phẩm vào giỏ hàng thất bại!",
+    "addItemToCartSuccess": "Thêm sản phẩm vào giỏ hàng thành công"
   },
   "profile": {
     "title": "Hồ sơ",
