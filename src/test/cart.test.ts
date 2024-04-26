@@ -52,7 +52,7 @@ describe('addItemToCart', () => {
       },
     });
 
-    const cartItem = await cartService.addItemToCart(user, data);
+    const cartItem = await cartService.updateItemToCart(user, data);
 
     expect(cartItem).toBeInstanceOf(CartItem);
     expect(cartItem.product.id).toEqual(product.id);
@@ -65,7 +65,7 @@ describe('addItemToCart', () => {
       quantity: 3,
     };
 
-    const cartItem = await cartService.addItemToCart(user, data);
+    const cartItem = await cartService.updateItemToCart(user, data);
 
     expect(cartItem).toBeNull();
   });

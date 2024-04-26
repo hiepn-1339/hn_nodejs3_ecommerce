@@ -18,7 +18,7 @@ export const createCart = async (user: User) => {
   return await cartRepository.save(cart);
 };
 
-export const addItemToCart = async (user: User, data: any) => {
+export const updateItemToCart = async (user: User, data: any) => {
   data.quantity = data.quantity || 1;
 
   const cart = await cartRepository.findOne({
@@ -41,9 +41,11 @@ export const addItemToCart = async (user: User, data: any) => {
   if (existsCartItem) {
     if (product.quantity < (existsCartItem.quantity + data.quantity)) return null;
     existsCartItem.quantity += data.quantity;
+    if (existsCartItem.quantity < 1) return null;
     item = await cartItemRepository.save(existsCartItem);
   } else {
     if (product.quantity < data.quantity) return null;
+    if (data.quantity < 1) return null;
     
     const cartItem = cartItemRepository.create({
       product: product,

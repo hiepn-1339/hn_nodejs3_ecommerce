@@ -34,19 +34,19 @@ block content
                 td
                   p.mb-0.mt-4 #{item.product.name}
                 td
-                  p.mb-0.mt-4 #{item.product.price} $
+                  p(id=`item-price-${item.product.id}` value=item.product.price).mb-0.mt-4 #{item.product.price} $
                 td
                   .input-group.quantity.mt-4.w-100px
                     .input-group-btn
-                      button#decreseQuantityItem.btn.btn-sm.rounded-circle.bg-light.border(value=item.product.id)
+                      button.decreseQuantityItem.btn.btn-sm.rounded-circle.bg-light.border(productId=item.product.id)
                         i.fa.fa-minus
-                    input.form-control.form-control-sm.text-center.border-0(type='text' value=item.quantity)
+                    input.no-extras.form-control.form-control-sm.text-center.border-0(type='text' disabled value=item.quantity id=`input-quantity-${item.product.id}`)
                     .input-group-btn
-                      button#increseQuantityItem.btn.btn-sm.rounded-circle.bg-light.border(value=item.product.id)
+                      button.increseQuantityItem.btn.btn-sm.rounded-circle.bg-light.border(productId=item.product.id)
                         i.fa.fa-plus
                 td
                   - let total = item.quantity * item.product.price
-                  p.mb-0.mt-4 #{total} $
+                  p(id=`total-${item.product.id}`).mb-0.mt-4 #{total} $
                 td
                   button.btn.btn-md.rounded-circle.bg-light.border.mt-4
                     i.fa.fa-times.text-danger

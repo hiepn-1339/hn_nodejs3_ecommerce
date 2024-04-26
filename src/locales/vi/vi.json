@@ -100,7 +100,9 @@
     "invalidId": "Id không hợp lệ",
     "idMustBeANumber": "Id phải là số",
     "addItemToCartFail": "Thêm sản phẩm vào giỏ hàng thất bại!",
-    "addItemToCartSuccess": "Thêm sản phẩm vào giỏ hàng thành công"
+    "addItemToCartSuccess": "Thêm sản phẩm vào giỏ hàng thành công",
+    "invalidQuantity": "Số lượng phải là một số",
+    "invalidProductId": "Product ID phải là một số"
   },
   "profile": {
     "title": "Hồ sơ",
