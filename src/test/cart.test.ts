@@ -69,4 +69,24 @@ describe('addItemToCart', () => {
 
     expect(cartItem).toBeNull();
   });
+
+  it('should return array cart items and subtotal', async() => {
+    const user = {
+      cart: {
+        id: 2,
+      },
+    };
+    let subtotalTest = 0;
+
+    const {items, subtotal} = await cartService.getCartItems(user as User);
+
+    items.forEach(item => {
+      expect(item).toBeInstanceOf(CartItem);
+      expect(item.cart.id).toEqual(user.cart.id);
+      expect(item.quantity).toBeGreaterThanOrEqual(1);
+      subtotalTest += item.product.price * item.quantity;
+    });
+
+    expect(subtotal).toEqual(subtotalTest);
+  });
 });
