@@ -711,3 +711,8 @@ table.table .avatar {
 .w-60 {
   width: 60% !important;
 }
+
+.description {
+  max-height: 100px !important;
+  overflow: hidden;
+}

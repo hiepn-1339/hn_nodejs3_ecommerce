@@ -39,8 +39,9 @@ export const createAccount = async (data: any) => {
 export const getUserByEmail = async (email: string) => {
   return await userRepository.findOne({
     where: {
-      email: email,
+      email,
     },
+    relations: ['cart'],
   });
 };
 

@@ -79,6 +79,24 @@
 
       window.location.href = url;
     });
+
+    $('.btn-minus').click(function(e) {
+      e.preventDefault();
+
+      const quantity = $('#quantityInput').val() * 1;
+
+      if (quantity > 0) {
+        $('#quantityInput').val(`${quantity - 1}`);
+      }
+    });
+
+    $('.btn-plus').click(function(e) {
+      e.preventDefault();
+
+      const quantity = $('#quantityInput').val() * 1;
+
+      $('#quantityInput').val(`${quantity + 1}`);
+    });
   });
 
   // Fixed Navbar
@@ -179,7 +197,6 @@
     $('.btn-play').click(function () {
       $videoSrc = $(this).data('src');
     });
-    console.log($videoSrc);
 
     $('#videoModal').on('shown.bs.modal', function (e) {
       $('#video').attr('src', $videoSrc + '?autoplay=1&amp;modestbranding=1&amp;showinfo=0');

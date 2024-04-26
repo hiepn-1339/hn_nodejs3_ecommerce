@@ -42,20 +42,27 @@ block content
             .col-lg-9
               .row.g-4.justify-content-center
                 each product in products
-                  a(href=`/product/${product.id}`)
-                    .col-md-6.col-lg-6.col-xl-4
-                      .rounded.position-relative.fruite-item
+                  .col-md-6.col-lg-6.col-xl-4
+                    .rounded.position-relative.fruite-item
+                      a(href=`/product/${product.id}`)
                         .fruite-img
-                          img.img-fluid.w-100.rounded-top(src=product.images[0] alt='')
-                        if product.category
-                          .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
-                        .p-4.border.border-secondary.border-top-0.rounded-bottom
+                          if product.images[0]
+                            img.img-fluid.w-100.rounded-top(src=product.images[0].url alt='')
+                      if product.category
+                        .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
+                      .p-4.border.border-secondary.border-top-0.rounded-bottom
+                        a(href=`/product/${product.id}`)
                           h4 #{product.name}
-                          p
-                            | #{product.description}
-                          .d-flex.justify-content-between.flex-lg-wrap
-                            p.text-dark.fs-5.fw-bold.mb-0 $#{product.price} / kg
-                            a.btn.border.border-secondary.rounded-pill.px-3.text-primary(href='#')
+                        p.description
+                          | #{product.description}
+                        .d-flex.justify-content-between.flex-lg-wrap
+                          p.text-dark.fs-5.fw-bold.mb-0 $#{product.price} / kg
+                          if user
+                            button.addToCart.btn.border.border-secondary.rounded-pill.px-3.text-primary(type='submit' productId=product.id)
+                              i.fa.fa-shopping-bag.me-2.text-primary
+                              |  #{t('home.addToCart')}
+                          else
+                            a.btn.border.border-secondary.rounded-pill.px-3.text-primary(href='/auth/login')
                               i.fa.fa-shopping-bag.me-2.text-primary
                               |  #{t('home.addToCart')}
                 .col-12
