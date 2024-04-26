@@ -48,7 +48,7 @@ block content
                   - let total = item.quantity * item.product.price
                   p(id=`total-${item.product.id}`).mb-0.mt-4 #{total} $
                 td
-                  button.btn.btn-md.rounded-circle.bg-light.border.mt-4
+                  button.deleteItem.btn.btn-md.rounded-circle.bg-light.border.mt-4(itemId=item.id productName=item.product.name)
                     i.fa.fa-times.text-danger
       .mt-5
         input.border-0.border-bottom.rounded.me-5.py-3.mb-4(type='text' placeholder='Coupon Code')
