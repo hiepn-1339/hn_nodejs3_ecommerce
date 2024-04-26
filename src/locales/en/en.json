@@ -98,7 +98,9 @@
     "wrongEmailOrPassword": "Wrong email or password!",
     "noProductFoundWithId": "No product found with id: {{id}}",
     "invalidId": "Invalid Id",
-    "idMustBeANumber": "Id must be a number"
+    "idMustBeANumber": "Id must be a number",
+    "addItemToCartFail": "Add item to cart fail!",
+    "addItemToCartSuccess": "Add item to cart success"
   },
   "profile": {
     "title": "Profile",
