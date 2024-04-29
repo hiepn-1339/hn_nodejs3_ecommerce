@@ -26,11 +26,11 @@ block content
               th(scope='col') #{t('cart.total')}
               th(scope='col') #{t('cart.handle')}
           tbody
-            each item in cart.items
+            each item in items
               tr
-                th(scope='row')
+                th(scope='row').w-250px
                   .d-flex.align-items-center
-                    img.img-fluid.me-5.rounded-circle.w-80px.h-80px(src=item.product.images[0] alt='')
+                    img.img-fluid.me-5.rounded-circle.w-80px.h-80px(src=item.product.images[0].url alt='')
                 td
                   p.mb-0.mt-4 #{item.product.name}
                 td
@@ -38,11 +38,11 @@ block content
                 td
                   .input-group.quantity.mt-4.w-100px
                     .input-group-btn
-                      button.btn.btn-sm.btn-minus.rounded-circle.bg-light.border
+                      button#decreseQuantityItem.btn.btn-sm.rounded-circle.bg-light.border(value=item.product.id)
                         i.fa.fa-minus
                     input.form-control.form-control-sm.text-center.border-0(type='text' value=item.quantity)
                     .input-group-btn
-                      button.btn.btn-sm.btn-plus.rounded-circle.bg-light.border
+                      button#increseQuantityItem.btn.btn-sm.rounded-circle.bg-light.border(value=item.product.id)
                         i.fa.fa-plus
                 td
                   - let total = item.quantity * item.product.price
@@ -52,14 +52,13 @@ block content
                     i.fa.fa-times.text-danger
       .mt-5
         input.border-0.border-bottom.rounded.me-5.py-3.mb-4(type='text' placeholder='Coupon Code')
-        button.btn.border-secondary.rounded-pill.px-4.py-3.text-primary(type='button') #{t('home.applyCoupon')}
+        button.btn.border-secondary.rounded-pill.px-4.py-3.text-primary(type='button') #{t('cart.applyCoupon')}
       .row.g-4.justify-content-end
         .col-8
         .col-sm-8.col-md-7.col-lg-6.col-xl-4
           .bg-light.rounded
             .p-4
               h1.display-6.mb-4
-                | #{t('cart.cart')}  
                 span.fw-normal #{t('cart.total')} 
               .d-flex.justify-content-between.mb-4
                 h5.mb-0.me-4 #{t('cart.subtotal')} :

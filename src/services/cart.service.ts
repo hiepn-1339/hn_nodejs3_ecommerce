@@ -31,8 +31,8 @@ export const addItemToCart = async (user: User, data: any) => {
   });
   
   const cartItems = cart.items;
-  const existsCartItem = cartItems.find(item => item.product.id === product.id);
-
+  const existsCartItem = cartItems.find(item => item.product.id == data.productId);
+  
   const product = await productService.getProductById(data.productId);
   if (!product) return null;
 
@@ -47,7 +47,7 @@ export const addItemToCart = async (user: User, data: any) => {
     
     const cartItem = cartItemRepository.create({
       product: product,
-      cart: user.cart,
+      cart: cart,
       quantity: data.quantity,
     });
 
@@ -55,4 +55,26 @@ export const addItemToCart = async (user: User, data: any) => {
   }
 
   return item;
+};
+
+export const getCartItems = async (user: User) => {
+  const items = await cartItemRepository.find({
+    where: {
+      cart: {
+        id: user.cart.id,
+      },
+    },
+    relations: ['cart', 'product', 'product.images'],
+    order: {
+      createdAt: 'DESC',
+    },
+  });
+
+  let subtotal = 0;
+
+  items.forEach(item => {
+    subtotal += item.product.price * item.quantity;
+  });
+
+  return { items, subtotal };
 };
