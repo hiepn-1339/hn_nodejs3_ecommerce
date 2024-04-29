@@ -1,5 +1,5 @@
 function addItemToCart(data) {
-  fetch('/cart/add', {
+  fetch('/cart/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,6 +29,20 @@ function addItemToCart(data) {
   .catch((e) => {
     console.error(e);
   });
+}
+
+async function updateCartItem(data) {
+  const response = await fetch('/cart/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const text = await response.text();
+  const result = JSON.parse(text);
+
+  return result.status;
 }
 
 function readCookie(name) {
@@ -83,5 +97,51 @@ $(document).ready(function () {
       }
 
     }
+  });
+
+  $('.decreseQuantityItem').click(async function (e) {
+    e.preventDefault();
+    const productId = $(this).attr('productId');
+    const input = $(`#input-quantity-${productId}`);
+    const price = $(`#item-price-${productId}`).attr('value');
+    $(this).prop('disabled', true);
+
+    if (input.val() <= 1) {
+      $(this).prop('disabled', false);
+      return;
+    }
+
+    const status = await updateCartItem({
+      productId,
+      quantity: -1,
+    });
+
+    if (status === 'Success') {
+      input.val(parseInt(input.val()) - 1);
+      $(`#total-${productId}`).text(`${price * input.val()}$`);
+    } 
+
+    $(this).prop('disabled', false);
+  });
+
+  $('.increseQuantityItem').click(async function (e) {
+    e.preventDefault();
+    console.log(+1);
+    const productId = $(this).attr('productId');
+    const input = $(`#input-quantity-${productId}`);
+    const price = $(`#item-price-${productId}`).attr('value');
+    $(this).prop('disabled', true);
+
+    const status = await updateCartItem({
+      productId,
+      quantity: 1,
+    });
+
+    if (status === 'Success') {
+      input.val(parseInt(input.val()) + 1);
+      $(`#total-${productId}`).text(`${price * input.val()}$`);
+    } 
+
+    $(this).prop('disabled', false);
   });
 });

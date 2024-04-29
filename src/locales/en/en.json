@@ -100,7 +100,9 @@
     "invalidId": "Invalid Id",
     "idMustBeANumber": "Id must be a number",
     "addItemToCartFail": "Add item to cart fail!",
-    "addItemToCartSuccess": "Add item to cart success"
+    "addItemToCartSuccess": "Add item to cart success",
+    "invalidQuantity": "Quantity must be a number",
+    "invalidProductId": "Product ID must be a number"
   },
   "profile": {
     "title": "Profile",

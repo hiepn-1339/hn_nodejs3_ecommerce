@@ -716,3 +716,10 @@ table.table .avatar {
   max-height: 100px !important;
   overflow: hidden;
 }
+
+.no-extras {
+  border: 1 !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  cursor: default !important;
+}
