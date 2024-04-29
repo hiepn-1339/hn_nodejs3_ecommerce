@@ -45,6 +45,15 @@ async function updateCartItem(data) {
   return result.status;
 }
 
+async function deleteCartItem(id) {
+  await fetch(`/cart/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
 function readCookie(name) {
   var nameEQ = name + '=';
   var ca = document.cookie.split(';');
@@ -126,7 +135,6 @@ $(document).ready(function () {
 
   $('.increseQuantityItem').click(async function (e) {
     e.preventDefault();
-    console.log(+1);
     const productId = $(this).attr('productId');
     const input = $(`#input-quantity-${productId}`);
     const price = $(`#item-price-${productId}`).attr('value');
@@ -143,5 +151,43 @@ $(document).ready(function () {
     } 
 
     $(this).prop('disabled', false);
+  });
+
+  $('.deleteItem').click(async function (e) {
+    e.preventDefault();
+
+    const id = $(this).attr('itemId');
+    const productName = $(this).attr('productName');
+
+    const lng = readCookie('i18next');
+
+    let swalOptions;
+
+    if (lng == 'en') {
+      swalOptions = {
+        title: 'Warning',
+        text: `Are you sure you want to delete ${productName}?`,
+        icon: 'warning',
+        confirmButtonText: 'Yes',
+      };
+    } else  if (lng == 'vi') {
+      swalOptions = {
+        title: 'Cảnh Báo',
+        text: `Bạn muốn xóa ${productName}?`,
+        icon: 'warning',
+        confirmButtonText: 'Đúng',
+      };
+    }
+
+    Swal.fire({
+      title: swalOptions.title,
+      text: swalOptions.text,
+      icon: swalOptions.icon,
+      confirmButtonText: swalOptions.confirmButtonText,
+    })
+    .then(async () => {
+      await deleteCartItem(id);
+      window.location.reload();
+    }); 
   });
 });

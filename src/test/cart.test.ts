@@ -4,17 +4,20 @@ import { Product } from '../entities/product.entity';
 import { User } from '../entities/user.entity';
 import * as cartService from '../services/cart.service';
 import { CartItem } from '../entities/cartItem.entity';
+import { IsNull, Not } from 'typeorm';
 
 let connection;
 let userRepository;
 let productRepository;
 let cartRepository;
+let cartItemRepository;
 
 beforeAll(async () => {
   connection = await AppDataSource.initialize();
   userRepository = AppDataSource.getRepository(User);
   productRepository = AppDataSource.getRepository(Product);
   cartRepository = AppDataSource.getRepository(Cart);
+  cartItemRepository = AppDataSource.getRepository(CartItem);
 });
 
 afterAll(async () => {
@@ -88,5 +91,23 @@ describe('addItemToCart', () => {
     });
 
     expect(subtotal).toEqual(subtotalTest);
+  });
+
+  it('should return null after delete cart item', async() => {
+    const cartItem = await cartItemRepository.findOne({
+      where: {
+        id: Not(IsNull()),
+      },
+    });
+
+    await cartService.deleteCartItem(cartItem.id);
+
+    const checkCartItem = await cartItemRepository.findOne({
+      where: {
+        id: cartItem.id,
+      },
+    });
+
+    expect(checkCartItem).toBeNull();
   });
 });

@@ -80,3 +80,7 @@ export const getCartItems = async (user: User) => {
 
   return { items, subtotal };
 };
+
+export const deleteCartItem = async (id: number) => {
+  await cartItemRepository.delete(id);
+};
