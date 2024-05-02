@@ -24,7 +24,7 @@ const checkExistsProduct = async (req: IProductRequest, res: Response, next: Nex
 
 export const getHome = asyncHandler(async(req: Request, res: Response) => {
   const { count, products } = await productService.getProducts(req.query);
-  const pages = count / parseInt(req.query.limit as string);
+  const pages = count / parseInt(req.query.limit as string) + 1;
   const categories = await categoryService.getCategories();
   return res.render('home/index', {products, categories, page: req.query.page, pages});
 });

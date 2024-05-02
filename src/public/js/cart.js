@@ -71,7 +71,7 @@ $(document).ready(function () {
     const productId = $(this).attr('productId');
 
     addItemToCart({
-      productId,
+      productId: parseInt(productId),
       quantity: 1,
     });
   });
@@ -83,7 +83,7 @@ $(document).ready(function () {
 
     if (quantity > 0) {
       addItemToCart({
-        productId,
+        productId: parseInt(productId),
         quantity,
       });
     } else {
@@ -121,7 +121,7 @@ $(document).ready(function () {
     }
 
     const status = await updateCartItem({
-      productId,
+      productId: parseInt(productId),
       quantity: -1,
     });
 
@@ -141,7 +141,7 @@ $(document).ready(function () {
     $(this).prop('disabled', true);
 
     const status = await updateCartItem({
-      productId,
+      productId: parseInt(productId),
       quantity: 1,
     });
 
@@ -153,7 +153,7 @@ $(document).ready(function () {
     $(this).prop('disabled', false);
   });
 
-  $('.deleteItem').click(async function (e) {
+  $('.deleteItem').click(function (e) {
     e.preventDefault();
 
     const id = $(this).attr('itemId');
@@ -189,5 +189,28 @@ $(document).ready(function () {
       await deleteCartItem(id);
       window.location.reload();
     }); 
+  });
+
+  $('#applyCoupon').click(async () => {
+    const name = $('#coupon').val();
+
+    if (!name) return;
+
+    const data = {
+      name,
+    };
+
+    await fetch('/cart/apply-coupon', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(async response => {
+      const result = await response.text();
+      var bodyContent = result.match(/<body>(.*)<\/body>/)[1];
+      $('body').html(bodyContent);
+    });
   });
 });

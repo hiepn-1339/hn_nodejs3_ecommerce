@@ -1,43 +1,91 @@
 import { getTranslatedMessage } from './../utils/i18n';
 import asyncHandler from 'express-async-handler';
 import * as cartService from '../services/cart.service';
-import { checkLoggedIn } from '../utils/auth';
 import { Request, Response } from 'express';
 import { Status } from '../constants';
 import { validateUpdateCartItem } from '../middlewares/validate/cart.validate';
-import { checkValidId } from '../middlewares';
+import { IAuthRequest, checkLoggedIn, checkValidId } from '../middlewares';
+import * as couponService from '../services/coupon.service';
+import { Coupon } from '../entities/coupon.entity';
+import { validateApplyCoupon } from '../middlewares/validate/cart.validate';
 
-export const getCart = asyncHandler(async (req: Request, res: Response) => {
-  const user = checkLoggedIn(req, res);
+export interface ICartRequest extends IAuthRequest {
+  errors?: Array<{path: string, msg: string}>;
+}
 
-  const {items, subtotal} = await cartService.getCartItems(user);
-  res.render('cart/index', {items, subtotal});
-});
+export const getCart = [
+  checkLoggedIn,
+  asyncHandler(async (req: IAuthRequest, res: Response) => {
+  const {items, subtotal} = await cartService.getCartItems(req.user);
+
+  const total = subtotal;
+  res.render('cart/index', {items, subtotal, total});
+}),
+];
 
 export const postAddItemToCart = [
+  checkLoggedIn,
   validateUpdateCartItem,
-  asyncHandler(async (req: Request, res: Response) => {
-    const user = checkLoggedIn(req, res);
-    const item = await cartService.updateItemToCart(user, req.body);
+  asyncHandler(async (req: IAuthRequest, res: Response) => {
+    const item = await cartService.updateItemToCart(req.user, req.body);
 
-  if (!item) {
-    res.send({
-      status: Status.FAIL,
-      message: getTranslatedMessage('error.addItemToCartFail', req.query.lng),
-    });
-  } else {
-    res.send({
+    let data = {
       status: Status.SUCCESS,
       message: getTranslatedMessage('error.addItemToCartSuccess', req.query.lng),
-    });
-  }
-})];
+    };
+
+    if (!item) {
+      data = {
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.addItemToCartFail', req.query.lng),
+      };
+    }
+
+    res.send(data);
+
+    return;
+  }),
+];
 
 export const deleteCartItem = [
+  checkLoggedIn,
   checkValidId,
   asyncHandler(async(req: Request, res: Response) => {
-    checkLoggedIn(req, res);
     await cartService.deleteCartItem(parseInt(req.params.id));
     res.send(Status.SUCCESS);
+  }),
+];
+
+export const postApplyCoupon = [
+  checkLoggedIn,
+  validateApplyCoupon,
+  asyncHandler(async(req: ICartRequest, res: Response) => {
+    const {items, subtotal} = await cartService.getCartItems(req.user);
+
+    let total = subtotal;
+
+    if (req.errors) {
+      res.render('cart/index', {
+        items,
+        subtotal,
+        total,
+        errors: req.errors,
+      });
+      return;
+    }
+
+    const coupon: Coupon = await couponService.findCouponByName(req.body.name);
+
+    if (!coupon) {
+      const error = {
+        path: 'name',
+        msg: getTranslatedMessage('error.couponNotFound', req.query.lng),
+      };
+      return res.render('cart/index', {items, subtotal, total, errors: [error]});
+    }
+
+    total = subtotal * (100 - coupon.percentage) / 100;
+
+    return res.render('cart/index', {items, subtotal, total, coupon});
   }),
 ];

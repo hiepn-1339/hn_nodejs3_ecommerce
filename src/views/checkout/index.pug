@@ -16,41 +16,51 @@ block content
   .container-fluid.py-5
     .container.py-5
       h1.mb-4 #{t('checkout.title')}
-      form(action='#')
+      form(method='POST' enctype='multipart/form-data')
         .row.g-5
           .col-md-12.col-lg-6.col-xl-7
-            .row
-              .col-md-12.col-lg-6
-                .form-item.w-100
-                  label.form-label.my-3
-                    | #{t('checkout.firstName')}
-                    sup.text-danger *
-                  input.form-control(type='text')
-              .col-md-12.col-lg-6
-                .form-item.w-100
-                  label.form-label.my-3
-                    | #{t('checkout.lastName')}
-                    sup.text-danger *
-                  input.form-control(type='text')
+            .form-item
+              label.form-label.my-3
+                | #{t('checkout.name')} 
+                sup.text-danger *
+              input.form-control(type='text' name="name" placeholder='name' value=(user === underfined ? '' : user.name))
+              if errors
+                - let error= errors.find(e => e.path == 'name')
+                if error
+                  p.text-danger #{error.msg}
             .form-item
               label.form-label.my-3
                 | #{t('checkout.address')} 
                 sup.text-danger *
-              input.form-control(type='text' placeholder='House Number Street Name')
+              input.form-control(type='text' name="address" placeholder='House Number Street Name' value=(user === underfined ? '' : user.address) )
+              if errors
+                - let error= errors.find(e => e.path == 'address')
+                if error
+                  p.text-danger #{error.msg}
             .form-item
               label.form-label.my-3
                 | #{t('checkout.phone')}
                 sup.text-danger *
-              input.form-control(type='tel')
+              input.form-control(type='tel' name="phone" value=(user === underfined ? '' : user.phone))
+              if errors
+                - let error= errors.find(e => e.path == 'phone')
+                if error
+                  p.text-danger #{error.msg}
             .form-item
               label.form-label.my-3
-                | #{t('checkout.Email')}
+                | #{t('checkout.email')}
                 sup.text-danger *
-              input.form-control(type='email')
+              input.form-control(type='email' name="email" value=(user === underfined ? '' : user.email))
+              if errors
+                - let error= errors.find(e => e.path == 'email')
+                if error
+                  p.text-danger #{error.msg}
             .form-item
               label.form-label.my-3
                | #{t('checkout.note')}
-              textarea.form-control(name='text' spellcheck='false' cols='30' rows='11' placeholder='Oreder Notes (Optional)')
+              textarea.form-control(name='note' spellcheck='false' cols='30' rows='11' placeholder='Oreder Notes (Optional)')
+            .form-item.d-none
+              input.form-control(type='text' name="coupon" value=(coupon === underfined ? '' : coupon.name))
           .col-md-12.col-lg-6.col-xl-5
             .table-responsive
               table.table
@@ -62,41 +72,61 @@ block content
                     th(scope='col') #{t('checkout.quantity')}
                     th(scope='col') #{t('checkout.total')}
                 tbody
-                  each item in cart.items
+                  each item in items
                     tr
                       th(scope='row')
                         .d-flex.align-items-center.mt-2
-                          img.img-fluid.rounded-circle.w-90px.h-90px(src='img/vegetable-item-2.jpg' alt='')
-                      td.py-5 #{item.name}
-                      td.py-5 $#{item.price}
+                          img.img-fluid.rounded-circle.w-90px.h-90px(src=item.product.images[0].url alt='')
+                      td.py-5 #{item.product.name}
+                      td.py-5 $#{item.product.price}
                       td.py-5 #{item.quantity}
-                      - let total = item.price * item.quantity
+                      - let total = item.product.price * item.quantity
                       td.py-5 $#{total}
                   tr
+                    td.py-5
+                      p.mb-0.text-dark.py-3 #{t('checkout.subtotal')}
                     th(scope='row')
                     td.py-5
                     td.py-5
-                    td.py-5
-                      p.mb-0.text-dark.py-3 #{t('checkout.subtotal')}
                     td.py-5
                       .py-3.border-bottom.border-top
                         p.mb-0.text-dark $#{subtotal}
+                  if coupon 
+                    tr
+                      td.py-5
+                        p.mb-0.text-dark.py-3 #{t('checkout.coupon')}
+                      th(scope='row')
+                      td.py-5
+                      td.py-5
+                      td.py-5
+                        .py-3.border-bottom.border-top
+                          p.mb-0.text-dark -#{coupon.percentage}%
                   tr
-                    th(scope='row')
-                    td.py-5
-                      p.mb-0.text-dark.py-4 #{t('checkout.paymentMethod')}
-                    td.py-5(colspan='3')
-                      each method in paymentMethods
-                        .form-check.text-start
-                          input#Shipping-1.form-check-input.bg-primary.border-0(type='checkbox' name='Shipping-1' value='Shipping')
-                          label.form-check-label(for='Shipping-1') #{method}
-                  tr
-                    th(scope='row')
                     td.py-5
                       p.mb-0.text-dark.text-uppercase.py-3 #{t('checkout.total')}
+                    th(scope='row')
                     td.py-5
                     td.py-5
                     td.py-5
                       .py-3.border-bottom.border-top
                         p.mb-0.text-dark $#{total}
-              button.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='button') #{t('checkout.placeOrder')}
+                  tr
+                    td.py-5(colspan='2')
+                      p.mb-0.text-dark.py-4 #{t('checkout.paymentMethod')}
+                    th(scope='row')
+                    td.py-5(colspan='3')
+                      each method in paymentMethods
+                        .form-check.text-start
+                          input.form-check-payment-method.form-check-input.bg-primary.border-0(type='checkbox' name='paymentMethod' value=method id=method)
+                          - let text = method.replaceAll('_', ' ')
+                          label.form-check-label(for=method) #{text}
+              #proof-input.d-none.border-bottom.py-5
+                label.form-label(for='proof')
+                  | #{t('checkout.proof')}
+                  sup.text-danger *
+                input#proof.form-control(type='file' required='' name='proof')
+                if errors
+                  - let error= errors.find(e => e.path == 'proof')
+                  if error
+                    p.text-danger #{error.msg}
+              button.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='submit') #{t('checkout.placeOrder')}

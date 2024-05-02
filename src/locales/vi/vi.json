@@ -102,7 +102,10 @@
     "addItemToCartFail": "Thêm sản phẩm vào giỏ hàng thất bại!",
     "addItemToCartSuccess": "Thêm sản phẩm vào giỏ hàng thành công",
     "invalidQuantity": "Số lượng phải là một số",
-    "invalidProductId": "Product ID phải là một số"
+    "invalidProductId": "Product ID phải là một số",
+    "couponInvalid": "Coupon không được trống!",
+    "couponNotFound": "Không tìm thấy coupon!",
+    "proofRequired": "Proof không được trống!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -132,7 +135,9 @@
     "subtotal": "Tổng phụ",
     "paymentMethod": "Phương thức thanh toán",
     "total": "Tổng cộng",
-    "placeOrder": "Đặt hàng"
+    "placeOrder": "Đặt hàng",
+    "coupon": "Coupon",
+    "proof": "Bằng chứng"
   },
   "order": {
     "title": "Đơn hàng",
@@ -151,7 +156,9 @@
     "titleModal": "Hủy Đơn Hàng",
     "areYouSureYouWantToCancelTheOrderWithId": "Bạn có chắc muốn hủy đơn hàng có id: ",
     "no": "Không",
-    "yes": "Có"
+    "yes": "Có",
+    "orderSuccess": "Order thành công",
+    "orderSuccessText": "Đơn hàng của bạn đã được tạo thành công"
   },
   "rating": {
     "rating": "Đánh giá",
@@ -254,6 +261,22 @@
       "cheers": "Chúc mừng",
       "fruitablesTeam": "Đội ngũ Fruitables",
       "confirmAccount": "Xác nhận Tài khoản"
+    },
+    "order": {
+      "subject": "Chi tiết Đơn hàng",
+      "thankyou": "Cảm ơn bạn",
+      "message": "Đơn hàng của bạn đã được ghi nhận",
+      "orderId": "Mã Đơn hàng: ",
+      "product": "Sản phẩm",
+      "quantity": "Số lượng",
+      "price": "Giá",
+      "coupon": "Mã giảm giá",
+      "total": "Tổng cộng",
+      "subtotal": "Tạm tính",
+      "name": "Tên",
+      "phone": "Điện thoại",
+      "address": "Địa chỉ",
+      "thanks": "Cảm ơn bạn"
     }
   },
   "emailConfirm": {
