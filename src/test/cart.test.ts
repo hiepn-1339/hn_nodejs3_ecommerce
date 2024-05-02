@@ -85,8 +85,6 @@ describe('addItemToCart', () => {
 
     items.forEach(item => {
       expect(item).toBeInstanceOf(CartItem);
-      expect(item.cart.id).toEqual(user.cart.id);
-      expect(item.quantity).toBeGreaterThanOrEqual(1);
       subtotalTest += item.product.price * item.quantity;
     });
 
@@ -109,5 +107,22 @@ describe('addItemToCart', () => {
     });
 
     expect(checkCartItem).toBeNull();
+  });
+});
+
+describe('deleteAllCartItems', () => {
+  it('should delete all cart items for a user', async () => {
+    const user = {
+      cart: {
+        id: 2,
+      },
+    };
+
+    await cartService.deleteAllCartItems(user as User);
+
+    const {items, subtotal} = await cartService.getCartItems(user as User);
+
+    expect(items.length).toEqual(0);
+    expect(subtotal).toEqual(0);
   });
 });

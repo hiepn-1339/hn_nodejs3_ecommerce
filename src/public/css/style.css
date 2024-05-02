@@ -723,3 +723,7 @@ table.table .avatar {
   background-color: white !important;
   cursor: default !important;
 }
+
+.h-215px {
+  height: 215px !important;
+}

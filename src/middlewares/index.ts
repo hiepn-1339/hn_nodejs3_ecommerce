@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { t } from 'i18next';
 import { ErrorCode, Query } from '../constants';
+import { User } from '../entities/user.entity';
 
 export const checkValidId = (req: Request, res: Response, next: NextFunction) => {
   const id = parseInt(req.params.id);
@@ -18,6 +19,23 @@ export const setPaginateQuery = (req: Request, res: Response, next: NextFunction
 
   req.query.page = page as string;
   req.query.limit = limit as string;
+
+  next();
+};
+
+export interface IAuthRequest extends Request {
+  session?: any;
+  user?: User;
+}
+
+export const checkLoggedIn = (req: IAuthRequest, res: Response, next: NextFunction) => {
+  const user = req.session.user;
+  if (!user) {
+    res.redirect('/auth/login');
+    return;
+  }
+
+  req.user = user;
 
   next();
 };

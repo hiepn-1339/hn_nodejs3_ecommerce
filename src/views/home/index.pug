@@ -40,14 +40,14 @@ block content
                       | #{t('home.maxPrice')}
                     input#maxPrice.form-control(type='number' required='')
             .col-lg-9
-              .row.g-4.justify-content-center
+              .row.g-4.justify-content-start
                 each product in products
                   .col-md-6.col-lg-6.col-xl-4
                     .rounded.position-relative.fruite-item
                       a(href=`/product/${product.id}`)
                         .fruite-img
                           if product.images[0]
-                            img.img-fluid.w-100.rounded-top(src=product.images[0].url alt='')
+                            img.img-fluid.w-100.rounded-top.h-215px(src=product.images[0].url alt='')
                       if product.category
                         .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
                       .p-4.border.border-secondary.border-top-0.rounded-bottom

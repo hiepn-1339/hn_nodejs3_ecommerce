@@ -15,7 +15,7 @@ export class Order extends BaseEntity {
   @JoinColumn({ name: 'coupon_id' })
   coupon: Coupon | undefined;
 
-  @Column({ nullable: false })
+  @Column({ type: 'float', nullable: false })
   total: number | undefined;
 
   @Column({ nullable: false })
@@ -38,6 +38,9 @@ export class Order extends BaseEntity {
 
   @Column({ type: 'text', nullable: true })
   note: string | undefined;
+
+  @Column({ nullable: true })
+  proof: string | undefined;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
   items: OrderItem[] | undefined;

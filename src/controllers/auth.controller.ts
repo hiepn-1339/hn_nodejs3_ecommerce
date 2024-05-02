@@ -18,7 +18,7 @@ export const postLogin = [
       res.render('login/index', {
         errors: [{
           path: 'email',
-          msg: getTranslatedMessage('error.InvalidEmailOrPassword', req.query.lng),
+          msg: getTranslatedMessage('error.wrongEmailOrPassword', req.query.lng),
         }],
       });
     }

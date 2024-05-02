@@ -51,8 +51,11 @@ block content
                   button.deleteItem.btn.btn-md.rounded-circle.bg-light.border.mt-4(itemId=item.id productName=item.product.name)
                     i.fa.fa-times.text-danger
       .mt-5
-        input.border-0.border-bottom.rounded.me-5.py-3.mb-4(type='text' placeholder='Coupon Code')
-        button.btn.border-secondary.rounded-pill.px-4.py-3.text-primary(type='button') #{t('cart.applyCoupon')}
+        input#coupon.border-0.border-bottom.rounded.me-5.py-3.mb-4(type='text' placeholder='Coupon Code' value=(coupon === underfined ? '' : coupon.name ))
+        button#applyCoupon.btn.border-secondary.rounded-pill.px-4.py-3.text-primary(type='button') #{t('cart.applyCoupon')}
+        if errors
+          - let error = errors.find(error => error.path == 'name') 
+          p.text-danger #{error.msg}
       .row.g-4.justify-content-end
         .col-8
         .col-sm-8.col-md-7.col-lg-6.col-xl-4
@@ -63,7 +66,14 @@ block content
               .d-flex.justify-content-between.mb-4
                 h5.mb-0.me-4 #{t('cart.subtotal')} :
                 p.mb-0 $#{subtotal}
+            if coupon
+              .py-4.mb-4.d-flex.justify-content-between
+                h5.mb-0.ps-4.me-4 #{t('cart.coupon')}
+                p.mb-0.pe-4 - #{coupon.percentage}%
             .py-4.mb-4.border-top.border-bottom.d-flex.justify-content-between
               h5.mb-0.ps-4.me-4 #{t('cart.total')}
-              p.mb-0.pe-4 $#{subtotal}
-            button.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(type='button') #{t('cart.proceedCheckout')}
+              p.mb-0.pe-4 $#{total}
+            if coupon
+              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order?coupon=${coupon.name}`) #{t('cart.proceedCheckout')}
+            else 
+              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order`) #{t('cart.proceedCheckout')}

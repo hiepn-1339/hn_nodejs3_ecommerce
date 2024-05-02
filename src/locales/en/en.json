@@ -102,7 +102,10 @@
     "addItemToCartFail": "Add item to cart fail!",
     "addItemToCartSuccess": "Add item to cart success",
     "invalidQuantity": "Quantity must be a number",
-    "invalidProductId": "Product ID must be a number"
+    "invalidProductId": "Product ID must be a number",
+    "couponInvalid": "Coupon must be not empty!",
+    "couponNotFound": "Coupon not found!",
+    "proofRequired": "Proof required!"
   },
   "profile": {
     "title": "Profile",
@@ -132,7 +135,9 @@
     "subtotal": "Subtotal",
     "paymentMethod": "Payment Method",
     "total": "Total",
-    "placeOrder": "Place Order"
+    "placeOrder": "Place Order",
+    "coupon": "Coupon",
+    "proof": "Proof"
   },
   "order": {
     "title": "Order",
@@ -151,7 +156,9 @@
     "titleModal": "Cancel Order",
     "areYouSureYouWantToCancelTheOrderWithId": "Are you sure you want to cancel the order with id: ",
     "no": "No",
-    "yes": "Yes"
+    "yes": "Yes",
+    "orderSuccess": "Order Success",
+    "orderSuccessText": "Your order has been successfully created"
   },
   "rating": {
     "rating": "Rating",
@@ -254,6 +261,22 @@
       "cheers": "Cheers",
       "fruitablesTeam": "Fruitables Team",
       "confirmAccount": "Confirm Account"
+    },
+    "order": {
+      "subject": "Order Details",
+      "thankyou": "Thank you",
+      "message": "Your order has beed received",
+      "orderId": "Order Id",
+      "product": "Product",
+      "quantity": "Quantity",
+      "price": "Price",
+      "coupon": "Coupon",
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "name": "Name",
+      "phone": "Phone",
+      "address": "Address",
+      "thanks": "Thanks"
     }
   },
   "emailConfirm": {

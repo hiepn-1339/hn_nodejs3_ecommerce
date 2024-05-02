@@ -21,35 +21,33 @@ export const createCart = async (user: User) => {
 export const updateItemToCart = async (user: User, data: any) => {
   data.quantity = data.quantity || 1;
 
-  const cart = await cartRepository.findOne({
+  const items = await cartItemRepository.find({
     where: {
-      user: {
-        id: user.id,
+      cart: {
+        id: user.cart.id,
       },
     },
-    relations: ['items', 'items.product'],
+    relations: ['product'],
   });
-  
-  const cartItems = cart.items;
-  const existsCartItem = cartItems.find(item => item.product.id == data.productId);
-  
-  const product = await productService.getProductById(data.productId);
-  if (!product) return null;
+
+  const existsCartItem = items.find(item => item.product.id == data.productId);
 
   let item: CartItem;
-
+  
   if (existsCartItem) {
+    const product = existsCartItem.product;
     if (product.quantity < (existsCartItem.quantity + data.quantity)) return null;
     existsCartItem.quantity += data.quantity;
     if (existsCartItem.quantity < 1) return null;
     item = await cartItemRepository.save(existsCartItem);
   } else {
-    if (product.quantity < data.quantity) return null;
+    const product = await productService.getProductById(data.productId);
+    if (!product || product.quantity < data.quantity) return null;
     if (data.quantity < 1) return null;
     
     const cartItem = cartItemRepository.create({
       product: product,
-      cart: cart,
+      cart: user.cart,
       quantity: data.quantity,
     });
 
@@ -66,7 +64,7 @@ export const getCartItems = async (user: User) => {
         id: user.cart.id,
       },
     },
-    relations: ['cart', 'product', 'product.images'],
+    relations: ['product', 'product.images'],
     order: {
       createdAt: 'DESC',
     },
@@ -83,4 +81,16 @@ export const getCartItems = async (user: User) => {
 
 export const deleteCartItem = async (id: number) => {
   await cartItemRepository.delete(id);
+};
+
+export const deleteAllCartItems = async (user: User) => {
+  const items = await cartItemRepository.find({
+    where: {
+      cart: {
+        id: user.cart.id,
+      },
+    },
+  });
+
+  await cartItemRepository.remove(items);
 };
