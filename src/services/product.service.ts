@@ -18,9 +18,14 @@ export const getProducts = async (data: any) => {
     }));
   }
 
-  if (data.minPrice || data.maxPrice) {
+  if (data.minPrice) {
     query.andWhere('(product.price >= :minPrice AND product.price <= :maxPrice)', {
       minPrice: data.minPrice || 0,
+    });
+  }
+
+  if (data.maxPrice) {
+    query.andWhere('(product.price <= :maxPrice)', {
       maxPrice: data.maxPrice || Number.MAX_VALUE,
     });
   }

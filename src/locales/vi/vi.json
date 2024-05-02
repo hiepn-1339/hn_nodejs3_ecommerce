@@ -1,4 +1,5 @@
 {
+  "selectAnOption": "chọn một cái",
   "header": {
     "title": "Fruitables",
     "home": "Trang chủ",
@@ -140,6 +141,8 @@
     "proof": "Bằng chứng"
   },
   "order": {
+    "id": "Id",
+    "name": "Tên",
     "title": "Đơn hàng",
     "startDate": "Ngày bắt đầu",
     "endDate": "Ngày kết thúc",

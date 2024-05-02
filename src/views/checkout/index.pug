@@ -16,7 +16,7 @@ block content
   .container-fluid.py-5
     .container.py-5
       h1.mb-4 #{t('checkout.title')}
-      form(method='POST' enctype='multipart/form-data')
+      form(method='POST' enctype='multipart/form-data' actions='/checkout')
         .row.g-5
           .col-md-12.col-lg-6.col-xl-7
             .form-item

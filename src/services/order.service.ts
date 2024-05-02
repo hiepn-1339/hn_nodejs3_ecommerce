@@ -3,6 +3,7 @@ import { CartItem } from '../entities/cartItem.entity';
 import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/orderItem.entity';
 import { Product } from '../entities/product.entity';
+import { User } from '../entities/user.entity';
 
 const orderRepository = AppDataSource.getRepository(Order);
 const orderItemRepository = AppDataSource.getRepository(OrderItem);
@@ -42,4 +43,46 @@ export const createOrderItems = async (items: CartItem[], order: Order) => {
   });
 
   return await Promise.all(orderItemsPromises);
+};
+
+export const getOrders = async (user: User, data: any) => {
+  const query = orderRepository.createQueryBuilder('order');
+
+  if (data.startDate) {
+    query.andWhere('(order.created_at >= :startDate)', {
+      startDate: data.startDate,
+    });
+  }
+
+  if (data.endDate) {
+    query.andWhere('(order.created_at <= :endDate)', {
+      endDate: data.endDate,
+    });
+  }
+
+  if (data.status) {
+    query.andWhere('order.status = :status', {
+      status: data.status,
+    });
+  }
+
+  if (data.paymentMethod) {
+    query.andWhere('order.payment_method = :paymentMethod', {
+      paymentMethod: data.paymentMethod,
+    });
+  }
+
+  query.andWhere('order.user_id = :userId', {
+    userId: user.id,
+  });
+
+  const count = await query.getCount();
+
+  const orders = await query
+    .orderBy('order.created_at', 'DESC')
+    .limit(data.limit)
+    .offset((data.page - 1) * data.limit)
+    .getMany();
+
+  return {orders, count};
 };

@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Response } from 'express';
-import { PaymentMethod } from '../constants';
+import { OrderStatus, PaymentMethod } from '../constants';
 import * as couponService from '../services/coupon.service';
 import { Coupon } from '../entities/coupon.entity';
 import { IAuthRequest, checkLoggedIn } from '../middlewares';
@@ -114,5 +114,16 @@ export const postCheckout = [
     }
 
     return await ProcessOrder.processOrder(req, res);
+  }),
+];
+
+export const getOrders = [
+  checkLoggedIn,
+  asyncHandler (async (req: IAuthRequest, res: Response) => {
+    const {orders, count} = await orderService.getOrders(req.user, req.query);
+
+    const pages = Math.ceil(count / parseInt(req.query.limit as string));
+
+    return res.render('order/index', {orders, paymentMethods: Object.keys(PaymentMethod), OrderStatus, pages, page: req.query.page});
   }),
 ];

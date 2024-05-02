@@ -26,17 +26,24 @@ block content
               | #{t('order.endDate')}
             input#endDate.form-control(type='date' aria-describedby='search-icon-1')
           div.w-25.px-3
-            label.form-label(for='Payment').pe-2
+            label.form-label(for='payment').pe-2
               | #{t('order.paymentMethod')}
-            select#Payment.form-select
+            select#payment.form-select
+              option(disabled selected value=null) -- #{t('selectAnOption')} --
               each method in paymentMethods
                 option(value=method) #{method}
-          div.w-25.px-3
+          div.w-20.px-3
             label.form-label(for='status').pe-2
               | #{t('order.status')}
             select#status.form-select
+              option(disabled selected value=null) -- #{t('selectAnOption')} --
+              - let statuses = Object.keys(OrderStatus)
               each status in statuses
                 option(value=status) #{status}
+          div.w-5
+            label.form-label.pe-2
+            span#searchOrder.input-group-text.p-3.justify-content-center
+              i.fa.fa-search
         .table-wrapper
           .table-title
             .row
@@ -46,36 +53,61 @@ block content
           table.table.table-hover
             thead
               tr
+                th
+                th #{t('order.id')}              
                 th.w-200px #{t('order.createdAt')}
-                th #{t('order.coupon')}
+                th #{t('order.name')}
+                th.w-250px #{t('order.address')}
                 th #{t('order.total')}
                 th #{t('order.paymentMethod')}
-                th.w-300px #{t('order.address')}
                 th #{t('order.status')}
-                th.w-200px #{t('order.action')}
+                th.w-200px.text-center #{t('order.action')}
             tbody
               each order in orders
-                tr
-                  td #{order.createdAt}
-                  td #{order.coupon.name}
-                  td #{order.total}
-                  td #{order.paymentMethod} 
+                tr.h-100px
+                  td 
+                    a(href="#") 
+                      i.fas.fa-eye
+                  td #{order.id}
+                  td.date(value=order.createdAt)
+                  td #{order.name}
                   td.text-break #{order.address}
-                  td
-                    span.status.text-success &bull;
-                    |  #{order.status}
-                  td
-                    if order.status === "PENDING"
+                  td #{order.total}$
+                  td #{order.paymentMethod} 
+                  if order.status === OrderStatus.PENDING
+                    td
+                      span.status.pending-color.pb-7px &bull;
+                      |  #{order.status}
+                    td
                       button#cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('order.cancel')}
-                    else if order.status === "COMPLETED"
+                  else if order.status === OrderStatus.COMPLETED
+                    td
+                      span.status.complete-color.pb-7px &bull;
+                      |  #{order.status}
+                    td
                       button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.rating')}
+                  else if order.status === OrderStatus.CANCELLED
+                    td
+                      span.status.canceled-color.pb-7px &bull;
+                      |  #{order.status}
+                    td
+                  else if order.status === OrderStatus.REJECTED
+                    td
+                      span.status.rejected-color.pb-7px &bull;
+                      |  #{order.status}
+                    td
+                  else if order.status === OrderStatus.APPROVED
+                    td
+                      span.status.approved-color.pb-7px &bull;
+                      |  #{order.status}
+                    td
           .col-12
             .pagination.d-flex.justify-content-center.mt-5
-              each val in Array.from({length: pageLength}, (_, i) => i + 1)
-                if val === page
-                  a.active.rounded(href='#') #{val}
+              each val in Array.from({length: pages}, (_, i) => i + 1)
+                if val == page
+                  a.page.active.rounded(value=val) #{val}
                 else
-                  a.rounded(href='#') #{val}
+                  a.page.rounded(value=val) #{val}
   #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
     .modal-dialog.modal-dialog-centered
       .modal-content

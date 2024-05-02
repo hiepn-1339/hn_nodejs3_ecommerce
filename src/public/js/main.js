@@ -80,6 +80,38 @@
       window.location.href = url;
     });
 
+    $('#searchOrder').click(function() {
+      var startDate = $('#startDate').val();
+      var endDate = $('#endDate').val();
+      var payment = $('#payment').val();
+      var status = $('#status').val();
+
+      var query = {
+        page: 1,
+      };
+
+      if (startDate) {
+        query.startDate = startDate;
+      }
+      if (endDate) {
+        query.endDate = endDate;
+      }
+      if (payment) {
+        query.paymentMethod = payment;
+      }
+      if (status) {
+        query.status = status;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 
