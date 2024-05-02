@@ -106,7 +106,8 @@
     "invalidProductId": "Product ID must be a number",
     "couponInvalid": "Coupon must be not empty!",
     "couponNotFound": "Coupon not found!",
-    "proofRequired": "Proof required!"
+    "proofRequired": "Proof required!",
+    "cancelOrderFail": "Cancel order fail!"
   },
   "profile": {
     "title": "Profile",
@@ -163,7 +164,8 @@
     "orderSuccess": "Order Success",
     "orderSuccessText": "Your order has been successfully created",
     "order": "Order",
-    "download": "Download"
+    "download": "Download",
+    "cancelOrderSuccess": "Cancel Order Success!"
   },
   "rating": {
     "rating": "Rating",

@@ -108,14 +108,3 @@ block content
                   a.page.active.rounded(value=val) #{val}
                 else
                   a.page.rounded(value=val) #{val}
-  #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
-    .modal-dialog.modal-dialog-centered
-      .modal-content
-        .modal-header
-          h1#modalCancelOrder.modal-title.fs-5 #{t('order.titleModal')}
-          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-        .modal-body
-          | #{t('order.areYouSureYouWantToCancelTheOrderWithId')} <span id="orderId"></span>
-        .modal-footer
-          button.btn.btn-secondary(type='button' data-bs-dismiss='modal') #{t('order.no')}
-          button.btn.btn-primary(type='button') #{t('order.yes')}

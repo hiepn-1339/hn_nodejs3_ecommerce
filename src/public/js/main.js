@@ -51,11 +51,6 @@
       $(this).text(formatDate($(this).attr('value')));
     });
 
-    $('#cancelOrder').click(function() {
-      var orderId = $(this).data('order-id');
-      $('#orderId').text(orderId);
-    });
-
     $('#searchProduct').click(function() {
       var keyword = $('#keyword').val();
       var minPrice = $('#minPrice').val();
