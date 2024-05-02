@@ -85,7 +85,7 @@ block content
                       span.status.complete-color.pb-7px &bull;
                       |  #{order.status}
                     td
-                      button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.rating')}
+                      a(href=`/order/${order.id}/rating`).btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.rating')}
                   else if order.status === OrderStatus.CANCELLED
                     td
                       span.status.canceled-color.pb-7px &bull;

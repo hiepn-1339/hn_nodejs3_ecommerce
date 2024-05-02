@@ -13,6 +13,8 @@ import { getTranslatedMessage } from '../utils/i18n';
 import { validateCreateOrder } from '../middlewares/validate/order.validate';
 import { sendEmail } from '../utils/mail';
 import { t } from 'i18next';
+import { OrderItem } from '../entities/orderItem.entity';
+import * as ratingService from '../services/rating.service';
 
 export interface IOrderRequest extends IAuthRequest {
   errors?: Array<{path: string, msg: string}>;
@@ -156,33 +158,6 @@ export const getOrder = [
   }),
 ];
 
-const checkExistsOrder = async (req: IOrderRequest, res: Response, next: NextFunction) => {
-  const order = await orderService.getOrderById(parseInt(req.params.id));
-  if (order === null) {
-    res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound') });
-  }
-
-  req.order = order;
-  next();
-};
-
-export const getOrder = [
-  checkLoggedIn,
-  checkValidId,
-  checkExistsOrder,
-  asyncHandler (async (req: IOrderRequest, res: Response) => {
-    const orderItems = await orderService.getOrderItems(req.order);
-
-    let subtotal = 0;
-
-    orderItems.forEach((item) => {
-      subtotal += item.price * item.quantity;
-    });
-
-    return res.render('order/detail', {subtotal, coupon: req.order.coupon, items: orderItems, order: req.order });
-  }),
-];
-
 export const cancelOrder = [
   checkLoggedIn,
   checkValidId,
@@ -203,6 +178,58 @@ export const cancelOrder = [
     await orderService.cancelOrder(req.order);
 
     res.send(data);
+    return;
+  }),
+];
+
+export const getRating = [
+  checkLoggedIn,
+  checkValidId,
+  checkExistsOrder,
+  asyncHandler (async (req: IOrderRequest, res: Response) => {
+    if (req.order.status !== OrderStatus.COMPLETED) {
+      return res.redirect('/order');
+    }
+
+    const orderItems = await orderService.getOrderItems(req.order);
+
+    return res.render('rating/index', {orderItems});
+  }),
+];
+
+export const postRating = [
+  checkLoggedIn,
+  checkValidId,
+  checkExistsOrder,
+  asyncHandler (async (req: IOrderRequest, res: Response) => {
+    if (req.order.status !== OrderStatus.COMPLETED) {
+      return res.redirect('/order');
+    }
+
+    const orderItem: OrderItem = await orderService.getOrderItemById(req.body.orderItemId);
+
+    if (!orderItem) {
+      res.send({
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.orderItemNotFound', req.query.lng),
+      });
+      return;
+    }
+
+    if (orderItem.isReviewed) {
+      res.send({
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.orderItemAlreadyReviewed', req.query.lng),
+      });
+      return;
+    }
+
+    await ratingService.createRating(req.user, orderItem, req.body);
+
+    res.send({
+      status: Status.SUCCESS,
+      message: getTranslatedMessage('order.ratingSuccess', req.query.lng),
+    });
     return;
   }),
 ];

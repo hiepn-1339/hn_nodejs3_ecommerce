@@ -142,3 +142,18 @@ describe('cancelOrder', () => {
     expect(updatedOrder.status).toEqual(OrderStatus.CANCELLED);
   });
 });
+
+describe('getOrderItemByID', () => {
+  it('should return order item with specified id', async () => {
+    const id = 1;
+    const orderItem = await orderService.getOrderItemById(id);
+    expect(orderItem).toBeInstanceOf(OrderItem);
+    expect(orderItem.id).toEqual(id);
+  });
+
+  it('should return null if order item does not exist', async () => {
+    const id = -1;
+    const orderItem = await orderService.getOrderItemById(id);
+    expect(orderItem).toBeNull();
+  });
+});
