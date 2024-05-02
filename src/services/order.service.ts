@@ -86,3 +86,26 @@ export const getOrders = async (user: User, data: any) => {
 
   return {orders, count};
 };
+
+export const getOrderById = async (id: number) => {
+  return await orderRepository.findOne({
+    where: {
+      id: id,
+    },
+    relations: ['coupon'],
+  });
+};
+
+export const getOrderItems = async (order: Order) => {
+  return await orderItemRepository.find({
+    where: {
+      order: {
+        id: order.id,
+      },
+    },
+    relations: ['product', 'product.images'],
+    order: {
+      createdAt: 'DESC',
+    },
+  });
+};

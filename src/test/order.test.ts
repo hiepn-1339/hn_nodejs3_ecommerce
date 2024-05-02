@@ -90,3 +90,41 @@ describe('getOrders', () => {
     });
   });
 });
+
+describe('getOrder', () => {
+  it('should return order with specified id', async () => {
+    const id = 1;
+
+    const order = await orderService.getOrderById(id);
+
+    expect(order).toBeInstanceOf(Order);
+    expect(order.id).toEqual(id);
+  });
+
+  it('should return null if order does not exist', async () => {
+    const id = -1;
+
+    const order = await orderService.getOrderById(id);
+
+    expect(order).toBeNull();
+  });
+});
+
+describe('getOrderItems', () => {
+  it('should return order items of specified order', async () => {
+    const orderId = 1;
+    const order = { id: orderId };
+    const orderItems = await orderService.getOrderItems(order as Order);
+    expect(orderItems).toBeInstanceOf(Array);
+    orderItems.forEach(item => {
+      expect(item).toBeInstanceOf(OrderItem);
+    });
+  });
+
+  it('should return empty array if order has no items', async () => {
+    const order = { id: -1 }; 
+    const orderItems = await orderService.getOrderItems(order as Order);
+    expect(orderItems).toBeInstanceOf(Array);
+    expect(orderItems.length).toBe(0);
+  });
+});

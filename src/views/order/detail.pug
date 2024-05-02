@@ -2,14 +2,14 @@ extends ../layout
 
 block content 
   include ../mixins/_breadcrumb
-  +breadcurmb(t('checkout.checkout'), [
+  +breadcurmb(t('order.order'), [
     {
       href: '/',
       text: t('header.home')
     },
     {
-      href: '',
-      text: t('checkout.checkout')
+      href: '/order',
+      text: t('order.order')
     },
   ])
 
@@ -23,44 +23,26 @@ block content
               label.form-label.my-3
                 | #{t('checkout.name')} 
                 sup.text-danger *
-              input.form-control(type='text' name="name" placeholder='name' value=(user === underfined ? '' : user.name))
-              if errors
-                - let error= errors.find(e => e.path == 'name')
-                if error
-                  p.text-danger #{error.msg}
+              input.form-control(type='text' name="name" placeholder='name' disabled value=order.name)
             .form-item
               label.form-label.my-3
                 | #{t('checkout.address')} 
                 sup.text-danger *
-              input.form-control(type='text' name="address" placeholder='House Number Street Name' value=(user === underfined ? '' : user.address) )
-              if errors
-                - let error= errors.find(e => e.path == 'address')
-                if error
-                  p.text-danger #{error.msg}
+              input.form-control(type='text' name="address" placeholder='House Number Street Name' disabled value=order.address )
             .form-item
               label.form-label.my-3
                 | #{t('checkout.phone')}
                 sup.text-danger *
-              input.form-control(type='tel' name="phone" value=(user === underfined ? '' : user.phone))
-              if errors
-                - let error= errors.find(e => e.path == 'phone')
-                if error
-                  p.text-danger #{error.msg}
+              input.form-control(type='tel' name="phone" disabled value=order.phone)
             .form-item
               label.form-label.my-3
                 | #{t('checkout.email')}
                 sup.text-danger *
-              input.form-control(type='email' name="email" value=(user === underfined ? '' : user.email))
-              if errors
-                - let error= errors.find(e => e.path == 'email')
-                if error
-                  p.text-danger #{error.msg}
+              input.form-control(type='email' name="email" disabled value=order.email)
             .form-item
               label.form-label.my-3
                | #{t('checkout.note')}
-              textarea.form-control(name='note' spellcheck='false' cols='30' rows='11' placeholder='Oreder Notes (Optional)')
-            .form-item.d-none
-              input.form-control(type='text' name="coupon" value=(coupon === underfined ? '' : coupon.name))
+              textarea.form-control(name='note' spellcheck='false' cols='30' rows='11' disabled placeholder='Oreder Notes (Optional)' value=(order.note === underfined ? '' : order.note))
           .col-md-12.col-lg-6.col-xl-5
             .table-responsive
               table.table
@@ -78,15 +60,14 @@ block content
                         .d-flex.align-items-center.mt-2
                           img.img-fluid.rounded-circle.w-90px.h-90px(src=item.product.images[0].url alt='')
                       td.py-5 #{item.product.name}
-                      td.py-5 $#{item.product.price}
+                      td.py-5 $#{item.price}
                       td.py-5 #{item.quantity}
-                      - let total = item.product.price * item.quantity
+                      - let total = item.price * item.quantity
                       td.py-5 $#{total}
                   tr
                     td.py-5(colspan='2')
                       p.mb-0.text-dark.py-3 #{t('checkout.subtotal')}
                     th(scope='row')
-                    td.py-5
                     td.py-5
                     td.py-5
                       .py-3.border-bottom.border-top
@@ -98,7 +79,6 @@ block content
                       th(scope='row')
                       td.py-5
                       td.py-5
-                      td.py-5
                         .py-3.border-bottom.border-top
                           p.mb-0.text-dark -#{coupon.percentage}%
                   tr
@@ -107,26 +87,21 @@ block content
                     th(scope='row')
                     td.py-5
                     td.py-5
-                    td.py-5
                       .py-3.border-bottom.border-top
-                        p.mb-0.text-dark $#{total}
+                        p.mb-0.text-dark $#{order.total}
                   tr
                     td.py-5(colspan='2')
                       p.mb-0.text-dark.py-4 #{t('checkout.paymentMethod')}
                     th(scope='row')
-                    td.py-5(colspan='3')
-                      each method in paymentMethods
-                        .form-check.text-start
-                          input.form-check-payment-method.form-check-input.bg-primary.border-0(type='checkbox' name='paymentMethod' value=method id=method)
-                          - let text = method.replaceAll('_', ' ')
-                          label.form-check-label(for=method) #{text}
-              #proof-input.d-none.border-bottom.py-5
-                label.form-label(for='proof')
-                  | #{t('checkout.proof')}
-                  sup.text-danger *
-                input#proof.form-control(type='file' required='' name='proof')
-                if errors
-                  - let error= errors.find(e => e.path == 'proof')
-                  if error
-                    p.text-danger #{error.msg}
-              button.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='submit') #{t('checkout.placeOrder')}
+                    td.py-5(colspan='2')
+                      .py-3
+                        -let text = order.paymentMethod.replaceAll('_', ' ')
+                        p.mb-0.text-dark #{text}
+                  if order.proof
+                    tr
+                      td.py-5(colspan='2')
+                        p.mb-0.text-dark.py-4 #{t('checkout.proof')}
+                      th(scope='row')
+                      td.py-5(colspan='2')
+                        .py-3
+                          a(href=order.proof download).mb-0 #{t('order.download')}

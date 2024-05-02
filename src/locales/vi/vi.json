@@ -161,7 +161,9 @@
     "no": "Không",
     "yes": "Có",
     "orderSuccess": "Order thành công",
-    "orderSuccessText": "Đơn hàng của bạn đã được tạo thành công"
+    "orderSuccessText": "Đơn hàng của bạn đã được tạo thành công",
+    "order": "Đơn hàng",
+    "download": "Tải về"
   },
   "rating": {
     "rating": "Đánh giá",
