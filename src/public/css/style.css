@@ -753,19 +753,19 @@ table.table .avatar {
 }
 
 .approved-bg-color {
-  background-color #4CAF50 !important;
+  background-color: #4CAF50 !important;
 }
 
 .rejected-bg-color {
-  background-color #FF0000 !important;
+  background-color: #FF0000 !important;
 }
 
 .canceled-bg-color {
-  background-color #FFD700 !important;
+  background-color: #FFD700 !important;
 }
 
 .complete-bg-color {
-  background-color #800080 !important;
+  background-color: #800080 !important;
 }
 
 .w-5 {

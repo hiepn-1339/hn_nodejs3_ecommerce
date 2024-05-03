@@ -4,6 +4,7 @@ import { validateLoginUser } from '../middlewares/validate/auth.validate';
 import { getTranslatedMessage } from '../utils/i18n';
 import * as userService from '../services/user.service';
 import bcrypt from 'bcrypt';
+import { Role } from '../constants';
 
 export const getLogin = (req: Request, res: Response) =>{
   return res.render('login/index');
@@ -24,7 +25,10 @@ export const postLogin = [
     }
 
     req.session.user = user;
-    res.redirect('/');
+    if (user.role === Role.ADMIN) {
+      return res.redirect('/admin/order');
+    }
+    return res.redirect('/');
   }),
 ];
 
