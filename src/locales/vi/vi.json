@@ -39,6 +39,7 @@
     "quantity": "Số lượng",
     "total": "Tổng cộng",
     "handle": "Xử lý",
+    "action": "Xử lý",
     "applyCoupon": "Áp dụng mã giảm giá",
     "coupon": "Mã giảm giá",
     "cart": "Giỏ hàng",
@@ -107,7 +108,9 @@
     "couponInvalid": "Coupon không được trống!",
     "couponNotFound": "Không tìm thấy coupon!",
     "proofRequired": "Proof không được trống!",
-    "cancelOrderFail": "Hủy đơn hàng lỗi"
+    "cancelOrderFail": "Hủy đơn hàng lỗi",
+    "orderItemNotFound": "Không tìm thấy mục đơn hàng!",
+    "orderItemAlreadyReviewed": "Mục đơn hàng đã được đánh giá trước đó!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -165,7 +168,9 @@
     "orderSuccessText": "Đơn hàng của bạn đã được tạo thành công",
     "order": "Đơn hàng",
     "download": "Tải về",
-    "cancelOrderSuccess": "Hủy đơn hàng thành công!"
+    "cancelOrderSuccess": "Hủy đơn hàng thành công!",
+    "submit": "Submit",
+    "ratingSuccess": "Đánh giá thành công!"
   },
   "rating": {
     "rating": "Đánh giá",

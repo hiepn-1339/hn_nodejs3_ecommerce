@@ -124,6 +124,71 @@
 
       $('#quantityInput').val(`${quantity + 1}`);
     });
+
+    $('.openModalRating').click(function() {
+      var orderId = $(this).data('order-id');
+
+      $('#orderItemId').val(orderId);
+    });
+
+    $('#submitRating').click(function(e) {
+      e.preventDefault();
+
+      var ratingPoint = $('input[name="ratingPoint"]:checked').val();
+      var comment = $('#comment').val();
+      var orderItemId = $('#orderItemId').val();
+
+      let data = {};
+
+      if (ratingPoint) {
+        data.ratingPoint = ratingPoint;
+      }
+      if (comment) {
+        data.comment = comment;
+      }
+      if (orderItemId) {
+        data.orderItemId = orderItemId;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      fetch(parsedURL.pathname, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => response.text())
+      .then((data) => {
+        data = JSON.parse(data);
+        let options;
+        if (data.status == 'Success') {
+          options = {
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          };
+        }
+        if (data.status == 'Fail') {
+          options ={
+            title: data.status,
+            text: data.message,
+            icon: 'error',
+            confirmButtonText: 'OK',
+          };
+        }
+
+        Swal.fire(options)
+        .then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  });
   });
 
   // Fixed Navbar

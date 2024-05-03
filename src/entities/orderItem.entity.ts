@@ -15,6 +15,9 @@ export class OrderItem extends BaseEntity{
   @Column({ nullable: false })
   price: number | undefined;
 
+  @Column({ nullable: false, default: false, name: 'is_reviewed'})
+  isReviewed: boolean;
+
   @ManyToOne(() => Order, (order) => order.items)
   @JoinColumn({ name: 'order_id' })
   order: Order | undefined;

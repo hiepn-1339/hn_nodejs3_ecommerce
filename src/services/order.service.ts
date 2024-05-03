@@ -115,3 +115,12 @@ export const cancelOrder = async (order: Order) => {
   order.status = OrderStatus.CANCELLED;
   return await orderRepository.save(order);
 };
+
+export const getOrderItemById = async (id: number) => {
+  return await orderItemRepository.findOne({
+    where: {
+      id,
+    },
+    relations: ['product'],
+  });
+};

@@ -39,6 +39,7 @@
     "quantity": "Quantity",
     "total": "Total",
     "handle": "Handle",
+    "action": "Action",
     "applyCoupon": "Apply Coupon",
     "coupon": "Coupon",
     "cart": "Cart",
@@ -107,7 +108,9 @@
     "couponInvalid": "Coupon must be not empty!",
     "couponNotFound": "Coupon not found!",
     "proofRequired": "Proof required!",
-    "cancelOrderFail": "Cancel order fail!"
+    "cancelOrderFail": "Cancel order fail!",
+    "orderItemNotFound": "Order item not found!",
+    "orderItemAlreadyReviewed": "Order item already reviewed!"
   },
   "profile": {
     "title": "Profile",
@@ -165,7 +168,9 @@
     "orderSuccessText": "Your order has been successfully created",
     "order": "Order",
     "download": "Download",
-    "cancelOrderSuccess": "Cancel Order Success!"
+    "cancelOrderSuccess": "Cancel Order Success!",
+    "submit": "Submit",
+    "ratingSuccess": "Rating success!"
   },
   "rating": {
     "rating": "Rating",
