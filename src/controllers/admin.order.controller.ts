@@ -1,14 +1,14 @@
 import asyncHandler from 'express-async-handler';
-import { checkIsAdmin, checkLoggedIn } from '../middlewares';
+import { IAuthRequest, checkIsAdmin, checkLoggedIn } from '../middlewares';
 import * as orderService from '../services/order.service';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { OrderStatus, PaymentMethod } from '../constants';
 
 export const getOrders = [
   checkLoggedIn,
   checkIsAdmin,
-  asyncHandler(async(req: Request, res: Response) => {
-    const {orders, count} = await orderService.getAllOrders(req.query);
+  asyncHandler(async(req: IAuthRequest, res: Response) => {
+    const {orders, count} = await orderService.getOrders(req.user, req.query);
 
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 

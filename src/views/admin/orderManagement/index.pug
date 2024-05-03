@@ -7,15 +7,15 @@ block admin_content
         label.form-label(for='keyword').pe-2
           | #{t('admin.order.search')}
         .input-group
-          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1' name='keyword')
+          input#keyword.form-control(type='search' placeholder='Search by name and address' aria-describedby='search-icon-1' name='keyword')
       div.w-25.px-3
         label.form-label(for='totalMin').pe-2
           | #{t('admin.order.totalMin')}
         input#totalMin.form-control(type='number' placeholder='Total min' aria-describedby='search-icon-1' name='totalMin')
       div.w-25.px-3
-        label.form-label(for='pricemax').pe-2
+        label.form-label(for='totalMax').pe-2
           | #{t('admin.order.totalMax')}
-        input#pricemin.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1' name='totalMax')
+        input#totalMax.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1' name='totalMax')
     .d-flex.mb-3
       div.w-25.px-3
         label.form-label(for='startDate').pe-2
@@ -43,7 +43,7 @@ block admin_content
             option(value=status) #{status}
       div.w-5
         label.form-label.pe-2
-        span#searchOrder.input-group-text.p-3.justify-content-center
+        span#searchAdminOrder.input-group-text.p-3.justify-content-center
           i.fa.fa-search
     .table-wrapper
       .table-title
@@ -72,7 +72,7 @@ block admin_content
                 a(href=`/order/${order.id}`) 
                   i.fas.fa-eye
               td #{order.id}
-              td.w-250px #{order.user.name}
+              td.w-250px #{order.name}
               td #{order.total}$
               - let method = order.paymentMethod.replaceAll('_', ' ')
               td #{method} 
