@@ -1,3 +1,4 @@
+import { OrderStatus } from '../constants';
 import { AppDataSource } from '../database/dataSource';
 import { CartItem } from '../entities/cartItem.entity';
 import { Order } from '../entities/order.entity';
@@ -108,4 +109,9 @@ export const getOrderItems = async (order: Order) => {
       createdAt: 'DESC',
     },
   });
+};
+
+export const cancelOrder = async (order: Order) => {
+  order.status = OrderStatus.CANCELLED;
+  return await orderRepository.save(order);
 };

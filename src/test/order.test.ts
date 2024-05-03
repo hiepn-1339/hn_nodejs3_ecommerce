@@ -4,6 +4,7 @@ import { CartItem } from '../entities/cartItem.entity';
 import { OrderItem } from '../entities/orderItem.entity';
 import * as orderService from '../services/order.service';
 import { User } from '../entities/user.entity';
+import { OrderStatus } from '../constants';
 
 let connection;
 
@@ -126,5 +127,18 @@ describe('getOrderItems', () => {
     const orderItems = await orderService.getOrderItems(order as Order);
     expect(orderItems).toBeInstanceOf(Array);
     expect(orderItems.length).toBe(0);
+  });
+});
+
+describe('cancelOrder', () => {
+  it('should return order items has status CANCELLED', async () => {
+    const id = 1;
+    
+    const order = await orderService.getOrderById(id);
+
+    const updatedOrder = await orderService.cancelOrder(order);
+
+    expect(updatedOrder).toBeInstanceOf(Order);
+    expect(updatedOrder.status).toEqual(OrderStatus.CANCELLED);
   });
 });

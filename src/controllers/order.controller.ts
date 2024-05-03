@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { NextFunction, Response } from 'express';
-import { ErrorCode, OrderStatus, PaymentMethod } from '../constants';
+import { ErrorCode, OrderStatus, PaymentMethod, Status } from '../constants';
 import * as couponService from '../services/coupon.service';
 import { Coupon } from '../entities/coupon.entity';
 import { IAuthRequest, checkLoggedIn, checkValidId } from '../middlewares';
@@ -153,5 +153,56 @@ export const getOrder = [
     });
 
     return res.render('order/detail', {subtotal, coupon: req.order.coupon, items: orderItems, order: req.order });
+  }),
+];
+
+const checkExistsOrder = async (req: IOrderRequest, res: Response, next: NextFunction) => {
+  const order = await orderService.getOrderById(parseInt(req.params.id));
+  if (order === null) {
+    res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound') });
+  }
+
+  req.order = order;
+  next();
+};
+
+export const getOrder = [
+  checkLoggedIn,
+  checkValidId,
+  checkExistsOrder,
+  asyncHandler (async (req: IOrderRequest, res: Response) => {
+    const orderItems = await orderService.getOrderItems(req.order);
+
+    let subtotal = 0;
+
+    orderItems.forEach((item) => {
+      subtotal += item.price * item.quantity;
+    });
+
+    return res.render('order/detail', {subtotal, coupon: req.order.coupon, items: orderItems, order: req.order });
+  }),
+];
+
+export const cancelOrder = [
+  checkLoggedIn,
+  checkValidId,
+  checkExistsOrder,
+  asyncHandler (async (req: IOrderRequest, res: Response) => {
+    let data = {
+      status: Status.SUCCESS,
+      message: getTranslatedMessage('order.cancelOrderSuccess', req.query.lng),
+    };
+    
+    if (req.order.status !== OrderStatus.PENDING) {
+      data = {
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.cancelOrderFail', req.query.lng),
+      }; 
+    }
+    
+    await orderService.cancelOrder(req.order);
+
+    res.send(data);
+    return;
   }),
 ];

@@ -106,7 +106,8 @@
     "invalidProductId": "Product ID phải là một số",
     "couponInvalid": "Coupon không được trống!",
     "couponNotFound": "Không tìm thấy coupon!",
-    "proofRequired": "Proof không được trống!"
+    "proofRequired": "Proof không được trống!",
+    "cancelOrderFail": "Hủy đơn hàng lỗi"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -163,7 +164,8 @@
     "orderSuccess": "Order thành công",
     "orderSuccessText": "Đơn hàng của bạn đã được tạo thành công",
     "order": "Đơn hàng",
-    "download": "Tải về"
+    "download": "Tải về",
+    "cancelOrderSuccess": "Hủy đơn hàng thành công!"
   },
   "rating": {
     "rating": "Đánh giá",
