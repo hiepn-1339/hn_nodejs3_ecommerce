@@ -161,7 +161,9 @@
     "no": "No",
     "yes": "Yes",
     "orderSuccess": "Order Success",
-    "orderSuccessText": "Your order has been successfully created"
+    "orderSuccessText": "Your order has been successfully created",
+    "order": "Order",
+    "download": "Download"
   },
   "rating": {
     "rating": "Rating",

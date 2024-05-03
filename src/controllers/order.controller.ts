@@ -1,9 +1,9 @@
 import asyncHandler from 'express-async-handler';
-import { Response } from 'express';
-import { OrderStatus, PaymentMethod } from '../constants';
+import { NextFunction, Response } from 'express';
+import { ErrorCode, OrderStatus, PaymentMethod } from '../constants';
 import * as couponService from '../services/coupon.service';
 import { Coupon } from '../entities/coupon.entity';
-import { IAuthRequest, checkLoggedIn } from '../middlewares';
+import { IAuthRequest, checkLoggedIn, checkValidId } from '../middlewares';
 import { Transactional } from 'typeorm-transactional';
 import { Order } from '../entities/order.entity';
 import * as orderService from '../services/order.service';
@@ -17,6 +17,7 @@ import { t } from 'i18next';
 export interface IOrderRequest extends IAuthRequest {
   errors?: Array<{path: string, msg: string}>;
   file?: any;
+  order: Order;
 }
 
 export const getCheckout = [
@@ -125,5 +126,32 @@ export const getOrders = [
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 
     return res.render('order/index', {orders, paymentMethods: Object.keys(PaymentMethod), OrderStatus, pages, page: req.query.page});
+  }),
+];
+
+const checkExistsOrder = async (req: IOrderRequest, res: Response, next: NextFunction) => {
+  const order = await orderService.getOrderById(parseInt(req.params.id));
+  if (order === null) {
+    res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound') });
+  }
+
+  req.order = order;
+  next();
+};
+
+export const getOrder = [
+  checkLoggedIn,
+  checkValidId,
+  checkExistsOrder,
+  asyncHandler (async (req: IOrderRequest, res: Response) => {
+    const orderItems = await orderService.getOrderItems(req.order);
+
+    let subtotal = 0;
+
+    orderItems.forEach((item) => {
+      subtotal += item.price * item.quantity;
+    });
+
+    return res.render('order/detail', {subtotal, coupon: req.order.coupon, items: orderItems, order: req.order });
   }),
 ];
