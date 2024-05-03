@@ -1,4 +1,5 @@
 {
+  "selectAnOption": "select an option",
   "header": {
     "title": "Fruitables",
     "home": "Home",
@@ -140,6 +141,8 @@
     "proof": "Proof"
   },
   "order": {
+    "id": "Id",
+    "name": "Name",
     "title": "Order",
     "startDate": "Start Date",
     "endDate": "End Date",

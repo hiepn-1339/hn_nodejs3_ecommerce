@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import * as orderController from '../controllers/order.controller';
 
-router.get('/', orderController.getCheckout);
-router.post('/', orderController.postCheckout);
+router.get('/checkout', orderController.getCheckout);
+router.post('/checkout', orderController.postCheckout);
+router.get('/', orderController.getOrders);
 export default router;

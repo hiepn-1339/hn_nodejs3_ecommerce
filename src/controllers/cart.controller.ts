@@ -18,8 +18,7 @@ export const getCart = [
   asyncHandler(async (req: IAuthRequest, res: Response) => {
   const {items, subtotal} = await cartService.getCartItems(req.user);
 
-  const total = subtotal;
-  res.render('cart/index', {items, subtotal, total});
+  res.render('cart/index', {items, subtotal, total: subtotal});
 }),
 ];
 

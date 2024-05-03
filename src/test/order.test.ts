@@ -1,8 +1,9 @@
+import { Order } from './../entities/order.entity';
 import { AppDataSource } from '../database/dataSource';
 import { CartItem } from '../entities/cartItem.entity';
-import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/orderItem.entity';
 import * as orderService from '../services/order.service';
+import { User } from '../entities/user.entity';
 
 let connection;
 
@@ -68,5 +69,24 @@ describe('createOrderItems', () => {
     const order = { id: 1 };
 
     await expect(orderService.createOrderItems(items as CartItem[], order as Order)).rejects.toThrow('Product 1 is not enough quantity');
+  });
+});
+
+describe('getOrders', () => {
+  it('should return a list of orders', async () => {
+    const user = {
+      id: 1,
+    };
+
+    const data = {
+      page: 1,
+      limit: 10,
+    };
+
+    const result = await orderService.getOrders(user as User, data);
+
+    result.orders.forEach((order) => {
+      expect(order).toBeInstanceOf(Order);
+    });
   });
 });

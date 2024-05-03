@@ -74,6 +74,6 @@ block content
               h5.mb-0.ps-4.me-4 #{t('cart.total')}
               p.mb-0.pe-4 $#{total}
             if coupon
-              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order?coupon=${coupon.name}`) #{t('cart.proceedCheckout')}
+              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order/checkout?coupon=${coupon.name}`) #{t('cart.proceedCheckout')}
             else 
-              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order`) #{t('cart.proceedCheckout')}
+              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order/checkout`) #{t('cart.proceedCheckout')}

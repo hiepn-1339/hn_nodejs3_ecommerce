@@ -727,3 +727,63 @@ table.table .avatar {
 .h-215px {
   height: 215px !important;
 }
+
+.pending-color {
+  color: #7FB3D5 !important;
+}
+
+.approved-color {
+  color: #4CAF50 !important;
+}
+
+.rejected-color {
+  color: #FF0000 !important;
+}
+
+.canceled-color {
+  color: #FFD700 !important;
+}
+
+.complete-color {
+  color: #800080 !important;
+}
+
+.pending-bg-color {
+  background-color: #7FB3D5 !important;
+}
+
+.approved-bg-color {
+  background-color #4CAF50 !important;
+}
+
+.rejected-bg-color {
+  background-color #FF0000 !important;
+}
+
+.canceled-bg-color {
+  background-color #FFD700 !important;
+}
+
+.complete-bg-color {
+  background-color #800080 !important;
+}
+
+.w-5 {
+  width: 5% !important;
+}
+
+.w-10 {
+  width: 10% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-20 {
+  width: 20% !important;
+}
+
+.pb-7px {
+  padding-bottom: 7px !important;
+}
