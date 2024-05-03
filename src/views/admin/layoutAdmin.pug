@@ -12,33 +12,33 @@ html(lang="en")
     link(href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap", rel="stylesheet")
 
     link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.15.4/css/all.css")
-    link(rel="stylesheet", href="css/bootstrap-icons.css")
+    link(rel="stylesheet", href="/public/css/bootstrap-icons.css")
 
-    link(href="/lib/lightbox/css/lightbox.min.css", rel="stylesheet")
-    link(href="/lib/owlcarousel/assets/owl.carousel.min.css", rel="stylesheet")
+    link(href="/public/lib/lightbox/css/lightbox.min.css", rel="stylesheet")
+    link(href="/public/lib/owlcarousel/assets/owl.carousel.min.css", rel="stylesheet")
 
-    link(href="/css/bootstrap.min.css", rel="stylesheet")
+    link(href="/public/css/bootstrap.min.css", rel="stylesheet")
 
-    link(rel='stylesheet' , href='/css/style.css' )
+    link(rel='stylesheet' , href='/public/css/style.css' )
     link(rel='icon' type="image/x-icon" href="/public/img/favicon.png")  
 
-    script(src='js/jquery.min.js')
-    script(src='js/bootstrap.bundle.min.js')
-    script(src='/lib/easing/easing.min.js')
-    script(src='/lib/waypoints/waypoints.min.js')
-    script(src='/lib/lightbox/js/lightbox.min.js')
-    script(src='/lib/owlcarousel/owl.carousel.min.js')
-    // Template Javascript
-    script(src='/js/main.js')
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
-  
+    script(src='/public/js/jquery.min.js')
+    script(src='/public/js/bootstrap.bundle.min.js' async="async")
+    script(src='/public/lib/easing/easing.min.js')
+    script(src='/public/lib/waypoints/waypoints.min.js')
+    script(src='/public/lib/lightbox/js/lightbox.min.js')
+    script(src='/public/lib/owlcarousel/owl.carousel.min.js')
+    script(src='/public/js/main.js')
+    script(src='/public/js/cart.js')
+    script(src='/public/js/order.js')
   body
     include ../_header
 
     .container-fluid.fruite.py-5
       .row.py-5.g-0
         .col-lg-2.d-flex.flex-column.border-right-2.vh-100.pt-5
-          include ../_sidebar
+          include ./_sidebar
           +sidebar()
         .col-lg-10.pt-3
           block admin_content

@@ -1,3 +1,4 @@
+import { Brackets } from 'typeorm';
 import { OrderStatus } from '../constants';
 import { AppDataSource } from '../database/dataSource';
 import { CartItem } from '../entities/cartItem.entity';
@@ -123,4 +124,51 @@ export const getOrderItemById = async (id: number) => {
     },
     relations: ['product'],
   });
+};
+
+export const getAllOrders = async (data: any) => {
+  const query = orderRepository.createQueryBuilder('order');
+
+  if (data.keyword) {
+    query.andWhere(new Brackets(qb => {
+      qb.where('MATCH(order.name) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword })
+        .orWhere('MATCH(order.address) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword });
+    }));
+  }
+
+  if (data.startDate) {
+    query.andWhere('(order.created_at >= :startDate)', {
+      startDate: data.startDate,
+    });
+  }
+
+  if (data.endDate) {
+    query.andWhere('(order.created_at <= :endDate)', {
+      endDate: data.endDate,
+    });
+  }
+
+  if (data.status) {
+    query.andWhere('order.status = :status', {
+      status: data.status,
+    });
+  }
+
+  if (data.paymentMethod) {
+    query.andWhere('order.payment_method = :paymentMethod', {
+      paymentMethod: data.paymentMethod,
+    });
+  }
+
+  query.leftJoinAndSelect('order.user', 'user');
+
+  const count = await query.getCount();
+
+  const orders = await query
+    .orderBy('order.created_at', 'DESC')
+    .limit(data.limit)
+    .offset((data.page - 1) * data.limit)
+    .getMany();
+
+  return {orders, count};
 };

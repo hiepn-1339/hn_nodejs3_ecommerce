@@ -7,36 +7,44 @@ block admin_content
         label.form-label(for='keyword').pe-2
           | #{t('admin.order.search')}
         .input-group
-          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
-          span#search-icon-1.input-group-text.p-2
-            i.fa.fa-search
+          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1' name='keyword')
       div.w-25.px-3
-        label.form-label(for='pricemin').pe-2
+        label.form-label(for='totalMin').pe-2
           | #{t('admin.order.totalMin')}
-        input#pricemin.form-control(type='number' placeholder='Total min' aria-describedby='search-icon-1')
+        input#totalMin.form-control(type='number' placeholder='Total min' aria-describedby='search-icon-1' name='totalMin')
       div.w-25.px-3
         label.form-label(for='pricemax').pe-2
           | #{t('admin.order.totalMax')}
-        input#pricemin.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1')
+        input#pricemin.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1' name='totalMax')
     .d-flex.mb-3
       div.w-25.px-3
-        label.form-label(for='coupon').pe-2
-          | #{t('admin.order.coupon')}
-        select#coupon.form-select
-          each gender in genders
-            option(value=gender) #{gender}
+        label.form-label(for='startDate').pe-2
+          | #{t('order.startDate')}
+        input#startDate.form-control(type='date' aria-describedby='search-icon-1')
       div.w-25.px-3
-        label.form-label(for='Payment').pe-2
+        label.form-label(for='endDate').pe-2
+          | #{t('order.endDate')}
+        input#endDate.form-control(type='date' aria-describedby='search-icon-1')
+      div.w-25.px-3
+        label.form-label(for='payment').pe-2
           | #{t('admin.order.paymentMethod')}
-        select#Payment.form-select
-          each method in paymentMethods
-            option(value=method) #{method}
-      div.w-25.px-3
+        select#payment.form-select(name="paymentMethod")
+          option(disabled selected value=null) -- #{t('selectAnOption')} --
+          each paymentMethod in paymentMethods
+            - let method = paymentMethod.replaceAll('_', ' ')
+            option(value=paymentMethod) #{method}
+      div.w-20.px-3(name="status")
         label.form-label(for='status').pe-2
           | #{t('admin.order.status')}
         select#status.form-select
+          option(disabled selected value=null) -- #{t('selectAnOption')} --
+          - let statuses = Object.keys(OrderStatus)
           each status in statuses
             option(value=status) #{status}
+      div.w-5
+        label.form-label.pe-2
+        span#searchOrder.input-group-text.p-3.justify-content-center
+          i.fa.fa-search
     .table-wrapper
       .table-title
         .row
@@ -49,42 +57,62 @@ block admin_content
       table.table.table-hover
         thead
           tr
+            th
             th #{t('admin.order.id')}
-            th #{t('admin.order.user')}
-            th #{t('admin.order.coupon')}
+            th #{t('admin.order.name')}
             th #{t('admin.order.total')}
             th #{t('admin.order.paymentMethod')}
             th #{t('admin.order.address')}
             th #{t('admin.order.status')}
-            th #{t('admin.order.action')}
+            th.text-center #{t('admin.order.action')}
         tbody
           each order in orders
-            tr
+            tr.h-100px
+              td
+                a(href=`/order/${order.id}`) 
+                  i.fas.fa-eye
               td #{order.id}
-              td.w-250px
-                a(href='#')
-                  img.avatar(src=order.user.avatar alt='Product')
-                  |  #{order.user.name}
-              td #{order.coupon.name}
-              td #{order.total}
-              td #{order.paymentMethod} 
-              td.text-break.w-300px#{order.address}
-              td
-                span.status.text-success &bull;
-                |  #{order.status}
-              td
-                if order.status === "PENDING"
-                  button#cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalApprovedOrder" data-order-id=order.id) #{t('order.approved')}
-                  button#cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalRejectOrder" data-order-id=order.id) #{t('order.reject')}
-                else if order.status === "COMPLETED"
-                  button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.rating')}
+              td.w-250px #{order.user.name}
+              td #{order.total}$
+              - let method = order.paymentMethod.replaceAll('_', ' ')
+              td #{method} 
+              td.text-break.w-300px #{order.address}
+              if order.status === OrderStatus.PENDING
+                td
+                  span.status.pending-color.pb-7px &bull;
+                  |  #{order.status}
+                td
+                  .d-flex 
+                    button#approveOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.approved-bg-color.me-2(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.approve')}
+                    button#rejectOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.rejected-bg-color(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.reject')}
+              else if order.status === OrderStatus.COMPLETED
+                td
+                  span.status.complete-color.pb-7px &bull;
+                  |  #{order.status}
+                td
+              else if order.status === OrderStatus.CANCELLED
+                td
+                  span.status.canceled-color.pb-7px &bull;
+                  |  #{order.status}
+                td
+              else if order.status === OrderStatus.REJECTED
+                td
+                  span.status.rejected-color.pb-7px &bull;
+                  |  #{order.status}
+                td
+              else if order.status === OrderStatus.APPROVED
+                td
+                  span.status.approved-color.pb-7px &bull;
+                  |  #{order.status}
+                td
+                  button#completeOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.complete-bg-color(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.complete')}
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
-          each val in Array.from({length: pageLength}, (_, i) => i + 1)
-            if val === page
-              a.active.rounded(href='#') #{val}
+          each val in Array.from({length: pages}, (_, i) => i + 1)
+            if val == page
+              a.page.active.rounded(value=val) #{val}
             else
-              a.rounded(href='#') #{val}
+              a.page.rounded(value=val) #{val}
   #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
     .modal-dialog.modal-dialog-centered
       .modal-content

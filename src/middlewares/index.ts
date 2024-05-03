@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { t } from 'i18next';
-import { ErrorCode, Query } from '../constants';
+import { ErrorCode, Query, Role } from '../constants';
 import { User } from '../entities/user.entity';
 
 export const checkValidId = (req: Request, res: Response, next: NextFunction) => {
@@ -36,6 +36,14 @@ export const checkLoggedIn = (req: IAuthRequest, res: Response, next: NextFuncti
   }
 
   req.user = user;
+
+  next();
+};
+
+export const checkIsAdmin = (req: IAuthRequest, res: Response, next: NextFunction) => {
+  if (req.user.role !== Role.ADMIN) {
+    return res.redirect('/');
+  } 
 
   next();
 };

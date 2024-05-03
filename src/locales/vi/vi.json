@@ -178,6 +178,7 @@
   },
   "admin": {
     "order": {
+      "order": "Đơn hàng",
       "search": "Tìm kiếm",
       "totalMin": "Tổng tối thiểu",
       "totalMax": "Tổng tối đa",
@@ -204,7 +205,10 @@
       "price": "Giá",
       "quantity": "Số lượng",
       "subtotal": "Tổng phụ",
-      "submit": "Gửi"
+      "submit": "Gửi",
+      "approve": "Chấp nhận",
+      "reject": "Từ chối",
+      "complete": "Hoàn thành"
     },
     "category": {
       "category": "Danh mục",

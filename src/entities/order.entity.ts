@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany, Index } from 'typeorm';
 import { User } from './user.entity';
 import { Coupon } from './coupon.entity';
 import { OrderStatus, PaymentMethod } from '../constants';
@@ -19,6 +19,7 @@ export class Order extends BaseEntity {
   total: number | undefined;
 
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   name: string | undefined;
 
   @Column({ nullable: false })
@@ -34,6 +35,7 @@ export class Order extends BaseEntity {
   status: OrderStatus | undefined;
 
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   address: string | undefined;
 
   @Column({ type: 'text', nullable: true })

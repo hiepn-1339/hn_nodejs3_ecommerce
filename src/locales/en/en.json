@@ -178,6 +178,7 @@
   },
   "admin": {
     "order": {
+      "order": "Order",
       "search": "Search",
       "totalMin": "Total Min",
       "totalMax": "Total Max",
@@ -204,7 +205,10 @@
       "price": "Price",
       "quantity": "Quantity",
       "subtotal": "Subtotal",
-      "submit": "Submit"
+      "submit": "Submit",
+      "approve": "Approve",
+      "reject": "Reject",
+      "complete": "Complete"
     },
     "category": {
       "category": "Category",
