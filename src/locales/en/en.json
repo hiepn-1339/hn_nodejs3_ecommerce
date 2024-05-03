@@ -142,7 +142,8 @@
     "total": "Total",
     "placeOrder": "Place Order",
     "coupon": "Coupon",
-    "proof": "Proof"
+    "proof": "Proof",
+    "user": "User"
   },
   "order": {
     "id": "Id",

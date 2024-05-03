@@ -115,7 +115,7 @@ export const getOrderById = async (id: number) => {
     where: {
       id: id,
     },
-    relations: ['coupon'],
+    relations: ['coupon', 'user'],
   });
 };
 
