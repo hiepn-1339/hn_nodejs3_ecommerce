@@ -19,6 +19,12 @@ block content
       form(method='POST' enctype='multipart/form-data' actions='/checkout')
         .row.g-5
           .col-md-12.col-lg-6.col-xl-7
+            if isAdmin
+              .form-item
+                label.form-label.my-3
+                  | #{t('checkout.user')} 
+                  sup.text-danger *
+                input.form-control(type='text' name="name" placeholder='name' disabled value=order.user.name)
             .form-item
               label.form-label.my-3
                 | #{t('checkout.name')} 

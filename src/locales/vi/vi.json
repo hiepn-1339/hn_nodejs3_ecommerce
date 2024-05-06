@@ -142,7 +142,8 @@
     "total": "Tổng cộng",
     "placeOrder": "Đặt hàng",
     "coupon": "Coupon",
-    "proof": "Bằng chứng"
+    "proof": "Bằng chứng",
+    "user": "Người đặt"
   },
   "order": {
     "id": "Id",
