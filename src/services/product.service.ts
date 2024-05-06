@@ -35,8 +35,7 @@ export const getProducts = async (data: any) => {
   }
 
   query.leftJoinAndSelect('product.category', 'category')
-       .leftJoinAndSelect('product.images', 'product_image')
-       .leftJoinAndSelect('product.ratings', 'rating');
+       .leftJoinAndSelect('product.images', 'product_image');
 
   const count = await query.getCount();
 

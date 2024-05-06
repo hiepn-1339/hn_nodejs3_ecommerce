@@ -26,7 +26,7 @@ export const postRegister = [
   asyncHandler(async (req: IUserRequest, res: Response) => {
     const existsUser = await userService.getUserByEmail(req.body.email);
 
-    if (existsUser) {
+    if (existsUser && existsUser.isActive === true) {
       res.render('register', {
         errors: [{
           path: 'email',
@@ -80,7 +80,7 @@ export const getActive = [
     const user = await userService.checkValidTokenActive(hashedToken);
 
     if (!user) {
-      throw new Error(t('error.activeTokenIsInvalidOrHasExpired'));
+      return res.render('failConfirm/index');
     }
 
     await userService.activeUser(user);

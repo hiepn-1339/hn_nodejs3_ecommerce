@@ -25,6 +25,9 @@ const config: {
   awsS3Region: string;
   bucketName: string;
   sessionSecret: string;
+  tokenExpirationTime: number;
+  bankName: string;
+  bankNumber: string;
 } = {
   port: Number(process.env.PORT) || 3000,
   dbHost: process.env.DB_HOST || '',
@@ -42,6 +45,9 @@ const config: {
   awsS3Region: process.env.AWS_S3_REGION || '',
   bucketName: process.env.BUCKET_NAME || '',
   sessionSecret: process.env.SESSION_SECRET || '',
+  tokenExpirationTime: Number(process.env.TOKEN_EXPIRATION_TIME) || 10,
+  bankName: process.env.BANK_NAME || '',
+  bankNumber: process.env.BANK_NUMBER || '',
 };
 
 export default config;

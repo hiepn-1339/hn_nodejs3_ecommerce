@@ -19,7 +19,7 @@ block content
         table.table
           thead
             tr
-              th(scope='col') #{t('cart.products')}
+              th.w-200px(scope='col') #{t('cart.products')}
               th(scope='col') #{t('cart.name')}
               th(scope='col') #{t('cart.price')}
               th(scope='col') #{t('cart.quantity')}
@@ -50,12 +50,13 @@ block content
                 td
                   button.deleteItem.btn.btn-md.rounded-circle.bg-light.border.mt-4(itemId=item.id productName=item.product.name)
                     i.fa.fa-times.text-danger
-      .mt-5
-        input#coupon.border-0.border-bottom.rounded.me-5.py-3.mb-4(type='text' placeholder='Coupon Code' value=(coupon === underfined ? '' : coupon.name ))
-        button#applyCoupon.btn.border-secondary.rounded-pill.px-4.py-3.text-primary(type='button') #{t('cart.applyCoupon')}
-        if errors
-          - let error = errors.find(error => error.path == 'name') 
-          p.text-danger #{error.msg}
+      if items.length > 0
+        .mt-5
+          input#coupon.border-0.border-bottom.rounded.me-5.py-3.mb-4(type='text' placeholder='Coupon Code' value=(coupon === underfined ? '' : coupon.name ))
+          button#applyCoupon.btn.border-secondary.rounded-pill.px-4.py-3.text-primary(type='button') #{t('cart.applyCoupon')}
+          if errors
+            - let error = errors.find(error => error.path == 'name') 
+            p.text-danger #{error.msg}
       .row.g-4.justify-content-end
         .col-8
         .col-sm-8.col-md-7.col-lg-6.col-xl-4
@@ -73,7 +74,8 @@ block content
             .py-4.mb-4.border-top.border-bottom.d-flex.justify-content-between
               h5.mb-0.ps-4.me-4 #{t('cart.total')}
               p.mb-0.pe-4 $#{total}
-            if coupon
-              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order/checkout?coupon=${coupon.name}`) #{t('cart.proceedCheckout')}
-            else 
-              a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order/checkout`) #{t('cart.proceedCheckout')}
+            if items.length > 0
+              if coupon
+                a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order/checkout?coupon=${coupon.name}`) #{t('cart.proceedCheckout')}
+              else 
+                a#checkout.btn.border-secondary.rounded-pill.px-4.py-3.text-primary.text-uppercase.mb-4.ms-4(href=`/order/checkout`) #{t('cart.proceedCheckout')}

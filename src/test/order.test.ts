@@ -136,7 +136,7 @@ describe('cancelOrder', () => {
     
     const order = await orderService.getOrderById(id);
 
-    const updatedOrder = await orderService.cancelOrder(order);
+    const updatedOrder = await orderService.changeStatusOrder(order, OrderStatus.CANCELLED);
 
     expect(updatedOrder).toBeInstanceOf(Order);
     expect(updatedOrder.status).toEqual(OrderStatus.CANCELLED);

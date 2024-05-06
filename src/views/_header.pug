@@ -8,17 +8,23 @@
       #navbarCollapse.collapse.navbar-collapse.bg-white
         .navbar-nav.mx-auto
         .d-flex.m-3.me-0
+          .mx-2.multi-language
+            select.form-select.select-language
+              option#lngVi(value='vi') #{t('vi')}
+              option#lngEn(value='en') #{t('en')}
           if user
-            a.position-relative.me-4.my-auto(href='/cart')
-              i.fa.fa-shopping-bag.fa-2x
+            if !isAdmin
+              a.position-relative.me-4.my-auto(href='/cart')
+                i.fa.fa-shopping-bag.fa-2x
             .nav-item.dropdown
-              a.nav-link(href='#', data-bs-toggle='dropdown')
-                i.fas.fa-user.fa-2x
+              img.avatar.h-60px.w-60px.rounded-circle(src=user.avatar alt='Avatar' data-bs-toggle='dropdown')
               .dropdown-menu.m-0.bg-secondary.rounded-0
                 a.dropdown-item(href='/profile') #{t('header.profile')}
-                a.dropdown-item(href='/order') #{t('header.order')}
+                if !isAdmin
+                  a.dropdown-item(href='/order') #{t('header.order')}
                 a.dropdown-item(href='/auth/logout') #{t('header.logout')}
           else
-            a(href='/auth/login') #{t('header.login')}
-            span |
-            a(href='/user/register') #{t('header.register')}
+            .mt-15px 
+              a(href='/auth/login') #{t('header.login')}
+              span |
+              a(href='/user/register') #{t('header.register')}

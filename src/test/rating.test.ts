@@ -60,6 +60,7 @@ describe('createRating', () => {
         },
         isReviewed: false,
       },
+      relations: ['product'],
     });
 
     const data = {

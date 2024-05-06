@@ -9,18 +9,14 @@ block content
       .row.g-4
         .col-lg-12
           .row.g-4
-            .col-xl-3
+            .col-lg-3
               .input-group.w-100.mx-auto.d-flex
                 input#keyword.form-control.p-3(type='search' placeholder='keywords' aria-describedby='search-icon-1')
                 span#searchProduct.input-group-text.p-3
                   i.fa.fa-search
-            .col-6
-            .col-xl-3
-          .row.g-4
-            .col-lg-3
               .row.g-4
                 .col-lg-12
-                  .mb-3
+                  .mb-3.mt-3
                     h4 #{t('home.categories')}
                     ul.list-unstyled.fruite-categorie
                       each category in categories
@@ -34,7 +30,7 @@ block content
                 .col-lg-12
                   .mb-3
                     label.form-label(for='minPrice') 
-                      | #{t('home.minPrice')}
+                      | #{t('home.minPrice')} 
                     input#minPrice.mb-3.form-control(type='number' required='')
                     label.form-label(for='maxPrice') 
                       | #{t('home.maxPrice')}

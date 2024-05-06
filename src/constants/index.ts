@@ -32,7 +32,7 @@ export enum LengthInput {
 
 export enum Query {
   PAGE_DEFAULT = 1,
-  LIMIT_DEFAULT = 10,
+  LIMIT_DEFAULT = 9,
 }
 
 export enum ErrorCode {

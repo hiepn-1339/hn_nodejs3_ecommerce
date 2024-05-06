@@ -83,8 +83,8 @@ block admin_content
                   |  #{order.status}
                 td
                   .d-flex 
-                    button#approveOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.approved-bg-color.me-2(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.approve')}
-                    button#rejectOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.rejected-bg-color(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.reject')}
+                    button.approveOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.approved-bg-color.me-2(data-order-id=order.id) #{t('admin.order.approve')}
+                    button.rejectOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.rejected-bg-color(data-bs-toggle="modal" data-bs-target="#modalRejectOrder" data-order-id=order.id) #{t('admin.order.reject')}
               else if order.status === OrderStatus.COMPLETED
                 td
                   span.status.complete-color.pb-7px &bull;
@@ -105,7 +105,7 @@ block admin_content
                   span.status.approved-color.pb-7px &bull;
                   |  #{order.status}
                 td
-                  button#completeOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.complete-bg-color(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.complete')}
+                  button.completeOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.complete-bg-color(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.complete')}
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
           each val in Array.from({length: pages}, (_, i) => i + 1)
@@ -113,25 +113,18 @@ block admin_content
               a.page.active.rounded(value=val) #{val}
             else
               a.page.rounded(value=val) #{val}
-  #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
+  #modalRejectOrder.modal.fade(tabindex='-1' aria-labelledby='modalRejectOrder' aria-hidden='true')
     .modal-dialog.modal-dialog-centered
       .modal-content
         .modal-header
-          h1#modalCancelOrder.modal-title.fs-5 #{t('order.titleModal')}
+          h1#modalRejectOrder.modal-title.fs-5 #{t('email.order.reasonReject')}
+            sup.text-danger *
           button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-        .modal-body
-          | #{t('order.areYouSureYouWantToCancelTheOrderWithId')} <span id="orderId"></span>
-        .modal-footer
-          button.btn.btn-secondary(type='button' data-bs-dismiss='modal') #{t('order.no')}
-          button.btn.btn-primary(type='button') #{t('order.yes')}
-  #modalCancelOrder.modal.fade(tabindex='-1' aria-labelledby='modalCancelOrder' aria-hidden='true')
-    .modal-dialog.modal-dialog-centered
-      .modal-content
-        .modal-header
-          h1#modalCancelOrder.modal-title.fs-5 #{t('order.titleModal')}
-          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-        .modal-body
-          | #{t('order.areYouSureYouWantToCancelTheOrderWithId')} <span id="orderId"></span>
-        .modal-footer
-          button.btn.btn-secondary(type='button' data-bs-dismiss='modal') #{t('order.no')}
-          button.btn.btn-primary(type='button') #{t('order.yes')}
+        .modal-body.star-widget
+          form()
+            .textarea
+              textarea#reasonReject(cols='50' placeholder='reason reject' name='reasonReject' required='')
+              p#errorReason.text-danger.d-none #{t('error.invalidReason')}
+            input#orderId.d-none(name='orderId')
+            .btn
+              button#submitRejectOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading...") #{t('order.submit')}
