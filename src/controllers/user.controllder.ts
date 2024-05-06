@@ -27,7 +27,7 @@ export const postRegister = [
     const existsUser = await userService.getUserByEmail(req.body.email);
 
     if (existsUser && existsUser.isActive === true) {
-      res.render('register', {
+      return res.render('register', {
         errors: [{
           path: 'email',
           msg: getTranslatedMessage('error.emailAlreadyExists', req.query.lng),

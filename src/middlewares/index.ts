@@ -31,8 +31,7 @@ export interface IAuthRequest extends Request {
 export const checkLoggedIn = (req: IAuthRequest, res: Response, next: NextFunction) => {
   const user = req.session.user;
   if (!user) {
-    res.redirect('/auth/login');
-    return;
+    return res.redirect('/auth/login');
   }
 
   req.user = user;

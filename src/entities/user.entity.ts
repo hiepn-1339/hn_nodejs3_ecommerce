@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, OneToMany, JoinColumn, OneToOne, Index } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Rating } from './rating.entity';
 import { Cart } from './cart.entity';
@@ -8,6 +8,7 @@ import { Gender, Role } from '../constants';
 @Entity()
 export class User extends BaseEntity {
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   name: string | undefined;
 
   @Column({ nullable: false, unique: true })
@@ -32,6 +33,7 @@ export class User extends BaseEntity {
   avatar: string | undefined;
 
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   address: string | undefined;
 
   @Column({ nullable: false, name: 'is_active', default: false })

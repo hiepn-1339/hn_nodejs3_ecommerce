@@ -28,9 +28,12 @@ export const getCheckout = [
   asyncHandler (async (req: IAuthRequest, res: Response) => {
     const { items, subtotal } = await cartService.getCartItems(req.user);
 
-    const coupon: Coupon = await couponService.findCouponByName(req.query.coupon as string);
-
-    const total = subtotal * (100 - coupon.percentage) / 100;
+    let coupon: Coupon = null;
+    let total = subtotal;
+    if (req.query.coupon) {
+      coupon = await couponService.findCouponByName(req.query.coupon as string || null);
+      total = subtotal * (100 - coupon.percentage) / 100;
+    }
 
     return res.render('checkout/index', {subtotal, total, paymentMethods: Object.keys(PaymentMethod), coupon, items, bank: {
       name: config.bankName,
@@ -48,12 +51,18 @@ class ProcessOrder {
       return res.redirect('/order/checkout');
     } 
 
-    const coupon: Coupon = await couponService.findCouponByName(req.query.coupon as string);
-
-    const total = subtotal * (100 - coupon.percentage) / 100;
+    let coupon: Coupon = null;
+    let total = subtotal;
+    if (req.query.coupon) {
+      coupon = await couponService.findCouponByName(req.query.coupon as string || null);
+      total = subtotal * (100 - coupon.percentage) / 100;
+    }
 
     if (req.errors) {
-      return res.render('checkout/index', {subtotal, total, paymentMethods: Object.keys(PaymentMethod), coupon, errors: req.errors, items });
+      return res.render('checkout/index', {subtotal, total, paymentMethods: Object.keys(PaymentMethod), coupon, errors: req.errors, items, bank: {
+        name: config.bankName,
+        number: config.bankNumber,
+      }});
     }
     
     const data = {
@@ -94,6 +103,7 @@ class ProcessOrder {
         total: getTranslatedMessage('email.order.total', req.query.lng),
         subtotal: getTranslatedMessage('email.order.subtotal', req.query.lng),
         name: getTranslatedMessage('email.order.name', req.query.lng),
+        email: getTranslatedMessage('email.order.email', req.query.lng),
         phone: getTranslatedMessage('email.order.phone', req.query.lng),
         address: getTranslatedMessage('email.order.address', req.query.lng),
         thanks: getTranslatedMessage('email.order.thanks', req.query.lng),
@@ -182,8 +192,10 @@ export const cancelOrder = [
         message: getTranslatedMessage('error.cancelOrderFail', req.query.lng),
       }; 
     }
-    
-    await orderService.changeStatusOrder(req.order, OrderStatus.CANCELLED);
+
+    if (data.status === Status.SUCCESS) {
+      await orderService.changeStatusOrder(req.order, OrderStatus.CANCELLED);
+    }
 
     res.send(data);
     return;

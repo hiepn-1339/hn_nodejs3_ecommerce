@@ -32,5 +32,6 @@ body
             td #{t}
 
   p #{emailData.content.subtotal}: $#{emailData.subtotal}
-  p #{emailData.content.coupon}: (- #{emailData.coupon.percentage}%)
+  if emailData.coupon
+    p #{emailData.content.coupon}: (- #{emailData.coupon.percentage}%)
   p #{emailData.content.total}: $#{emailData.total}

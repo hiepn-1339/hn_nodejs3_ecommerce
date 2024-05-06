@@ -30,10 +30,10 @@ export const createOrder = async (data: any) => {
 
 export const createOrderItems = async (items: CartItem[], order: Order) => {
   const orderItemsPromises = items.map(async item => {
-    if (item.product.quantity < item.quantity) throw new Error(`${item.product.name} is not enough quantity`);
+    // if (item.product.quantity < item.quantity) throw new Error(`${item.product.name} is not enough quantity`);
 
-    item.product.quantity -= item.quantity;
-    await productRepository.save(item.product);
+    // item.product.quantity -= item.quantity;
+    // await productRepository.save(item.product);
     
     const orderItem = orderItemRepository.create({
       quantity: item.quantity,
@@ -145,4 +145,26 @@ export const getOrderItemById = async (id: number) => {
 export const changeStatusOrder = async (order: Order, status: OrderStatus) => {
   order.status = status;
   return await orderRepository.save(order);
+};
+
+export const approveOrder = async (order: Order) => {
+  const items = await orderItemRepository.find({
+    where: {
+      order: {
+        id: order.id,
+      },
+    },
+    relations: ['product'],
+  });
+
+  const updateProductQuantityPromises = items.map(async item => {
+    if (item.product.quantity < item.quantity) throw new Error(`${item.product.name} is not enough quantity`);
+
+    item.product.quantity -= item.quantity;
+    await productRepository.save(item.product);
+  });
+
+  await Promise.all(updateProductQuantityPromises);
+
+  return await changeStatusOrder(order, OrderStatus.APPROVED);
 };

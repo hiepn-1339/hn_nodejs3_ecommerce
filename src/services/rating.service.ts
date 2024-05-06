@@ -59,11 +59,13 @@ export const createRating = async (user: User, orderItem: OrderItem, data: any) 
     ratingPoint: data.ratingPoint,
   });
 
+  const result = await ratingRepository.save(rating);
+
   await calculateRatingAvg(product);
 
   orderItem.isReviewed = true;
 
   await orderItemRepository.save(orderItem);
 
-  return await ratingRepository.save(rating);
+  return result;
 };

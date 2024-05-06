@@ -59,6 +59,7 @@ block admin_content
           tr
             th
             th #{t('admin.order.id')}
+            th #{t('admin.order.createdAt')}
             th #{t('admin.order.name')}
             th #{t('admin.order.total')}
             th #{t('admin.order.paymentMethod')}
@@ -72,6 +73,7 @@ block admin_content
                 a(href=`/order/${order.id}`) 
                   i.fas.fa-eye
               td #{order.id}
+              td.date(value=order.createdAt)
               td.w-250px #{order.name}
               td #{order.total}$
               - let method = order.paymentMethod.replaceAll('_', ' ')

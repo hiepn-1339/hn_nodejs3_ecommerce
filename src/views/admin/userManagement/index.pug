@@ -7,21 +7,24 @@ block admin_content
         label.form-label(for='keyword').pe-2
           | #{t('admin.user.search')}
         .input-group
-          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
-          span#search-icon-1.input-group-text.p-2
-            i.fa.fa-search
+          input#keyword.form-control(type='search' placeholder='Search by name and address' aria-describedby='search-icon-1')
       div.w-25.px-3
         label.form-label(for='gender').pe-2
           | #{t('admin.user.gender')}
         select#gender.form-select
+          option(disabled selected value=null) -- #{t('selectAnOption')} --
           each gender in genders
             option(value=gender) #{gender}
-      div.w-25.px-2
+      div.w-20.px-2
         label.form-label(for='status').pe-2
           | #{t('admin.user.status')}
         select#status.form-select
+          option(disabled selected value=null) -- #{t('selectAnOption')} --
           each status in statuses
             option(value=status) #{status}
+      .w-5.px-2 
+        span#searchUser.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fa.fa-search
     .table-wrapper
       .table-title
         .row
