@@ -278,7 +278,9 @@
       "passwordConfirm": "Xác nhận mật khẩu",
       "genre": "Giới tính",
       "avatar": "Hình đại diện",
-      "update": "Cập nhật"
+      "update": "Cập nhật",
+      "active": "Active",
+      "inactive": "Inactive"
     }
   },
   "email": {

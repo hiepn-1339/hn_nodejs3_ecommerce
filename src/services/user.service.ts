@@ -63,3 +63,9 @@ export const activeUser = async (user: User) => {
 
   await userRepository.save(user);
 };
+
+export const getUsers = async () => {
+  const [users, count] = await userRepository.findAndCount();
+
+  return {users, count};
+};

@@ -278,7 +278,9 @@
       "passwordConfirm": "Password Confirm",
       "genre": "Genre",
       "avatar": "Avatar",
-      "update": "Update"
+      "update": "Update",
+      "active": "Active",
+      "inactive": "Inactive"
     }
   },
   "email": {

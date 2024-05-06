@@ -50,7 +50,7 @@ block admin_content
             tr
               td.w-250px
                 a(href='#')
-                  img.avatar(src=user.avatar alt='Avatar')
+                  img.avatar.h-60px.w-60px(src=user.avatar alt='Avatar')
                   |  #{user.name}
               td #{user.email}
               td #{user.phone}
@@ -58,11 +58,17 @@ block admin_content
               td #{user.dateOfBirth}
               td.text-break.w-300px #{user.address}
               td
-                span.status.text-success &bull;
-                |  #{user.status}
+                if user.isActive
+                  span.status.text-success &bull;
+                  |  #{t('admin.user.active')}
+                else 
+                  span.status.text-danger &bull;
+                  |  #{t('admin.user.inactive')}
               td
-                a(href='#').px-2.text-success
-                  i.fas.fa-pen.fs-24px
+                if user.isActive
+                  button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray #{t('admin.user.inactive')}
+                else 
+                  button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('admin.user.active')}
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
           each val in Array.from({length: pageLength}, (_, i) => i + 1)
