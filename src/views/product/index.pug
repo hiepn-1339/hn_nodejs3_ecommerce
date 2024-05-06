@@ -60,7 +60,7 @@ block content
                   each rating in ratings
                     .d-flex.w-100
                       img.img-fluid.rounded-circle.p-3.w-100px.h-100px(src=rating.user.avatar alt='')
-                      div
+                      .flex-grow-1
                         p.date.mb-2.fs-14px(value=rating.createdAt)
                         .d-flex.justify-content-between
                           h5 #{rating.user.name}

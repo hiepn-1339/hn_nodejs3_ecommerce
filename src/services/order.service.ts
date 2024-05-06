@@ -133,11 +133,6 @@ export const getOrderItems = async (order: Order) => {
   });
 };
 
-export const cancelOrder = async (order: Order) => {
-  order.status = OrderStatus.CANCELLED;
-  return await orderRepository.save(order);
-};
-
 export const getOrderItemById = async (id: number) => {
   return await orderItemRepository.findOne({
     where: {
@@ -145,4 +140,9 @@ export const getOrderItemById = async (id: number) => {
     },
     relations: ['product'],
   });
+};
+
+export const changeStatusOrder = async (order: Order, status: OrderStatus) => {
+  order.status = status;
+  return await orderRepository.save(order);
 };

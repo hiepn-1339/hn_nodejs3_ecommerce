@@ -148,7 +148,27 @@ $(document).ready(function () {
     if (status === 'Success') {
       input.val(parseInt(input.val()) + 1);
       $(`#total-${productId}`).text(`${price * input.val()}$`);
-    } 
+    } else {
+      const lng = readCookie('i18next');
+      let swalOptions;
+      if (lng == 'en') {
+        swalOptions = {
+          title: 'Error',
+          text: 'This product is not available in sufficient quantity',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        };
+      } else  if (lng == 'vi') {
+        swalOptions = {
+          title: 'Lỗi',
+          text: 'Sản phẩm này không đủ số lượng',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        };
+      }
+
+      Swal.fire(swalOptions);
+    }
 
     $(this).prop('disabled', false);
   });
@@ -192,6 +212,8 @@ $(document).ready(function () {
   });
 
   $('#applyCoupon').click(async () => {
+    $('#loader').removeClass('d-none');
+
     const name = $('#coupon').val();
 
     if (!name) return;

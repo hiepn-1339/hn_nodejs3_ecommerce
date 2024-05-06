@@ -1,4 +1,6 @@
 {
+  "vi": "VI",
+  "en": "EN",
   "selectAnOption": "select an option",
   "header": {
     "title": "Fruitables",
@@ -22,8 +24,8 @@
     "categories": "Categories",
     "price": "Price",
     "addToCart": "Add to cart",
-    "minPrice": "Min Price",
-    "maxPrice": "Max Price"
+    "minPrice": "Min Price ($)",
+    "maxPrice": "Max Price ($)"
   },
   "product": {
     "category": "Category",
@@ -110,7 +112,12 @@
     "proofRequired": "Proof required!",
     "cancelOrderFail": "Cancel order fail!",
     "orderItemNotFound": "Order item not found!",
-    "orderItemAlreadyReviewed": "Order item already reviewed!"
+    "orderItemAlreadyReviewed": "Order item already reviewed!",
+    "approveOrderFail": "Approve order fail!",
+    "rejectOrderFail": "Reject order fail!",
+    "completeOrderFail": "Complete order fail!",
+    "invalidReason": "Please enter a valid reason",
+    "accountIsNotActive": "Account is not active!"
   },
   "profile": {
     "title": "Profile",
@@ -143,7 +150,9 @@
     "placeOrder": "Place Order",
     "coupon": "Coupon",
     "proof": "Proof",
-    "user": "User"
+    "user": "User",
+    "bankName": "Bank Name",
+    "bankNumber": "Bank Number"
   },
   "order": {
     "id": "Id",
@@ -171,7 +180,10 @@
     "download": "Download",
     "cancelOrderSuccess": "Cancel Order Success!",
     "submit": "Submit",
-    "ratingSuccess": "Rating success!"
+    "ratingSuccess": "Rating success!",
+    "approveOrderSuccess": "Approve Order Success!",
+    "rejectOrderSuccess": "Reject Order Success!",
+    "completeOrderSuccess": "Complete Order Success!"
   },
   "rating": {
     "rating": "Rating",
@@ -293,7 +305,14 @@
       "name": "Name",
       "phone": "Phone",
       "address": "Address",
-      "thanks": "Thanks"
+      "thanks": "Thanks",
+      "reasonReject": "Reason Reject",
+      "rejectOrder": "Reject Order",
+      "rejectOrderMessage": "Your order has been rejected",
+      "completeOrder": "Complete Order",
+      "completeOrderMessage": "Your order has been completed",
+      "approveOrder": "Approve Order",
+      "approveOrderMessage": "Your order has been approved"
     }
   },
   "emailConfirm": {
@@ -303,5 +322,9 @@
   "sucessConfirm": {
     "sucessConfirm": "Sucess Confirm",
     "text": "Your account has been successfully confirmed. You can now login to your account."
+  },
+  "failConfirm": {
+    "failConfirm": "Fail Confirm",
+    "text": "Active Token is invalid or has expired!"
   }
 }

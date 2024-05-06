@@ -38,6 +38,9 @@ export class Order extends BaseEntity {
   @Index({ fulltext: true })
   address: string | undefined;
 
+  @Column({ nullable: true, name: 'reason_reject' })
+  reasonReject: string | undefined;
+
   @Column({ type: 'text', nullable: true })
   note: string | undefined;
 

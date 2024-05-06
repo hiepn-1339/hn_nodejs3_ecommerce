@@ -15,6 +15,7 @@ import { sendEmail } from '../utils/mail';
 import { t } from 'i18next';
 import { OrderItem } from '../entities/orderItem.entity';
 import * as ratingService from '../services/rating.service';
+import config from '../config';
 
 export interface IOrderRequest extends IAuthRequest {
   errors?: Array<{path: string, msg: string}>;
@@ -31,7 +32,10 @@ export const getCheckout = [
 
     const total = subtotal * (100 - coupon.percentage) / 100;
 
-    return res.render('checkout/index', {subtotal, total, paymentMethods: Object.keys(PaymentMethod), coupon, items });
+    return res.render('checkout/index', {subtotal, total, paymentMethods: Object.keys(PaymentMethod), coupon, items, bank: {
+      name: config.bankName,
+      number: config.bankNumber,
+    }});
   }),
 ];
 
@@ -39,6 +43,10 @@ class ProcessOrder {
   @Transactional()
   static async processOrder(req: IOrderRequest, res: Response) {
     const { items, subtotal } = await cartService.getCartItems(req.user);
+
+    if (items.length === 0) {
+      return res.redirect('/order/checkout');
+    } 
 
     const coupon: Coupon = await couponService.findCouponByName(req.query.coupon as string);
 
@@ -68,7 +76,7 @@ class ProcessOrder {
     await cartService.deleteAllCartItems(req.user);
 
     const emailData = {
-      subject: t('email.order.subject'),
+      subject: getTranslatedMessage('email.order.subject', req.query.lng),
       email: req.user.email,
       order,
       orderItems, 
@@ -131,7 +139,7 @@ export const getOrders = [
   }),
 ];
 
-const checkExistsOrder = async (req: IOrderRequest, res: Response, next: NextFunction) => {
+export const checkExistsOrder = async (req: IOrderRequest, res: Response, next: NextFunction) => {
   const order = await orderService.getOrderById(parseInt(req.params.id));
   if (order === null) {
     res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound') });
@@ -175,7 +183,7 @@ export const cancelOrder = [
       }; 
     }
     
-    await orderService.cancelOrder(req.order);
+    await orderService.changeStatusOrder(req.order, OrderStatus.CANCELLED);
 
     res.send(data);
     return;

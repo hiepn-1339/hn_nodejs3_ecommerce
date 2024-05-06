@@ -86,6 +86,6 @@ block content
                 - let error= errors.find(e => e.path == 'address')
                 if error
                   p.text-danger #{error.msg}
-            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('register.register')}
+            button#register-btn.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('register.register')}
             .d-flex.justify-content-end 
               a(href='/auth/login').mt-2 #{t('register.login')}

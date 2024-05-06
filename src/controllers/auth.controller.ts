@@ -24,6 +24,15 @@ export const postLogin = [
       });
     }
 
+    if (!user.isActive) {
+      res.render('login/index', {
+        errors: [{
+          path: 'email',
+          msg: getTranslatedMessage('error.accountIsNotActive', req.query.lng),
+        }],
+      });
+    }
+
     req.session.user = user;
     if (user.role === Role.ADMIN) {
       return res.redirect('/admin/order');

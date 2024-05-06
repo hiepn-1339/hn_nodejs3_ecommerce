@@ -76,7 +76,7 @@ app.use(setPaginateQuery);
 app.use('', routes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const lng = req.query.lng as string || 'vi';
+  const lng = req.query.lng as string || req.cookies.i18next || 'vi';
   i18next.changeLanguage(lng);
   next();
 });

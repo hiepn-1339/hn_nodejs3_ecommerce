@@ -1,4 +1,6 @@
 {
+  "vi": "VI",
+  "en": "EN",
   "selectAnOption": "chọn một cái",
   "header": {
     "title": "Fruitables",
@@ -22,8 +24,8 @@
     "categories": "Danh mục",
     "price": "Giá",
     "addToCart": "Thêm vào giỏ hàng",
-    "minPrice": "Giá thấp nhất",
-    "maxPrice": "Giá cao nhất"
+    "minPrice": "Giá thấp nhất ($)",
+    "maxPrice": "Giá cao nhất ($)"
   },
   "product": {
     "category": "Danh mục",
@@ -110,7 +112,12 @@
     "proofRequired": "Proof không được trống!",
     "cancelOrderFail": "Hủy đơn hàng lỗi",
     "orderItemNotFound": "Không tìm thấy mục đơn hàng!",
-    "orderItemAlreadyReviewed": "Mục đơn hàng đã được đánh giá trước đó!"
+    "orderItemAlreadyReviewed": "Mục đơn hàng đã được đánh giá trước đó!",
+    "approveOrderFail": "Chấp nhận đơn hàng thất bại!",
+    "rejectOrderFail": "Từ chối đơn hàng thất bại!",
+    "completeOrderFail": "Hoàn thành đơn hàng thất bại!",
+    "invalidReason": "Vui lòng nhập địa chỉ lý do hợp lệ",
+    "accountIsNotActive": "Tài khoản chưa được active!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -143,7 +150,9 @@
     "placeOrder": "Đặt hàng",
     "coupon": "Coupon",
     "proof": "Bằng chứng",
-    "user": "Người đặt"
+    "user": "Người đặt",
+    "bankName": "Tên ngân hàng",
+    "bankNumber": "Số tài khoản"
   },
   "order": {
     "id": "Id",
@@ -171,7 +180,10 @@
     "download": "Tải về",
     "cancelOrderSuccess": "Hủy đơn hàng thành công!",
     "submit": "Submit",
-    "ratingSuccess": "Đánh giá thành công!"
+    "ratingSuccess": "Đánh giá thành công!",
+    "approveOrderSuccess": "Chấp nhận đơn hàng thành công!",
+    "rejectOrderSuccess": "Từ chối đơn hàng thành công!",
+    "completeOrderSuccess": "Hoàn thành đơn hàng thành công!"
   },
   "rating": {
     "rating": "Đánh giá",
@@ -293,7 +305,14 @@
       "name": "Tên",
       "phone": "Điện thoại",
       "address": "Địa chỉ",
-      "thanks": "Cảm ơn bạn"
+      "thanks": "Cảm ơn bạn",
+      "reasonReject": "Lý do từ chối",
+      "rejectOrder": "Từ chối đơn hàng",
+      "rejectOrderMessage": "Đơn hàng của bạn đã bị từ chối",
+      "completeOrder": "Hoàn tất Đơn hàng",
+      "completeOrderMessage": "Đơn hàng của bạn đã được hoàn tất",
+      "approveOrder": "Duyệt Đơn hàng",
+      "approveOrderMessage": "Đơn hàng của bạn đã được duyệt"
     }
   },
   "emailConfirm": {
@@ -303,5 +322,9 @@
   "successConfirm": {
     "successConfirm": "Xác nhận thành công",
     "text": "Tài khoản của bạn đã được xác nhận thành công. Bây giờ bạn có thể đăng nhập vào tài khoản của mình."
+  },
+  "failConfirm": {
+    "failConfirm": "Xác nhận thất bại",
+    "text": "Token kích hoạt không hợp lệ hoặc đã hết hạn!"
   }
 }

@@ -87,8 +87,7 @@ block content
                       p.mb-0.text-dark.py-3 #{t('checkout.subtotal')}
                     th(scope='row')
                     td.py-5
-                    td.py-5
-                    td.py-5
+                    td.py-5(colspan='2')
                       .py-3.border-bottom.border-top
                         p.mb-0.text-dark $#{subtotal}
                   if coupon 
@@ -97,8 +96,7 @@ block content
                         p.mb-0.text-dark.py-3 #{t('checkout.coupon')}
                       th(scope='row')
                       td.py-5
-                      td.py-5
-                      td.py-5
+                      td.py-5(colspan='2')
                         .py-3.border-bottom.border-top
                           p.mb-0.text-dark -#{coupon.percentage}%
                   tr
@@ -106,8 +104,7 @@ block content
                       p.mb-0.text-dark.text-uppercase.py-3 #{t('checkout.total')}
                     th(scope='row')
                     td.py-5
-                    td.py-5
-                    td.py-5
+                    td.py-5(colspan='3')
                       .py-3.border-bottom.border-top
                         p.mb-0.text-dark $#{total}
                   tr
@@ -121,6 +118,8 @@ block content
                           - let text = method.replaceAll('_', ' ')
                           label.form-check-label(for=method) #{text}
               #proof-input.d-none.border-bottom.py-5
+                p #{t('checkout.bankName')}: #{bank.name}
+                p #{t('checkout.bankNumber')}: #{bank.number}
                 label.form-label(for='proof')
                   | #{t('checkout.proof')}
                   sup.text-danger *
@@ -129,4 +128,4 @@ block content
                   - let error= errors.find(e => e.path == 'proof')
                   if error
                     p.text-danger #{error.msg}
-              button.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='submit') #{t('checkout.placeOrder')}
+              button#placeOrder.btn.border-secondary.py-3.px-4.text-uppercase.w-100.text-primary(type='submit') #{t('checkout.placeOrder')}

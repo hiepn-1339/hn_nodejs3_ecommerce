@@ -79,7 +79,7 @@ block content
                       span.status.pending-color.pb-7px &bull;
                       |  #{order.status}
                     td
-                      button#cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('order.cancel')}
+                      button.cancelOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('order.cancel')}
                   else if order.status === OrderStatus.COMPLETED
                     td
                       span.status.complete-color.pb-7px &bull;

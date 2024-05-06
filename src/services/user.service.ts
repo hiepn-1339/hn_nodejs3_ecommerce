@@ -3,6 +3,7 @@ import { AppDataSource } from '../database/dataSource';
 import { User } from '../entities/user.entity';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import config from '../config';
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -25,7 +26,7 @@ export const createAccount = async (data: any) => {
     avatar: data.avatar,
     address: data.address,
     tokenActive: hashedToken,
-    tokenActiveExpires: new Date(Date.now() + 10 * 60 * 1000),
+    tokenActiveExpires: new Date(Date.now() + config.tokenExpirationTime * 60 * 1000),
   });
   
   const newUser = await userRepository.save(user);
