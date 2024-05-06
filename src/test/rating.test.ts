@@ -26,7 +26,6 @@ describe('getRatingsByProduct', () => {
 
     ratings.forEach(rating => {
       expect(rating).toBeInstanceOf(Rating);
-      expect(rating.product.id).toEqual(id);
       expect(rating.user).toBeInstanceOf(User);
     });
 

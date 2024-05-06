@@ -45,3 +45,8 @@ export enum Status {
   FAIL = 'Fail',
   ERROR = 'Error',
 }
+
+export enum UserStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
