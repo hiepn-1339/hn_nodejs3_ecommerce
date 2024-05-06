@@ -107,6 +107,50 @@
       window.location.href = newURL;
     });
 
+    $('#searchAdminOrder').click(function() {
+      var keyword = $('#keyword').val();
+      var totalMin = $('#totalMin').val();
+      var totalMax = $('#totalMax').val();
+      var startDate = $('#startDate').val();
+      var endDate = $('#endDate').val();
+      var payment = $('#payment').val();
+      var status = $('#status').val();
+
+      var query = {
+        page: 1,
+      };
+
+      if (keyword) {
+        query.keyword = keyword;
+      }
+      if (totalMin) {
+        query.totalMin = totalMin;
+      }
+      if (totalMax) {
+        query.totalMax = totalMax;
+      }
+      if (startDate) {
+        query.startDate = startDate;
+      }
+      if (endDate) {
+        query.endDate = endDate;
+      }
+      if (payment) {
+        query.paymentMethod = payment;
+      }
+      if (status) {
+        query.status = status;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 

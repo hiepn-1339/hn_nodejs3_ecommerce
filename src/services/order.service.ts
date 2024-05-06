@@ -1,5 +1,5 @@
 import { Brackets } from 'typeorm';
-import { OrderStatus } from '../constants';
+import { OrderStatus, Role } from '../constants';
 import { AppDataSource } from '../database/dataSource';
 import { CartItem } from '../entities/cartItem.entity';
 import { Order } from '../entities/order.entity';
@@ -50,6 +50,25 @@ export const createOrderItems = async (items: CartItem[], order: Order) => {
 export const getOrders = async (user: User, data: any) => {
   const query = orderRepository.createQueryBuilder('order');
 
+  if (data.keyword) {
+    query.andWhere(new Brackets(qb => {
+      qb.where('MATCH(order.name) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword })
+        .orWhere('MATCH(order.address) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword });
+    }));
+  }
+
+  if (data.totalMin) {
+    query.andWhere('(order.total >= :totalMin)', {
+      totalMin: data.totalMin,
+    });
+  }
+
+  if (data.totalMax) {
+    query.andWhere('(order.total <= :totalMax)', {
+      totalMax: data.totalMax,
+    });
+  }
+
   if (data.startDate) {
     query.andWhere('(order.created_at >= :startDate)', {
       startDate: data.startDate,
@@ -74,9 +93,11 @@ export const getOrders = async (user: User, data: any) => {
     });
   }
 
-  query.andWhere('order.user_id = :userId', {
-    userId: user.id,
-  });
+  if (user.role !== Role.ADMIN) {
+    query.andWhere('order.user_id = :userId', {
+      userId: user.id,
+    });
+  }
 
   const count = await query.getCount();
 
@@ -124,51 +145,4 @@ export const getOrderItemById = async (id: number) => {
     },
     relations: ['product'],
   });
-};
-
-export const getAllOrders = async (data: any) => {
-  const query = orderRepository.createQueryBuilder('order');
-
-  if (data.keyword) {
-    query.andWhere(new Brackets(qb => {
-      qb.where('MATCH(order.name) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword })
-        .orWhere('MATCH(order.address) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword });
-    }));
-  }
-
-  if (data.startDate) {
-    query.andWhere('(order.created_at >= :startDate)', {
-      startDate: data.startDate,
-    });
-  }
-
-  if (data.endDate) {
-    query.andWhere('(order.created_at <= :endDate)', {
-      endDate: data.endDate,
-    });
-  }
-
-  if (data.status) {
-    query.andWhere('order.status = :status', {
-      status: data.status,
-    });
-  }
-
-  if (data.paymentMethod) {
-    query.andWhere('order.payment_method = :paymentMethod', {
-      paymentMethod: data.paymentMethod,
-    });
-  }
-
-  query.leftJoinAndSelect('order.user', 'user');
-
-  const count = await query.getCount();
-
-  const orders = await query
-    .orderBy('order.created_at', 'DESC')
-    .limit(data.limit)
-    .offset((data.page - 1) * data.limit)
-    .getMany();
-
-  return {orders, count};
 };
