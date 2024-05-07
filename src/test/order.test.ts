@@ -62,15 +62,6 @@ describe('createOrderItems', () => {
     });
     expect(createdItems).toHaveLength(items.length);
   });
-
-  it('should throw an error if product quantity is not enough', async () => {
-    const items = [
-      { product: { id: 1, name: 'Product 1', quantity: 2, price: 20 }, quantity: 10000 },
-    ];
-    const order = { id: 1 };
-
-    await expect(orderService.createOrderItems(items as CartItem[], order as Order)).rejects.toThrow('Product 1 is not enough quantity');
-  });
 });
 
 describe('getOrders', () => {

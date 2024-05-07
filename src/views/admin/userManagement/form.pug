@@ -3,59 +3,130 @@ extends ../layoutAdmin
 block admin_content
   .row.mt-5
     .col-md-6.offset-md-3
-      h1 {{Action}} #{t('admin.user.user')}
-      form
-            .mb-3
-              label.form-label(for='name') 
-                | #{t('admin.user.name')}
-                sup.text-danger *
-              input#name.form-control(disabled type='text' required='')
-            .mb-3
-              label.form-label(for='email') 
-                | #{t('admin.user.email')}
-                sup.text-danger *
-              input#email.form-control(disabled type='email' required='')
-            .mb-3
-              label.form-label(for='password') 
-                | #{t('admin.user.password')}
-                sup.text-danger *
-              input#password.form-control(disabled type='password' required='')
-            .mb-3
-              label.form-label(for='passwordConfirm')
-                | #{t('admin.user.passwordConfirm')} 
-                sup.text-danger *
-              input#passwordConfirm.form-control(disabled type='password' required='')
-            .mb-3
-              label.form-label(for='phone')
-                | #{t('admin.user.phone')}
-                sup.text-danger *
-              input#phone.form-control(disabled type='tel' required='')
-            .mb-3
-              label.form-label(for='gender')
-                | #{t('admin.user.genre')}
-                sup.text-danger *
-              select#gender.form-select(disabled)
-            .mb-3
-              label.form-label(for='dateOfBirth')
-                | #{t('admin.user.dateOfBirth')}
-                sup.text-danger *
-              input#dateOfBirth.form-control(disabled type='date')
-            .mb-3
-              label.form-label(for='avatar')
-                | #{t('admin.user.avatar')}
-                sup.text-danger *
-              input#avatar.form-control(disabled type='file')
-            .mb-3
-              label.form-label(for='address')
-                | #{t('admin.user.address')}
-                sup.text-danger *
-              textarea#address.form-control(disabled rows='3' required='')
-            .mb-3
-              label.form-label(for='gender')
-                | #{t('admin.user.status')}
-                sup.text-danger *
-              select#gender.form-select
-                each status in statuses
-                  option(value=status) #{status}
-            button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('admin.user.update')}
-            .d-flex.justify-content-end 
+      if isUpdate
+        h1 #{t('admin.user.updateUser')}
+      else 
+        h1 #{t('admin.user.createUser')}
+      form(method='POST' enctype='multipart/form-data' actions=(isUpdate ? 'update' : ''))
+        .mb-3
+          label.form-label(for='name') 
+            | #{t('admin.user.name')}
+            sup.text-danger *
+          if isUpdate
+            input#name.form-control(disabled value=(user ? user.name : '') type='text' required='')
+          else
+            input#name.form-control(type='text' required='' name='name')
+          if errors
+            - let error = errors.find(e => e.path == 'name')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='email') 
+            | #{t('admin.user.email')}
+            sup.text-danger *
+          if isUpdate
+            input#email.form-control(disabled value=(user ? user.email : '') type='email' required='')
+          else 
+           input#email.form-control(type='email' required='' name='email')
+          if errors
+            - let error = errors.find(e => e.path == 'email')
+            if error
+              p.text-danger #{error.msg}
+        if !isUpdate
+          .mb-3
+            label.form-label(for='password') 
+              | #{t('admin.user.password')}
+              sup.text-danger *
+            input#password.form-control(type='password' required='' name='password')
+            if errors
+              - let error = errors.find(e => e.path == 'password')
+              if error
+                p.text-danger #{error.msg}
+          .mb-3
+            label.form-label(for='passwordConfirm')
+              | #{t('admin.user.passwordConfirm')} 
+              sup.text-danger *
+            input#passwordConfirm.form-control(type='password' required='' name='passwordConfirm')
+            if errors
+              - let error= errors.find(e => e.path == 'passwordConfirm')
+              if error
+                p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='phone')
+            | #{t('admin.user.phone')}
+            sup.text-danger *
+          if isUpdate
+            input#phone.form-control(disabled value=(user ? user.phone : '') type='tel' required='')
+          else 
+            input#phone.form-control(type='tel' required='' name='phone')
+          if errors
+            - let error= errors.find(e => e.path == 'phone')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='gender')
+            | #{t('admin.user.genre')}
+            sup.text-danger *
+          if isUpdate
+            select#gender.form-select(disabled value=(user ? user.gender : ''))
+          else 
+            select#gender.form-select(name='gender')
+              each gender in genders
+                option(value=gender) #{gender}
+        .mb-3
+          label.form-label(for='dateOfBirth')
+            | #{t('admin.user.dateOfBirth')}
+            sup.text-danger *
+          if isUpdate
+            input#dateOfBirth.form-control(disabled value=(user ? user.dateOfBirth : '') type='date')
+          else 
+            input#dateOfBirth.form-control(type='date' name='dateOfBirth')
+          if errors
+            - let error= errors.find(e => e.path == 'dateOfBirth')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='avatar')
+            | #{t('admin.user.avatar')}
+            sup.text-danger *
+          if !isUpdate
+            input#avatar.form-control(type='file' name='avatar')
+          if avatarError
+            p.text-danger #{avatarError}
+        .mb-3
+          label.form-label(for='address')
+            | #{t('admin.user.address')}
+            sup.text-danger *
+          if isUpdate
+            textarea#address.form-control(disabled value=(user ? user.address : '') rows='3' required='')
+          else 
+            textarea#address.form-control(rows='3' required='' name='address')
+          if errors
+            - let error= errors.find(e => e.path == 'address')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='status')
+            | #{t('admin.user.status')}
+          select#status.form-select(name="isActive")
+            each status in userStatus
+              option(value=status) #{status}
+          if errors
+            - let error= errors.find(e => e.path == 'isActive')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='role')
+            | #{t('admin.user.role')}
+          select#role.form-select(name="role")
+            each role in roles
+              option(value=role) #{role}
+          if errors
+            - let error= errors.find(e => e.path == 'role')
+            if error
+              p.text-danger #{error.msg}
+        if isUpdate
+          button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('admin.user.update')}
+        else 
+          button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('admin.user.create')}
+        .d-flex.justify-content-end 
