@@ -100,3 +100,20 @@ export const getUsers = async (data: any) => {
 
   return {users, count};
 };
+
+export const adminCreateAccount = async (data: any) => {
+  const user = userRepository.create({
+    name: data.name,
+    email: data.email,
+    password: bcrypt.hashSync(data.password, 10),
+    gender: data.gender,
+    phone: data.phone,
+    dateOfBirth: data.dateOfBirth,
+    avatar: data.avatar,
+    address: data.address,
+    role: data.role,
+    isActive: data.isActive,
+  });
+  
+  return await userRepository.save(user);
+};

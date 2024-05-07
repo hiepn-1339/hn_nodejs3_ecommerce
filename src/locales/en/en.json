@@ -118,7 +118,10 @@
     "completeOrderFail": "Complete order fail!",
     "invalidReason": "Please enter a valid reason",
     "accountIsNotActive": "Account is not active!",
-    "paymentMethodRequired": "Payment method is required!"
+    "paymentMethodRequired": "Payment method is required!",
+    "roleInvalid": "Role is invalid!",
+    "statusInvalid": "Status is invalid!",
+    "paymentMethodInvalid": "Payment method is invalid!"
   },
   "profile": {
     "title": "Profile",
@@ -282,7 +285,11 @@
       "avatar": "Avatar",
       "update": "Update",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "role": "Role",
+      "updateUser": "Update User",
+      "create": "Create",
+      "createUser": "Create User"
     }
   },
   "email": {

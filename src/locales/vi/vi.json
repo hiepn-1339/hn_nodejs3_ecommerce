@@ -118,7 +118,10 @@
     "completeOrderFail": "Hoàn thành đơn hàng thất bại!",
     "invalidReason": "Vui lòng nhập địa chỉ lý do hợp lệ",
     "accountIsNotActive": "Tài khoản chưa được active!",
-    "paymentMethodRequired": "Phương thức thanh toán không được trống!"
+    "paymentMethodRequired": "Phương thức thanh toán không được trống!",
+    "roleInvalid": "Role không hợp lệ!",
+    "statusInvalid": "Status không hợp lệ!",
+    "paymentMethodInvalid": "Payment không hợp lệ!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -282,7 +285,11 @@
       "avatar": "Hình đại diện",
       "update": "Cập nhật",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "role": "Role",
+      "updateUser": "Cập nhật người dùng",
+      "create": "Tạo",
+      "createUser": "Tạo người dùng"
     }
   },
   "email": {

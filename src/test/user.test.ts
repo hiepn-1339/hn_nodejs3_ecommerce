@@ -2,9 +2,10 @@ import { faker } from '@faker-js/faker';
 import { AppDataSource } from '../database/dataSource';
 import { User } from '../entities/user.entity';
 import { Cart } from '../entities/cart.entity';
-import { Gender } from '../constants';
+import { Gender, Role } from '../constants';
 import * as userService from '../services/user.service';
 import * as cartService from '../services/cart.service';
+import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
 let connection;
@@ -162,3 +163,36 @@ describe('getUsers', () => {
     });
   });
 });
+
+describe('adminCreateAccount', () => {
+  it('should create a new user', async () => {
+    const data = {
+      name: faker.internet.userName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      phone: faker.phone.number(),
+      address: faker.location.secondaryAddress(),
+      gender: faker.helpers.enumValue(Gender),
+      dateOfBirth: faker.date.past(),
+      avatar: faker.internet.url(),
+      isActive: faker.datatype.boolean(),
+      role: faker.helpers.enumValue(Role),
+    };
+
+    const user = await userService.adminCreateAccount(data);
+
+    const checkPassword = await bcrypt.compare(data.password, user.password);
+
+    expect(user).toBeInstanceOf(User);
+    expect(user.role).toEqual(data.role); 
+    expect(user.email).toEqual(data.email);
+    expect(checkPassword).toEqual(true);
+    expect(user.phone).toEqual(data.phone);
+    expect(user.address).toEqual(data.address);
+    expect(user.gender).toEqual(data.gender);
+    expect(user.dateOfBirth).toEqual(data.dateOfBirth);
+    expect(user.avatar).toEqual(data.avatar);
+    expect(user.role).toEqual(data.role);
+    expect(user.isActive).toEqual(data.isActive);
+  });
+}); 

@@ -14,7 +14,7 @@ export class CreateOrderDTO {
   @Length(LengthInput.MIN_LENGTH_TEXT, LengthInput.MAX_LENGTH_TEXT, { message: 'error.addressLengthError' })
   address: string;
 
-  @IsEnum(PaymentMethod)
+  @IsEnum(PaymentMethod, {message: 'error.paymentMethodInvalid'})
   paymentMethod: PaymentMethod;
 
   constructor(data: any) {

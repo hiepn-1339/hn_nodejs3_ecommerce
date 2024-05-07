@@ -30,11 +30,6 @@ export const createOrder = async (data: any) => {
 
 export const createOrderItems = async (items: CartItem[], order: Order) => {
   const orderItemsPromises = items.map(async item => {
-    // if (item.product.quantity < item.quantity) throw new Error(`${item.product.name} is not enough quantity`);
-
-    // item.product.quantity -= item.quantity;
-    // await productRepository.save(item.product);
-    
     const orderItem = orderItemRepository.create({
       quantity: item.quantity,
       product: item.product,
