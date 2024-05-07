@@ -309,6 +309,110 @@
         console.error(e);
       });
     });
+
+    $('.inactiveUser').on('click', (e) => {
+      const userId = $(e.target).data('user-id');
+      
+      const lng = readCookie('i18next');
+
+      let options;
+
+      if (lng === 'en') {
+        options = {
+          title: 'Warning',
+          text: 'Are you sure you want to inactivate this user?',
+          icon: 'warning',
+          confirmButtonText: 'Ok',
+        };
+      } else {
+        options = {
+          title: 'Warning',
+          text: 'Bạn có chắc chắn muốn vô hiệu hóa người dùng này không?',
+          icon: 'warning',
+          confirmButtonText: 'Ok',
+        };
+      }
+
+      Swal.fire(options)
+      .then(() => {
+        $('#loader').removeClass('d-none');
+        fetch(`/admin/user/${userId}/inactive`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => response.text())
+        .then((data) => {
+          $('#loader').addClass('d-none');
+          data = JSON.parse(data);
+          Swal.fire({
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          })
+          .then(() => {
+            window.location.reload();
+          });
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      });
+    });
+
+    $('.activeUser').on('click', (e) => {
+      const userId = $(e.target).data('user-id');
+      
+      const lng = readCookie('i18next');
+
+      let options;
+
+      if (lng === 'en') {
+        options = {
+          title: 'Warning',
+          text: 'Are you sure you want to activate this user?',
+          icon: 'warning',
+          confirmButtonText: 'Ok',
+        };
+      } else {
+        options = {
+          title: 'Warning',
+          text: 'Bạn có chắc chắn muốn kích hoạt người dùng này không?',
+          icon: 'warning',
+          confirmButtonText: 'Ok',
+        };
+      }
+
+      Swal.fire(options)
+      .then(() => {
+        $('#loader').removeClass('d-none');
+        fetch(`/admin/user/${userId}/active`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => response.text())
+        .then((data) => {
+          $('#loader').addClass('d-none');
+          data = JSON.parse(data);
+          Swal.fire({
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          })
+          .then(() => {
+            window.location.reload();
+          });
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      });
+    });
   });
 
   // Fixed Navbar

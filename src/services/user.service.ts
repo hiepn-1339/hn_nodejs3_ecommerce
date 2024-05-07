@@ -132,3 +132,9 @@ export const adminUpdateUser = async (user: User, data: any) => {
 
   return await userRepository.save(user);
 };
+
+export const changeStatusUser = async (user: User, status: boolean) => {
+  user.isActive = status;
+
+  return await userRepository.save(user);
+};

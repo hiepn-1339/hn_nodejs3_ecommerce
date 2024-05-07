@@ -226,3 +226,18 @@ describe('adminUpdateUser', () => {
     expect(newUser.isActive).toEqual(data.isActive);
   });
 }); 
+
+describe('changeStatusUser', () => {
+  it('should change user status', async () => {
+    const id = faker.number.int({min: 1, max: 1000});
+
+    const isActive = faker.datatype.boolean();
+
+    const user = await userService.getUserById(id);
+    
+    const newUser = await userService.changeStatusUser(user, isActive);
+
+    expect(newUser).toBeInstanceOf(User);
+    expect(newUser.isActive).toEqual(isActive);
+  });
+});
