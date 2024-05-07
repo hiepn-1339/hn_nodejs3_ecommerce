@@ -227,6 +227,25 @@
       window.location.href = newURL;
     });
 
+    $('#searchCategory').click(() => {
+      var keyword = $('#keyword').val();
+      var query = {
+        page: 1,
+      };
+
+      if (keyword) {
+        query.keyword = keyword;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 
