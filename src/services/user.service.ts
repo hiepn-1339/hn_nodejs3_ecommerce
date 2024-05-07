@@ -1,9 +1,10 @@
-import { MoreThan } from 'typeorm';
+import { Brackets, MoreThan } from 'typeorm';
 import { AppDataSource } from '../database/dataSource';
 import { User } from '../entities/user.entity';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import config from '../config';
+import { UserStatus } from '../constants';
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -64,8 +65,38 @@ export const activeUser = async (user: User) => {
   await userRepository.save(user);
 };
 
-export const getUsers = async () => {
-  const [users, count] = await userRepository.findAndCount();
+export const getUsers = async (data: any) => {
+  const query = userRepository.createQueryBuilder('user');
+
+  if (data.keyword) {
+    query.andWhere(new Brackets(qb => {
+      qb.where('MATCH(user.name) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword })
+        .orWhere('MATCH(user.address) AGAINST (:keyword IN BOOLEAN MODE)', { keyword: data.keyword });
+    }));
+  }
+
+  if (data.gender) {
+    query.andWhere('user.gender = :gender', {
+      gender: data.gender,
+    });
+  }
+
+  if (data.status === UserStatus.ACTIVE) {
+    query.andWhere('user.isActive = true');
+  }
+
+  if (data.status === UserStatus.INACTIVE) {
+    query.andWhere('user.isActive = false');
+  }
+
+  const count = await query.getCount();
+
+  const users = await query
+    .orderBy('user.created_at', 'DESC')
+    .limit(data.limit)
+    .offset((data.page - 1) * data.limit)
+    .getMany();
+
 
   return {users, count};
 };

@@ -60,7 +60,7 @@ block content
                | #{t('checkout.note')}
               textarea.form-control(name='note' spellcheck='false' cols='30' rows='11' placeholder='Oreder Notes (Optional)')
             .form-item.d-none
-              input.form-control(type='text' name="coupon" value=(coupon === underfined ? '' : coupon.name))
+              input.form-control(type='text' name="coupon" value=(coupon ? coupon.name : ''))
           .col-md-12.col-lg-6.col-xl-5
             .table-responsive
               table.table
@@ -117,13 +117,19 @@ block content
                           input.form-check-payment-method.form-check-input.bg-primary.border-0(type='checkbox' name='paymentMethod' value=method id=method)
                           - let text = method.replaceAll('_', ' ')
                           label.form-check-label(for=method) #{text}
+                  if errors
+                    - let error= errors.find(e => e.path == 'paymentMethod')
+                    if error
+                      tr
+                        td(colspan='5')
+                              p.text-danger #{error.msg}
               #proof-input.d-none.border-bottom.py-5
                 p #{t('checkout.bankName')}: #{bank.name}
                 p #{t('checkout.bankNumber')}: #{bank.number}
                 label.form-label(for='proof')
                   | #{t('checkout.proof')}
                   sup.text-danger *
-                input#proof.form-control(type='file' required='' name='proof')
+                input#proof.form-control(type='file' name='proof')
                 if errors
                   - let error= errors.find(e => e.path == 'proof')
                   if error

@@ -135,3 +135,30 @@ describe('getUserByEmail', () => {
     expect(user).toBeNull();
   });
 });
+
+describe('getUsers', () => {
+  it('should return all users', async () => {
+    const data = {
+      keyword: 'Hai',
+      gender: 'MALE',
+      status: 'ACTIVE',
+      page: 1,
+      limit: 10,
+    };
+
+    const words = data.keyword.toLocaleLowerCase().split(' ');
+
+    const {users, count} = await userService.getUsers(data);
+    
+    expect(users).toBeInstanceOf(Array);
+    expect(count).toBeGreaterThanOrEqual(0);
+    users.forEach(user => {
+      expect(user).toBeInstanceOf(User);
+      expect(user.gender).toEqual(data.gender);
+      expect(user.isActive).toEqual(true);
+      const nameContainsKeyword = words.some(word => user.name.toLocaleLowerCase().includes(word));
+      const addressContainsKeyword = words.some(word => user.address.toLocaleLowerCase().includes(word));
+      expect(nameContainsKeyword || addressContainsKeyword).toBe(true);
+    });
+  });
+});

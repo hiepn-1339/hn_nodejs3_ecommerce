@@ -12,10 +12,12 @@ export const createCart = async (user: User) => {
   const cart = new Cart();
   cart.user = user;
 
+  const result = await cartRepository.save(cart);
+
   user.cart = cart;
   await userRepository.save(user);
 
-  return await cartRepository.save(cart);
+  return result;
 };
 
 export const updateItemToCart = async (user: User, data: any) => {

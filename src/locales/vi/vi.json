@@ -117,7 +117,8 @@
     "rejectOrderFail": "Từ chối đơn hàng thất bại!",
     "completeOrderFail": "Hoàn thành đơn hàng thất bại!",
     "invalidReason": "Vui lòng nhập địa chỉ lý do hợp lệ",
-    "accountIsNotActive": "Tài khoản chưa được active!"
+    "accountIsNotActive": "Tài khoản chưa được active!",
+    "paymentMethodRequired": "Phương thức thanh toán không được trống!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -221,7 +222,8 @@
       "submit": "Gửi",
       "approve": "Chấp nhận",
       "reject": "Từ chối",
-      "complete": "Hoàn thành"
+      "complete": "Hoàn thành",
+      "createdAt": "Created At"
     },
     "category": {
       "category": "Danh mục",
@@ -297,7 +299,7 @@
       "subject": "Chi tiết Đơn hàng",
       "thankyou": "Cảm ơn bạn",
       "message": "Đơn hàng của bạn đã được ghi nhận",
-      "orderId": "Mã Đơn hàng: ",
+      "orderId": "Mã Đơn hàng",
       "product": "Sản phẩm",
       "quantity": "Số lượng",
       "price": "Giá",
@@ -314,7 +316,8 @@
       "completeOrder": "Hoàn tất Đơn hàng",
       "completeOrderMessage": "Đơn hàng của bạn đã được hoàn tất",
       "approveOrder": "Duyệt Đơn hàng",
-      "approveOrderMessage": "Đơn hàng của bạn đã được duyệt"
+      "approveOrderMessage": "Đơn hàng của bạn đã được duyệt",
+      "email": "Email"
     }
   },
   "emailConfirm": {

@@ -8,7 +8,7 @@ export const getUsers = [
   checkLoggedIn,
   checkIsAdmin,
   asyncHandler(async (req: Request, res: Response) => {
-    const {users, count} = await userService.getUsers();
+    const {users, count} = await userService.getUsers(req.query);
 
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 

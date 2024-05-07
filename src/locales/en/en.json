@@ -117,7 +117,8 @@
     "rejectOrderFail": "Reject order fail!",
     "completeOrderFail": "Complete order fail!",
     "invalidReason": "Please enter a valid reason",
-    "accountIsNotActive": "Account is not active!"
+    "accountIsNotActive": "Account is not active!",
+    "paymentMethodRequired": "Payment method is required!"
   },
   "profile": {
     "title": "Profile",
@@ -221,7 +222,8 @@
       "submit": "Submit",
       "approve": "Approve",
       "reject": "Reject",
-      "complete": "Complete"
+      "complete": "Complete",
+      "createdAt":"Created At"
     },
     "category": {
       "category": "Category",
@@ -314,7 +316,8 @@
       "completeOrder": "Complete Order",
       "completeOrderMessage": "Your order has been completed",
       "approveOrder": "Approve Order",
-      "approveOrderMessage": "Your order has been approved"
+      "approveOrderMessage": "Your order has been approved",
+      "email": "Email"
     }
   },
   "emailConfirm": {

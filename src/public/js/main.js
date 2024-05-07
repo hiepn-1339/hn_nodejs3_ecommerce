@@ -114,9 +114,13 @@
         query.maxPrice = maxPrice;
       }
 
-      var url = buildURLWithQuery(window.location.href, query);
+      const parsedURL = new URL(window.location.href);
 
-      window.location.href = url;
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
     });
 
     $('#searchOrder').click(function() {
@@ -137,6 +141,34 @@
       }
       if (payment) {
         query.paymentMethod = payment;
+      }
+      if (status) {
+        query.status = status;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
+    });
+
+    $('#searchUser').click(function() {
+      var keyword = $('#keyword').val();
+      var gender = $('#gender').val();
+      var status = $('#status').val();
+
+      var query = {
+        page: 1,
+      };
+
+      if (keyword) {
+        query.keyword = keyword;
+      }
+      if (gender) {
+        query.gender = gender;
       }
       if (status) {
         query.status = status;
