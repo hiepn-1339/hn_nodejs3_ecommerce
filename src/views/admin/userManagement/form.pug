@@ -7,13 +7,13 @@ block admin_content
         h1 #{t('admin.user.updateUser')}
       else 
         h1 #{t('admin.user.createUser')}
-      form(method='POST' enctype='multipart/form-data' actions=(isUpdate ? 'update' : ''))
+      form(method='POST' enctype=(isUpdate ? '' : 'multipart/form-data') actions='')
         .mb-3
           label.form-label(for='name') 
             | #{t('admin.user.name')}
             sup.text-danger *
           if isUpdate
-            input#name.form-control(disabled value=(user ? user.name : '') type='text' required='')
+            input#name.form-control(disabled value=(user ? user.name : '') type='text')
           else
             input#name.form-control(type='text' required='' name='name')
           if errors
@@ -25,7 +25,7 @@ block admin_content
             | #{t('admin.user.email')}
             sup.text-danger *
           if isUpdate
-            input#email.form-control(disabled value=(user ? user.email : '') type='email' required='')
+            input#email.form-control(disabled value=(user ? user.email : '') type='email')
           else 
            input#email.form-control(type='email' required='' name='email')
           if errors
@@ -56,7 +56,7 @@ block admin_content
             | #{t('admin.user.phone')}
             sup.text-danger *
           if isUpdate
-            input#phone.form-control(disabled value=(user ? user.phone : '') type='tel' required='')
+            input#phone.form-control(disabled value=(user ? user.phone : '') type='tel')
           else 
             input#phone.form-control(type='tel' required='' name='phone')
           if errors
@@ -68,7 +68,9 @@ block admin_content
             | #{t('admin.user.genre')}
             sup.text-danger *
           if isUpdate
-            select#gender.form-select(disabled value=(user ? user.gender : ''))
+            select#gender.form-select(disabled)
+              each gender in genders
+                option(value=`${gender}` selected=(user.gender === gender)) #{gender}
           else 
             select#gender.form-select(name='gender')
               each gender in genders
@@ -91,6 +93,8 @@ block admin_content
             sup.text-danger *
           if !isUpdate
             input#avatar.form-control(type='file' name='avatar')
+          else 
+            input#avatar.form-control(disabled value=(user ? user.avatar : ''))
           if avatarError
             p.text-danger #{avatarError}
         .mb-3
@@ -98,7 +102,8 @@ block admin_content
             | #{t('admin.user.address')}
             sup.text-danger *
           if isUpdate
-            textarea#address.form-control(disabled value=(user ? user.address : '') rows='3' required='')
+            textarea#address.form-control(disabled rows='3')
+              | #{user ? user.address : ''}
           else 
             textarea#address.form-control(rows='3' required='' name='address')
           if errors
@@ -108,9 +113,11 @@ block admin_content
         .mb-3
           label.form-label(for='status')
             | #{t('admin.user.status')}
-          select#status.form-select(name="isActive")
-            each status in userStatus
-              option(value=status) #{status}
+          select#status.form-select(name="isActive" )
+            - let statuses = Object.keys(UserStatus)
+            - let defaultValue = user && user.isActive ? UserStatus.ACTIVE  : UserStatus.INACTIVE
+            each status in statuses
+              option(value=`${status}` selected=(defaultValue === status)) #{status}
           if errors
             - let error= errors.find(e => e.path == 'isActive')
             if error
@@ -120,7 +127,7 @@ block admin_content
             | #{t('admin.user.role')}
           select#role.form-select(name="role")
             each role in roles
-              option(value=role) #{role}
+              option(value=`${role}` selected=(user.role === role)) #{role}
           if errors
             - let error= errors.find(e => e.path == 'role')
             if error

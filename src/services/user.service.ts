@@ -117,3 +117,18 @@ export const adminCreateAccount = async (data: any) => {
   
   return await userRepository.save(user);
 };
+
+export const getUserById = async (id: number) => {
+  return await userRepository.findOne({
+    where: {
+      id: id,
+    },
+  });
+};
+
+export const adminUpdateUser = async (user: User, data: any) => {
+  user.isActive = data.isActive;
+  user.role = data.role;
+
+  return await userRepository.save(user);
+};

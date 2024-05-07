@@ -289,7 +289,9 @@
       "role": "Role",
       "updateUser": "Cập nhật người dùng",
       "create": "Tạo",
-      "createUser": "Tạo người dùng"
+      "createUser": "Tạo người dùng",
+      "inactiveUserSuccess": "Vô hiệu hóa người dùng thành công!",
+      "activeUserSuccess": "Kích hoạt người dùng thành công!"
     }
   },
   "email": {
