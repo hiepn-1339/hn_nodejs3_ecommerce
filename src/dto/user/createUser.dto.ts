@@ -1,13 +1,13 @@
 import { IsEnum } from 'class-validator';
 import RegisterDTO from './register.dto';
-import { Role, UserStatus } from '../../constants';
+import { Role, EntityStatus } from '../../constants';
 
 export class CreateUserDTO extends RegisterDTO {
   @IsEnum(Role, {message: 'error.roleInvalid'})
   role: Role;
 
-  @IsEnum(UserStatus, {message: 'error.statusInvalid'})
-  isActive: UserStatus;
+  @IsEnum(EntityStatus, {message: 'error.statusInvalid'})
+  isActive: EntityStatus;
 
   constructor(data: any) {
     super(data);

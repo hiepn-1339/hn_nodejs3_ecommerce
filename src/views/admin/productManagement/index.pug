@@ -7,40 +7,47 @@ block admin_content
         label.form-label(for='keyword').pe-2
           | #{t('admin.product.search')}
         .input-group
-          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+          input#keyword.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1' value=(query.keyword ? query.keyword : ''))
           span#search-icon-1.input-group-text.p-2
             i.fa.fa-search
       div.w-25.px-3
-        label.form-label(for='pricemin').pe-2
+        label.form-label(for='minPrice').pe-2
           | #{t('admin.product.priceMin')}
-        input#pricemin.form-control(type='number' placeholder='price min' aria-describedby='search-icon-1')
+        input#minPrice.form-control(type='number' placeholder='price min' aria-describedby='search-icon-1' value=(query.minPrice ? query.minPrice : ''))
       div.w-25.px-3
-        label.form-label(for='pricemax').pe-2
+        label.form-label(for='maxPrice').pe-2
           | #{t('admin.product.priceMax')}
-        input#pricemin.form-control(type='number' placeholder='price max' aria-describedby='search-icon-1')
+        input#maxPrice.form-control(type='number' placeholder='price max' aria-describedby='search-icon-1' value=(query.maxPrice ? query.maxPrice : ''))
     .d-flex.mb-3
-      div.w-25.px-3
+      div.w-40.px-3
         label.form-label(for='category').pe-2
           | #{t('admin.product.category')}
-        select#category.form-select
+        select#category.form-select.js-example-basic-multiple(name="categories[]" multiple="multiple")
           each category in categories
-            option(value=category) #{category}
+            - let selected = query.categories ? query.categories.split(',').includes(`${category.id}`) : false
+            option(value=category.id selected=selected) #{category.name}
       div.w-25.px-3
-        label.form-label(for='status').pe-2
+        label.form-label(for='ratingAvg').pe-2
           | #{t('admin.product.ratingAvg')}
-        select#status.form-select
-          option(value='5') 5
-          option(value='4') 4
-          option(value='3') 3
-          option(value='2') 2
-          option(value='1') 1
-          option(value='0') 0
+        select#ratingAvg.form-select.js-example-basic-multiple(name="ratingAvgs[]" multiple="multiple")
+          - let ratingAvgs = [0, 1, 2, 3, 4, 5]
+          each rating in ratingAvgs
+            - let selected = query.ratingAvgs ? query.ratingAvgs.split(',').includes(`${rating}`) : false
+            option(value=rating selected=selected) #{rating}
       div.w-25.px-3
         label.form-label(for='status').pe-2
           | #{t('admin.product.status')}
-        select#status.form-select
+        select#status.form-select.js-example-basic-multiple(name="statuses[]" multiple="multiple")
+          - let statuses = Object.keys(EntityStatus)
           each status in statuses
-            option(value=status) #{status}
+            - let selected = query.statuses ? query.statuses.split(',').includes(`${status}`) : false
+            option(value=status selected=selected) #{status}
+      .w-5.px-2 
+        span#searchReset.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fas.fa-minus-circle
+      .w-5.px-2 
+        span#adminSearchProduct.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fa.fa-search
     .table-wrapper
       .table-title
         .row
@@ -59,31 +66,35 @@ block admin_content
             th #{t('admin.product.name')}
             th #{t('admin.product.category')}
             th #{t('admin.product.description')}
-            th #{t('admin.product.price')}
-            th #{t('admin.product.ratingAvg')}
-            th #{t('admin.product.status')}
+            th.w-100px #{t('admin.product.price')}
+            th.w-150px #{t('admin.product.ratingAvg')}
+            th.w-150px #{t('admin.product.status')}
             th #{t('admin.product.action')}
         tbody
           each product in products
             tr
               td.w-250px
                 a(href='#')
-                  img.avatar(src=product.images[0] alt='Product')
+                  img.h-60px.w-60px.avatar(src=product.images[0].url alt='Product')
                   |  #{product.name}
               td #{product.category.name}
-              td.text-break.w-300px #{product.description}
-              td #{product.price} 
+              td.text-break #{product.description}
+              td #{product.price}$
               td #{product.ratingAvg}
               td
-                span.status.text-success &bull;
-                |  #{product.status}
+                if product.isActive
+                  span.status.text-success &bull;
+                  |  #{t('admin.user.active')}
+                else 
+                  span.status.text-danger &bull;
+                  |  #{t('admin.user.inactive')}
               td
                 a(href='#').px-2.text-success
                   i.fas.fa-pen.fs-24px
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
-          each val in Array.from({length: pageLength}, (_, i) => i + 1)
-            if val === page
-              a.active.rounded(href='#') #{val}
+          each val in Array.from({length: pages}, (_, i) => i + 1)
+            if val == page
+              a.page.active.rounded(value=val) #{val}
             else
-              a.rounded(href='#') #{val}
+              a.page.rounded(value=val) #{val}

@@ -1,5 +1,5 @@
 import { Brackets } from 'typeorm';
-import { Query } from '../constants';
+import { EntityStatus, Query } from '../constants';
 import { AppDataSource } from '../database/dataSource';
 import { Product } from '../entities/product.entity';
 
@@ -32,6 +32,23 @@ export const getProducts = async (data: any) => {
 
   if (data.category) {
     query.andWhere('product.category_id = :categoryId', { categoryId: data.category });
+  }
+
+  if (data.categories) {
+    const categories = data.categories.split(',');
+    query.andWhere('product.category_id IN (:...categories)', { categories });
+  }
+
+  if (data.ratingAvgs) {
+    const ratingAvgs = data.ratingAvgs.split(',').map(Number);
+    query.andWhere('product.rating_avg IN (:...ratingAvgs)', { ratingAvgs });
+  }
+
+  if (data.statuses) {
+    const statuses = data.statuses.split(',').map(status => {
+      return status === EntityStatus.ACTIVE;
+    });
+    query.andWhere('product.is_active IN (:...statuses)', { statuses });
   }
 
   query.leftJoinAndSelect('product.category', 'category')

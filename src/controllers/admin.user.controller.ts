@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import { checkIsAdmin, checkLoggedIn } from '../middlewares';
 import { NextFunction, Request, Response } from 'express';
 import * as userService from '../services/user.service';
-import { ErrorCode, Gender, Role, Status, UserStatus } from '../constants';
+import { ErrorCode, Gender, Role, Status, EntityStatus } from '../constants';
 import { uploadImage } from '../middlewares/multer.middleware';
 import { validateCreateUser, validateUpdateUser } from '../middlewares/validate/user.validate';
 import { getTranslatedMessage } from '../utils/i18n';
@@ -22,7 +22,7 @@ export const getUsers = [
 
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 
-    return res.render('admin/userManagement/index', {users, genders: Object.keys(Gender), statuses: Object.keys(UserStatus), pages, page: req.query.page});
+    return res.render('admin/userManagement/index', {users, genders: Object.keys(Gender), statuses: Object.keys(EntityStatus), pages, page: req.query.page});
   }),
 ];
 
@@ -30,7 +30,7 @@ export const getCreateUser = [
   checkLoggedIn,
   checkIsAdmin,
   (req: Request, res: Response) => {
-    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false});
+    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: false});
   },
 ];
 
@@ -48,13 +48,13 @@ export const postCreateUser = [
           path: 'email',
           msg: getTranslatedMessage('error.emailAlreadyExists', req.query.lng),
         }],
-        genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false,
+        genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: false,
       });
     }
 
     if (req.file) {
       req.body.avatar = req.file.location;
-      req.body.isActive = req.body.isActive === UserStatus.ACTIVE ? true : false;
+      req.body.isActive = req.body.isActive === EntityStatus.ACTIVE ? true : false;
       const user = await userService.adminCreateAccount(req.body);
 
       await cartService.createCart(user);
@@ -62,7 +62,7 @@ export const postCreateUser = [
     } else {
       res.render('admin/userManagement/form', {
         avatarError: getTranslatedMessage('error.cantUploadAvatar', req.query.lng),
-        genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false,
+        genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: false,
       });
     }
   }),
@@ -83,7 +83,7 @@ export const getUpdateUser = [
   checkIsAdmin,
   checkExistsUser,
   (req: IAdminUserRequest, res: Response) => {
-    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: true, user: req.user});
+    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: true, user: req.user});
   },
 ];
 

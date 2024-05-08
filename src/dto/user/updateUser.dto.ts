@@ -1,12 +1,12 @@
 import { IsEnum } from 'class-validator';
-import { Role, UserStatus } from '../../constants';
+import { Role, EntityStatus } from '../../constants';
 
 export class UpdateUserDTO {
   @IsEnum(Role, {message: 'error.roleInvalid'})
   role: Role;
 
-  @IsEnum(UserStatus, {message: 'error.statusInvalid'})
-  isActive: UserStatus;
+  @IsEnum(EntityStatus, {message: 'error.statusInvalid'})
+  isActive: EntityStatus;
 
   constructor(data: any) {
     this.role = data.role;

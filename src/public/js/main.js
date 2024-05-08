@@ -341,6 +341,58 @@
       });
     });
 
+    $(document).ready(function() {
+      $('.js-example-basic-multiple').select2();
+    });
+
+    $('#searchReset').click(function() {
+      const parsedURL = new URL(window.location.href);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}`;
+
+      window.location.href = newURL;
+    });
+
+    $('#adminSearchProduct').click(function() {
+      var keyword = $('#keyword').val();
+      var minPrice = $('#minPrice').val();
+      var maxPrice = $('#maxPrice').val();
+      var categories = $('#category').val();
+      var ratingAvgs = $('#ratingAvg').val();
+      var statuses = $('#status').val();
+
+      var query = {
+        page: 1,
+      };
+
+      if (keyword) {
+        query.keyword = keyword;
+      }
+      if (minPrice) {
+        query.minPrice = minPrice;
+      }
+      if (maxPrice) {
+        query.maxPrice = maxPrice;
+      }
+      if (categories != '') {
+        query.categories = categories;
+      }
+      if (ratingAvgs != '') {
+        query.ratingAvgs = ratingAvgs;
+      }
+      if (statuses != '') {
+        query.statuses = statuses;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 
