@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { AppDataSource } from '../database/dataSource';
 import { Category } from '../entities/category.entity';
 import * as categoryService from '../services/category.service';
@@ -42,5 +43,27 @@ describe('adminGetCategories', () => {
       const nameContainsKeyword = words.some(word => category.name.toLocaleLowerCase().includes(word));
       expect(nameContainsKeyword).toBe(true);
     });
+  });
+});
+
+describe('getCategoryByName', () => {
+  it('should return a category', async () => {
+    const name = 'category1';
+    
+    const category = await categoryService.getCategoryByName(name);
+    
+    expect(category).toBeInstanceOf(Category);
+    expect(category.name).toEqual(name);
+  });
+});
+
+describe('addCategory', () => {
+  it('should return a new category', async () => {
+    const name = faker.internet.displayName();
+    
+    const category = await categoryService.addCategory({name});
+    
+    expect(category).toBeInstanceOf(Category);
+    expect(category.name).toEqual(name);
   });
 });

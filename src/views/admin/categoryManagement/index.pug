@@ -5,7 +5,7 @@ block admin_content
     .d-flex.mb-3
       div.w-50.ms-3
         label.form-label(for='keyword').pe-2
-          | #{t('admin.user.search')}
+        | #{t('admin.user.search')}
         .input-group
           input#keyword.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1' value=(query.keyword ? query.keyword : ''))
           span#searchCategory.search-icon-1.input-group-text.p-2
@@ -13,8 +13,12 @@ block admin_content
     .table-wrapper
       .table-title
         .row
-          .col-sm-12
+          .col-sm-5
             h2.text-white #{t('admin.category.categoryManagment')}
+          .col-sm-7
+            button#addCategory.btn.btn-secondary(data-bs-toggle="modal" data-bs-target="#modalCreateCategory")
+              i.fas.fa-plus
+              span #{t('admin.category.addNewCategory')}
       table.table.table-hover
         thead
           tr
@@ -29,6 +33,18 @@ block admin_content
               td
                 a(href='#').px-2.text-success
                   i.fas.fa-pen.fs-24px
+      #modalCreateCategory.modal.fade(tabindex='-1' aria-labelledby='modalCreateCategory' aria-hidden='true')
+        .modal-dialog.modal-dialog-centered
+          .modal-content
+            .modal-header
+              h1#modalCreateCategory.modal-title.fs-5 #{t('admin.category.addNewCategory')}
+              button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+            .modal-body
+              form
+                .input-group
+                  input#name.form-control(placeholder='name' type="text")
+                p.text-danger#errorCreateCategory
+                button#submitCreateCategory.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('order.submit')}
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
           each val in Array.from({length: pages}, (_, i) => i + 1)

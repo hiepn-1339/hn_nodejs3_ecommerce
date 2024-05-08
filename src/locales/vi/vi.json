@@ -34,6 +34,9 @@
     "viewMore": "Xem thêm",
     "product": "Sản phẩm"
   },
+  "category": {
+    "createSuccess": "Tạo category thành công!"
+  },
   "cart": {
     "products": "Sản phẩm",
     "name": "Tên",
@@ -121,7 +124,8 @@
     "paymentMethodRequired": "Phương thức thanh toán không được trống!",
     "roleInvalid": "Role không hợp lệ!",
     "statusInvalid": "Status không hợp lệ!",
-    "paymentMethodInvalid": "Payment không hợp lệ!"
+    "paymentMethodInvalid": "Payment không hợp lệ!",
+    "categoryExist": "Category đã tồn tại!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -233,7 +237,8 @@
       "categoryManagment": "Quản lý danh mục",
       "id": "Id",
       "name": "Tên",
-      "action": "Hành động"
+      "action": "Hành động",
+      "addNewCategory": "Tạo mới category"
     },
     "coupon": {
       "search": "Tìm kiếm",
