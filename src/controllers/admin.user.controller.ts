@@ -97,3 +97,31 @@ export const postUpdateUser = [
     return res.redirect('/admin/user');
   },
 ];
+
+export const inactiveUser = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkExistsUser,
+  async (req: IAdminUserRequest, res: Response) => {
+    await userService.changeStatusUser(req.user, false);
+
+    return res.send({
+      status: Status.SUCCESS,
+      message: getTranslatedMessage('admin.user.inactiveUserSuccess', req.query.lng),
+    });
+  },
+];
+
+export const activeUser = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkExistsUser,
+  async (req: IAdminUserRequest, res: Response) => {
+    await userService.changeStatusUser(req.user, true);
+
+    return res.send({
+      status: Status.SUCCESS,
+      message: getTranslatedMessage('admin.user.activeUserSuccess', req.query.lng),
+    });
+  },
+];
