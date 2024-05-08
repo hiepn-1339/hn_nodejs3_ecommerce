@@ -308,7 +308,7 @@
       .catch((e) => {
         console.error(e);
       });
-  });
+    });
   });
 
   // Fixed Navbar
@@ -456,4 +456,3 @@
     }
   });
 })(jQuery);
-

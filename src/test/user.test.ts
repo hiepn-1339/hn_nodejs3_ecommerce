@@ -196,3 +196,33 @@ describe('adminCreateAccount', () => {
     expect(user.isActive).toEqual(data.isActive);
   });
 }); 
+
+describe('getUserById', () => {
+  it('should return a user', async () => {
+    const id = faker.number.int({min: 1, max: 1000});
+
+    const user = await userService.getUserById(id);
+
+    expect(user).toBeInstanceOf(User);
+    expect(user.id).toEqual(id); 
+  });
+}); 
+
+describe('adminUpdateUser', () => {
+  it('should update user with provided data', async () => {
+    const data = {
+      isActive: faker.datatype.boolean(),
+      role: faker.helpers.enumValue(Role),
+    };
+
+    const id = faker.number.int({min: 1, max: 1000});
+
+    const user = await userService.getUserById(id);
+
+    const newUser = await userService.adminUpdateUser(user, data);
+
+    expect(newUser).toBeInstanceOf(User);
+    expect(newUser.role).toEqual(data.role);
+    expect(newUser.isActive).toEqual(data.isActive);
+  });
+}); 

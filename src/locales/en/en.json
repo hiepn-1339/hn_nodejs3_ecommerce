@@ -226,7 +226,7 @@
       "approve": "Approve",
       "reject": "Reject",
       "complete": "Complete",
-      "createdAt":"Created At"
+      "createdAt": "Created At"
     },
     "category": {
       "category": "Category",
@@ -289,7 +289,9 @@
       "role": "Role",
       "updateUser": "Update User",
       "create": "Create",
-      "createUser": "Create User"
+      "createUser": "Create User",
+      "inactiveUserSuccess": "Inactive User Success!",
+      "activeUserSuccess": "Active User Success!"
     }
   },
   "email": {

@@ -1,14 +1,16 @@
 import asyncHandler from 'express-async-handler';
 import { checkIsAdmin, checkLoggedIn } from '../middlewares';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as userService from '../services/user.service';
-import { Gender, Role, UserStatus } from '../constants';
+import { ErrorCode, Gender, Role, Status, UserStatus } from '../constants';
 import { uploadImage } from '../middlewares/multer.middleware';
-import { validateCreateUser } from '../middlewares/validate/user.validate';
+import { validateCreateUser, validateUpdateUser } from '../middlewares/validate/user.validate';
 import { getTranslatedMessage } from '../utils/i18n';
 import * as cartService from '../services/cart.service';
+import { t } from 'i18next';
 
-interface IAdminUserRequest extends Request {
+export interface IAdminUserRequest extends Request {
+  user?: any;
   file?: any;
 }
 
@@ -28,7 +30,7 @@ export const getCreateUser = [
   checkLoggedIn,
   checkIsAdmin,
   (req: Request, res: Response) => {
-    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), userStatus: Object.keys(UserStatus), roles: Object.keys(Role), isUpdate: false});
+    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false});
   },
 ];
 
@@ -46,7 +48,7 @@ export const postCreateUser = [
           path: 'email',
           msg: getTranslatedMessage('error.emailAlreadyExists', req.query.lng),
         }],
-        genders: Object.keys(Gender), userStatus: Object.keys(UserStatus), roles: Object.keys(Role), isUpdate: false,
+        genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false,
       });
     }
 
@@ -60,8 +62,38 @@ export const postCreateUser = [
     } else {
       res.render('admin/userManagement/form', {
         avatarError: getTranslatedMessage('error.cantUploadAvatar', req.query.lng),
-        genders: Object.keys(Gender), userStatus: Object.keys(UserStatus), roles: Object.keys(Role), isUpdate: false,
+        genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false,
       });
     }
   }),
+];
+
+const checkExistsUser = async (req: IAdminUserRequest, res: Response, next: NextFunction) => {
+  const user = await userService.getUserById(parseInt(req.params.id));
+  if (user === null) {
+    res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound', {id: req.params.id}) });
+  }
+
+  req.user = user;
+  next();
+};
+
+export const getUpdateUser = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkExistsUser,
+  (req: IAdminUserRequest, res: Response) => {
+    return res.render('admin/userManagement/form', {genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: true, user: req.user});
+  },
+];
+
+export const postUpdateUser = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkExistsUser,
+  validateUpdateUser,
+  async (req: IAdminUserRequest, res: Response) => {
+    await userService.adminUpdateUser(req.user, req.body);
+    return res.redirect('/admin/user');
+  },
 ];
