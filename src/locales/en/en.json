@@ -34,6 +34,9 @@
     "viewMore": "View More",
     "product": "Product"
   },
+  "category": {
+    "createSuccess": "Create cateogry successfully!"
+  },
   "cart": {
     "products": "Products",
     "name": "Name",
@@ -121,7 +124,8 @@
     "paymentMethodRequired": "Payment method is required!",
     "roleInvalid": "Role is invalid!",
     "statusInvalid": "Status is invalid!",
-    "paymentMethodInvalid": "Payment method is invalid!"
+    "paymentMethodInvalid": "Payment method is invalid!",
+    "categoryExist": "Category already exists!"
   },
   "profile": {
     "title": "Profile",
@@ -233,7 +237,8 @@
       "categoryManagment": "Category Managment",
       "id": "Id",
       "name": "Name",
-      "action": "Action"
+      "action": "Action",
+      "addNewCategory": "Add New Category"
     },
     "coupon": {
       "search": "Search",

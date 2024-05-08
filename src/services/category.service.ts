@@ -29,3 +29,21 @@ export const adminGetCategories = async (data: any) => {
 
   return {categories, count};
 };
+
+export const getCategoryByName = async (name: string) => {
+  return await categoryRepository.findOne({
+    where: {
+      name: name,
+    },
+  });
+};
+
+export const addCategory = async (data: any) => {
+  const category = categoryRepository.create({
+    name: data.name,
+  });
+
+  await categoryRepository.save(category);
+
+  return category;
+};

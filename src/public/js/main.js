@@ -246,6 +246,51 @@
       window.location.href = newURL;
     });
 
+    $('#addCategory').click((e) => {
+      e.preventDefault();
+
+      $('#errorCreateCategory').text('');
+    });
+
+    $('#submitCreateCategory').click((e) => {
+      e.preventDefault();
+
+      const name = $('#name').val();
+
+      $('#loader').removeClass('d-none');
+      fetch('/admin/category/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+        }),
+      })
+      .then((response) => response.text())
+      .then((data) => {
+        $('#loader').addClass('d-none');
+        data = JSON.parse(data);
+        let options;
+        if (data.status == 'Success') {
+          options = {
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          };
+
+          Swal.fire(options)
+          .then(() => {
+            window.location.reload();
+          });
+        }
+        if (data.status == 'Fail') {
+          $('#errorCreateCategory').text(data.message);
+        }
+      });
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 

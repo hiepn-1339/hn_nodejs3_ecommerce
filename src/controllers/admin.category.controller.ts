@@ -2,6 +2,9 @@ import { checkIsAdmin, checkLoggedIn } from '../middlewares';
 import { Request, Response } from 'express';
 import * as categoryService from '../services/category.service';
 import asyncHandler from 'express-async-handler';
+import { validateCreateCategory } from '../middlewares/validate/category.validate';
+import { getTranslatedMessage } from '../utils/i18n';
+import { Status } from '../constants';
 
 export const getCategories = [
   checkLoggedIn,
@@ -12,5 +15,30 @@ export const getCategories = [
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 
     return res.render('admin/categoryManagement/index', {categories, pages, page: req.query.page, query: req.query});
+  }),
+];
+
+export const createCategory = [
+  checkLoggedIn,
+  checkIsAdmin,
+  validateCreateCategory,
+  asyncHandler(async (req: Request, res: Response) => {
+    const category = await categoryService.getCategoryByName(req.body.name);
+
+    if (category) {
+      res.send({
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.categoryExist', req.query.lng),
+      });
+      return;
+    }
+
+    await categoryService.addCategory(req.body);
+
+    res.send({
+      status: Status.SUCCESS,
+      message: getTranslatedMessage('category.createSuccess', req.query.lng),
+    });
+    return;
   }),
 ];
