@@ -2,12 +2,13 @@ extends ../layoutAdmin
 
 block admin_content 
   .table-responsive
-    .row
-      .col-sm-9 
-      .col-sm-3 
+    .d-flex.mb-3
+      div.w-50.ms-3
+        label.form-label(for='keyword').pe-2
+          | #{t('admin.user.search')}
         .input-group
-          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
-          span#search-icon-1.input-group-text.p-2
+          input#keyword.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1' value=(query.keyword ? query.keyword : ''))
+          span#searchCategory.search-icon-1.input-group-text.p-2
             i.fa.fa-search
     .table-wrapper
       .table-title
@@ -17,7 +18,7 @@ block admin_content
       table.table.table-hover
         thead
           tr
-            th.w-25 #{t('admin.category.id')}
+            th.w-50 #{t('admin.category.id')}
             th.w-50 #{t('admin.category.name')}
             th.w-25 #{t('admin.category.action')}
         tbody
@@ -30,8 +31,8 @@ block admin_content
                   i.fas.fa-pen.fs-24px
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
-          each val in Array.from({length: pageLength}, (_, i) => i + 1)
-            if val === page
-              a.active.rounded(href='#') #{val}
+          each val in Array.from({length: pages}, (_, i) => i + 1)
+            if val == page
+              a.page.active.rounded(value=val) #{val}
             else
-              a.rounded(href='#') #{val}
+              a.page.rounded(value=val) #{val}

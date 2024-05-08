@@ -21,3 +21,26 @@ describe('getCategories', () => {
     });
   });
 });
+
+describe('adminGetCategories', () => {
+  it('should return array of category', async () => {
+    const query = {
+      keyword: 'vegetable',
+      page: 1,
+      limit: 10,
+    };
+    
+    const words = query.keyword.toLocaleLowerCase().split(' ');
+
+    const {categories, count} = await categoryService.adminGetCategories(query);
+
+    expect(count).toBeGreaterThanOrEqual(0);
+
+    categories.forEach(category => {
+      expect(category).toBeInstanceOf(Category);
+
+      const nameContainsKeyword = words.some(word => category.name.toLocaleLowerCase().includes(word));
+      expect(nameContainsKeyword).toBe(true);
+    });
+  });
+});
