@@ -3,37 +3,77 @@ extends ../layoutAdmin
 block admin_content
   .row.mt-5
     .col-md-6.offset-md-3
-      h1 {{Action}} #{t('admin.product.product')}
-      form
+      if isUpdate
+        h1 #{t('admin.product.updateProduct')}
+      else 
+        h1 #{t('admin.product.createProduct')}
+      form(method='POST' enctype='multipart/form-data')
         .mb-3
-          label.form-label(for='avatar')
+          label.form-label(for='images')
             | #{t('admin.product.productImages')}
             sup.text-danger *
-          .col-sm-3.imgUp
-            .imagePreview
-            label.btn.btn-primary.text-white
-              | #{t('admin.product.upload')}
-              input.uploadFile.img.w-0px.h-0px.over(type='file' value='Upload Photo')
-        .mb-3
+          input#images.form-control(type='file' multiple="" required name='images')
+          if errors
+            - let error= errors.find(e => e.path == 'images')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3 
           label.form-label(for='category')
             | #{t('admin.product.category')}
             sup.text-danger *
-          select#category.form-select
+          select#category.form-select(name='category')
             each category in categories
-              option(value=category) #{category}
+              option(value=category.name) #{category.name}
+          if errors
+            - let error= errors.find(e => e.path == 'category')
+            if error
+              p.text-danger #{error.msg}
         .mb-3
           label.form-label(for='name') 
             | #{t('admin.product.name')}
             sup.text-danger *
-          input#name.form-control(type='text' required)
+          input#name.form-control(type='text' required name='name')
+          if errors
+            - let error= errors.find(e => e.path == 'name')
+            if error
+              p.text-danger #{error.msg}
         .mb-3
           label.form-label(for='price') 
-            | #{t('admin.product.price')}
+            | #{t('admin.product.price')} ($)
             sup.text-danger *
-          input#price.form-control(type='text' required)
+          input#price.form-control(type='number' required name='price')
+          if errors
+            - let error= errors.find(e => e.path == 'price')
+            if error
+              p.text-danger #{error.msg}
         .mb-3
           label.form-label(for='description')
             | #{t('admin.product.description')}
             sup.text-danger *
-          textarea#description.form-control(rows='3' required)
-        button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') {{action}}
+          textarea#description.form-control(rows='3' required name="description")
+          if errors
+            - let error= errors.find(e => e.path == 'description')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='quantity')
+            | #{t('admin.product.quantity')}
+            sup.text-danger *
+          input#quantity.form-control(required type='number' name='quantity')
+          if errors
+            - let error= errors.find(e => e.path == 'quantity')
+            if error
+              p.text-danger #{error.msg}
+        .mb-3
+          label.form-label(for='status')
+            | #{t('admin.user.status')}
+          select#status.form-select(name="status")
+            - let statuses = Object.keys(EntityStatus)
+            - let defaultValue = product && product.isActive ? EntityStatus.ACTIVE  : EntityStatus.INACTIVE
+            each status in statuses
+              option(value=status selected=(defaultValue === status)) #{status}
+          if errors
+            - let error= errors.find(e => e.path == 'isActive')
+            if error
+              p.text-danger #{error.msg}
+        button#submitProduct.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('admin.product.submit')}
