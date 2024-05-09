@@ -23,10 +23,21 @@ block content
         .col-lg-8.col-xl-9
           .row.g-4
             .col-lg-6
-              .border.rounded
-                a(href='#')
-                  if product.images[0]
-                    img.img-fluid.rounded(src=product.images[0].url alt='Image')
+              #carouselId.carousel.slide.position-relative(data-bs-ride='carousel')
+                .carousel-inner(role='listbox')
+                  each img, index in product.images
+                    if index === 0
+                      .carousel-item.rounded.active
+                        img.img-fluid.w-100.h-100.rounded(src=img.url)
+                    else 
+                      .carousel-item.rounded
+                        img.img-fluid.w-100.h-100.rounded(src=img.url)
+                button.carousel-control-prev(type='button' data-bs-target='#carouselId' data-bs-slide='prev')
+                  span.carousel-control-prev-icon(aria-hidden='true')
+                  span.visually-hidden
+                button.carousel-control-next(type='button' data-bs-target='#carouselId' data-bs-slide='next')
+                  span.carousel-control-next-icon(aria-hidden='true')
+                  span.visually-hidden
             .col-lg-6
               h4.fw-bold.mb-3 #{product.name}
               if product.category

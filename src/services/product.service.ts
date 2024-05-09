@@ -2,8 +2,10 @@ import { Brackets } from 'typeorm';
 import { EntityStatus, Query } from '../constants';
 import { AppDataSource } from '../database/dataSource';
 import { Product } from '../entities/product.entity';
+import { ProductImage } from '../entities/productImage.entity';
 
 const productRepository = AppDataSource.getRepository(Product);
+const productImageRepository = AppDataSource.getRepository(ProductImage);
 
 export const getProducts = async (data: any) => {
   const page = data.page || Query.PAGE_DEFAULT;
@@ -83,4 +85,37 @@ export const getFeaturedProduct = async () => {
     take: Query.LIMIT_DEFAULT,
     skip: 0,
   });
+};
+
+export const getProductByName = async (name: string) => {
+  return await productRepository.findOne({
+    where: {
+      name: name,
+    },
+  });
+};
+
+export const createProduct = async (data: any) => {
+  const product = productRepository.create({
+    name: data.name,
+    category: data.category,
+    price: data.price,
+    description: data.description,
+    quantity: data.quantity,
+    isActive: data.isActive,
+  });
+
+  return await productRepository.save(product);
+};
+
+export const createProductImages = async (product: Product, files: any) => {
+  const productImagesPromises = files.map(async (file: { location: any; }) => {
+    const productImage = productImageRepository.create({
+      product: product,
+      url: file.location,
+    });
+    return await productImageRepository.save(productImage);
+  });
+
+  return await Promise.all(productImagesPromises);
 };

@@ -126,7 +126,12 @@
     "roleInvalid": "Role is invalid!",
     "statusInvalid": "Status is invalid!",
     "paymentMethodInvalid": "Payment method is invalid!",
-    "categoryExist": "Category already exists!"
+    "categoryExist": "Category already exists!",
+    "priceInvalid": "Price is invalid!",
+    "quantityInvalid": "Quantity is invalid!",
+    "descriptionLengthError": "The description must be between 1 and 255 characters",
+    "nameExists": "Name already exists!",
+    "cantUploadImages": "Cant upload images!"
   },
   "profile": {
     "title": "Profile",
@@ -270,7 +275,11 @@
       "action": "Action",
       "product": "Product",
       "productImages": "Product Images",
-      "upload": "Upload"
+      "upload": "Upload",
+      "submit": "Submit",
+      "updateProduct": "Update Product",
+      "createProduct": "Create Product",
+      "quantity": "Quantity"
     },
     "user": {
       "search": "Search",

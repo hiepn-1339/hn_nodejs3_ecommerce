@@ -126,7 +126,12 @@
     "roleInvalid": "Role không hợp lệ!",
     "statusInvalid": "Status không hợp lệ!",
     "paymentMethodInvalid": "Payment không hợp lệ!",
-    "categoryExist": "Category đã tồn tại!"
+    "categoryExist": "Category đã tồn tại!",
+    "priceInvalid": "Price không hợp lệ!",
+    "quantityInvalid": "Quantity không hợp lệ!",
+    "descriptionLengthError": "Mô tả phải từ 1 đến 255 ký tự",
+    "nameExists": "Tên đã tồn tại!",
+    "cantUploadImages": "Không thể upload images!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -270,7 +275,11 @@
       "action": "Hành động",
       "product": "Sản phẩm",
       "productImages": "Hình ảnh sản phẩm",
-      "upload": "Tải lên"
+      "upload": "Tải lên",
+      "submit": "Submit",
+      "updateProduct": "Cập nhật sản phẩm",
+      "createProduct": "Tạo sản phẩm",
+      "quantity": "Số lượng"
     },
     "user": {
       "search": "Tìm kiếm",
