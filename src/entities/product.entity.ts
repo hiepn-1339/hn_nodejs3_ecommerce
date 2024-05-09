@@ -32,6 +32,9 @@ export class Product extends BaseEntity {
   @Column({ nullable: false, name: 'quantity_sold', default: 0})
   quantitySold: number | undefined;
 
+  @Column({ nullable: false, name: 'is_active', default: false })
+  isActive: boolean | undefined;
+
   @OneToMany(() => ProductImage, (productImage) => productImage.product)
   images: ProductImage[] | undefined;
 

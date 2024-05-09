@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import RegisterDTO from '../../dto/user/register.dto';
 import { validate } from 'class-validator';
-import { Gender, Role, UserStatus } from '../../constants';
+import { Gender, Role, EntityStatus } from '../../constants';
 import { getTranslatedMessage } from '../../utils/i18n';
 import { CreateUserDTO } from '../../dto/user/createUser.dto';
 import { UpdateUserDTO } from '../../dto/user/updateUser.dto';
@@ -38,7 +38,7 @@ export const validateCreateUser = async (req: Request, res: Response, next: Next
     }));
     return res.render('admin/userManagement/form', {
       errors: errorMessages,
-      genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: false,
+      genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: false,
     });
   }
 
@@ -57,7 +57,7 @@ export const validateUpdateUser = async (req: IAdminUserRequest, res: Response, 
     }));
     return res.render('admin/userManagement/form', {
       errors: errorMessages,
-      genders: Object.keys(Gender), UserStatus, roles: Object.keys(Role), isUpdate: true, user: req.user,
+      genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: true, user: req.user,
     });
   }
 

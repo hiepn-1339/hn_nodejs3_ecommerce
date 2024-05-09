@@ -4,7 +4,7 @@ import { User } from '../entities/user.entity';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import config from '../config';
-import { UserStatus } from '../constants';
+import { EntityStatus } from '../constants';
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -81,11 +81,11 @@ export const getUsers = async (data: any) => {
     });
   }
 
-  if (data.status === UserStatus.ACTIVE) {
+  if (data.status === EntityStatus.ACTIVE) {
     query.andWhere('user.isActive = true');
   }
 
-  if (data.status === UserStatus.INACTIVE) {
+  if (data.status === EntityStatus.INACTIVE) {
     query.andWhere('user.isActive = false');
   }
 

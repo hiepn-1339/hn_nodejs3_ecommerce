@@ -114,8 +114,8 @@ block admin_content
           label.form-label(for='status')
             | #{t('admin.user.status')}
           select#status.form-select(name="isActive" )
-            - let statuses = Object.keys(UserStatus)
-            - let defaultValue = user && user.isActive ? UserStatus.ACTIVE  : UserStatus.INACTIVE
+            - let statuses = Object.keys(EntityStatus)
+            - let defaultValue = user && user.isActive ? EntityStatus.ACTIVE  : EntityStatus.INACTIVE
             each status in statuses
               option(value=`${status}` selected=(defaultValue === status)) #{status}
           if errors
