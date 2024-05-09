@@ -67,3 +67,29 @@ describe('addCategory', () => {
     expect(category.name).toEqual(name);
   });
 });
+
+describe('getCategoryById', () => {
+  it('should return a category', async () => {
+    const id = faker.number.int({min: 1, max: 3});
+    
+    const category = await categoryService.getCategoryById(id);
+    
+    expect(category).toBeInstanceOf(Category);
+    expect(category.id).toEqual(id);
+  });
+});
+
+describe('updateCategory', () => {
+  it('should return a new category', async () => {
+    const name = faker.internet.displayName();
+
+    const id = faker.number.int({min: 1, max: 3});
+    
+    const category = await categoryService.getCategoryById(id);
+    
+    const newCategory = await categoryService.updateCategory(category, {name});
+    
+    expect(newCategory).toBeInstanceOf(Category);
+    expect(newCategory.name).toEqual(name);
+  });
+});

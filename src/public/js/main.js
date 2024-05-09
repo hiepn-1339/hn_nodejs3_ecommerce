@@ -291,6 +291,56 @@
       });
     });
 
+    $('.updateCategory').click(function(e) {
+      e.preventDefault();
+
+      $('#errorUpdateCategory').text('');
+
+      $('#id').val($(this).data('category-id'));
+      $('#updateName').val($(this).data('category-name'));
+    });
+
+    $('#submitUpdateCategory').click((e) => {
+      e.preventDefault();
+
+      const name = $('#updateName').val();
+
+      const id = $('#id').val();
+
+      $('#loader').removeClass('d-none');
+      fetch(`/admin/category/${id}/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+        }),
+      })
+      .then((response) => response.text())
+      .then((data) => {
+        $('#loader').addClass('d-none');
+        data = JSON.parse(data);
+        let options;
+        if (data.status == 'Success') {
+          options = {
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          };
+
+          Swal.fire(options)
+          .then(() => {
+            window.location.reload();
+          });
+        }
+        if (data.status == 'Fail') {
+          $('#errorUpdateCategory').text(data.message);
+        }
+      });
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 

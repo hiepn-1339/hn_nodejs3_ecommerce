@@ -47,3 +47,17 @@ export const addCategory = async (data: any) => {
 
   return category;
 };
+
+export const getCategoryById = async (id: number) => {
+  return await categoryRepository.findOne({
+    where: {
+      id: id,
+    },
+  });
+};
+
+export const updateCategory = async (category: Category, data: any) => {
+  category.name = data.name;
+
+  return await categoryRepository.save(category);
+};

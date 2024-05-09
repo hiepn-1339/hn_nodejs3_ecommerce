@@ -35,7 +35,8 @@
     "product": "Sản phẩm"
   },
   "category": {
-    "createSuccess": "Tạo category thành công!"
+    "createSuccess": "Tạo category thành công!",
+    "updateSuccess": "Cập nhật category thành công!"
   },
   "cart": {
     "products": "Sản phẩm",
@@ -238,7 +239,8 @@
       "id": "Id",
       "name": "Tên",
       "action": "Hành động",
-      "addNewCategory": "Tạo mới category"
+      "addNewCategory": "Tạo mới category",
+      "updateCategory": "Cập nhật category"
     },
     "coupon": {
       "search": "Tìm kiếm",

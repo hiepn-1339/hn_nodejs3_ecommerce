@@ -35,7 +35,8 @@
     "product": "Product"
   },
   "category": {
-    "createSuccess": "Create cateogry successfully!"
+    "createSuccess": "Create cateogry successfully!",
+    "updateSuccess": "Update cateogry successfully!"
   },
   "cart": {
     "products": "Products",
@@ -238,7 +239,8 @@
       "id": "Id",
       "name": "Name",
       "action": "Action",
-      "addNewCategory": "Add New Category"
+      "addNewCategory": "Add New Category",
+      "updateCategory": "Update Category"
     },
     "coupon": {
       "search": "Search",

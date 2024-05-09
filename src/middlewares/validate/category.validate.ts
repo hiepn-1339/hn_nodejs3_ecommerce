@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { CreateCategoryDTO } from '../../dto/category/createCategory.dto';
 import { validate } from 'class-validator';
 import { getTranslatedMessage } from '../../utils/i18n';
+import { Status } from '../../constants';
 
 export const validateCreateCategory = async (req: Request, res: Response, next: NextFunction) => {
   const userDTO = new CreateCategoryDTO(req.body);
@@ -13,7 +14,12 @@ export const validateCreateCategory = async (req: Request, res: Response, next: 
       path: error.property,
       msg: getTranslatedMessage(Object.values(error.constraints)[0], req.query.lng),
     }));
-    return res.send(errorMessages[0]);
+    res.send({
+      status: Status.FAIL,
+      message: errorMessages[0].msg,
+    });
+
+    return;
   }
 
   next();
