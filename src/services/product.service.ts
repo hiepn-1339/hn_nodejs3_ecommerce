@@ -102,7 +102,7 @@ export const createProduct = async (data: any) => {
     price: data.price,
     description: data.description,
     quantity: data.quantity,
-    isActive: data.isActive,
+    isActive: data.status,
   });
 
   return await productRepository.save(product);
@@ -118,4 +118,27 @@ export const createProductImages = async (product: Product, files: any) => {
   });
 
   return await Promise.all(productImagesPromises);
+};
+
+export const updateProduct = async (product: Product, data: any) => {
+  product.name = data.name;
+  product.category = data.category;
+  product.price = data.price;
+  product.description = data.description;
+  product.quantity = data.quantity;
+  product.isActive = data.status;
+
+  return await productRepository.save(product);
+};
+
+export const deleteProductImages = async (product: Product) => {
+  return await productImageRepository.delete({
+    product: product,
+  });
+};
+
+export const changeStatusProduct = async (product: Product, status: boolean) => {
+  product.isActive = status;
+
+  return await productRepository.save(product);
 };
