@@ -148,3 +148,26 @@ describe('getOrderItemByID', () => {
     expect(orderItem).toBeNull();
   });
 });
+
+describe('getCountAndTotalRevenueEachMonth', () => {
+  it('should return an array of objects containing count and total revenue for each month', async () => {
+    const result = await orderService.getCountAndTotalRevenueEachMonth();
+    
+    expect(Array.isArray(result)).toBe(true);
+    
+    expect(result.length).toBe(new Date().getMonth() + 1);
+    
+    result.forEach(item => {
+      expect(typeof item.month).toBe('number');
+      
+      expect(typeof item.data).toBe('object');
+      
+      expect(item.month).toBeGreaterThanOrEqual(1);
+      expect(item.month).toBeLessThanOrEqual(12);
+      
+      expect(typeof item.data.count).toBe('number');
+      
+      expect(typeof item.data.total).toBe('number');
+    });
+  });
+});

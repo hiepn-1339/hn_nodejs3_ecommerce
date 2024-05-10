@@ -35,7 +35,7 @@ export const postLogin = [
 
     req.session.user = user;
     if (user.role === Role.ADMIN) {
-      return res.redirect('/admin/order');
+      return res.redirect('/admin/overview');
     }
     return res.redirect('/');
   }),

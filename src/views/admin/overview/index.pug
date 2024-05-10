@@ -1,0 +1,77 @@
+extends ../layoutAdmin
+
+block admin_content 
+  .pt-4.px-4
+    .row.g-4
+      .col-sm-6.col-xl-3
+        .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+          i.fa.fa-chart-line.fa-3x.text-primary
+          .ms-3
+            p.mb-2 #{t('admin.overview.monthOrders')}
+            h6.mb-0 #{monthOrder.data.count}
+      .col-sm-6.col-xl-3
+        .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+          i.fa.fa-chart-bar.fa-3x.text-primary
+          .ms-3
+            p.mb-2 #{t('admin.overview.orders')}
+            h6.mb-0 #{totalOrder.count}
+      .col-sm-6.col-xl-3
+        .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+          i.fa.fa-chart-area.fa-3x.text-primary
+          .ms-3
+            p.mb-2 #{t('admin.overview.monthRevenue')}
+            h6.mb-0 $#{monthOrder.data.total}
+      .col-sm-6.col-xl-3
+        .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+          i.fa.fa-chart-pie.fa-3x.text-primary
+          .ms-3
+            p.mb-2 #{t('admin.overview.revenue')}
+            h6.mb-0 $#{totalOrder.total}
+
+  .pt-4.px-4 
+    .row.g-4
+      .col-sm-12.col-xl-6
+        .bg-light.text-center.rounded.p-4
+          .d-flex.align-items-center.justify-content-between.mb-4
+            h6.mb-0 #{t('admin.overview.orders')}
+          canvas#count-orders
+      .col-sm-12.col-xl-6
+        .bg-light.text-center.rounded.p-4
+          .d-flex.align-items-center.justify-content-between.mb-4
+            h6.mb-0 #{t('admin.overview.revenue')}
+          canvas#salse-revenue(data-order-data=orderData)
+  
+  .pt-4.px-4 
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between.mb-4
+        h6.mb-0 #{t('admin.overview.recentOrders')}
+      .table-responsive
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0
+          thead
+            tr.text-dark
+              th(scope='col') #{t('admin.overview.date')}
+              th(scope='col') #{t('admin.overview.id')}
+              th(scope='col') #{t('admin.overview.total')}
+              th(scope='col') #{t('admin.overview.paymentMethod')}
+              th(scope='col') #{t('admin.overview.status')}
+              th(scope='col') #{t('admin.overview.action')}
+          tbody
+            each order in orders
+              tr
+                td.date(value=order.createdAt)
+                td #{order.id}
+                td $#{order.total}
+                - let paymentMethod = order.paymentMethod.replaceAll('_', ' ')
+                td #{paymentMethod}
+                if order.status === OrderStatus.PENDING
+                  td.pending-color #{order.status}
+                if order.status === OrderStatus.COMPLETED
+                  td.complete-color #{order.status}
+                if order.status === OrderStatus.CANCELLED
+                  td.canceled-color #{order.status}
+                if order.status === OrderStatus.REJECTED
+                  td.rejected-color #{order.status}
+                if order.status === OrderStatus.APPROVED
+                  td.approved-color #{order.status}
+                td
+                  a.text-white.btn.btn-sm.btn-primary(href=`/admin/order/${order.id}`) #{t('admin.overview.detail')}
