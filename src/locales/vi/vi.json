@@ -133,6 +133,7 @@
     "nameExists": "Tên đã tồn tại!",
     "cantUploadImages": "Không thể upload images!",
     "orderUnprocessed": "Đơn hàng có chứa sản phẩm này chưa được xử lý!",
+    "orderContainCouponUnprocessed": "Đơn hàng có chứa mã giảm giá này chưa được xử lý!",
     "percentageInvalid": "Phần trăm không hợp lệ",
     "startDateMustBeBeforeEndDate": "Ngày bắt đầu phải trước ngày kết thúc",
     "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu",
@@ -262,11 +263,13 @@
       "endDate": "Ngày kết thúc",
       "couponManagement": "Quản lý mã giảm giá",
       "addNewCoupon": "Thêm mã giảm giá mới",
+      "updateNewCoupon": "Cập nhật mã giảm giá",
       "exportToExcel": "Xuất ra Excel",
       "name": "Tên",
       "action": "Hành động",
       "coupon": "Mã giảm giá",
-      "createSuccess": "Tạo mã giảm giá thành công!"
+      "createSuccess": "Tạo mã giảm giá thành công!",
+      "updateSuccess": "Cập nhật mã giảm giá thành công!"
     },
     "product": {
       "search": "Tìm kiếm",

@@ -70,3 +70,20 @@ export const createCoupon = async (data: any) => {
 
   return await couponRepository.save(coupon);
 };
+
+export const getCouponById = async (id: number) => {
+  return await couponRepository.findOne({
+    where: {
+      id,
+    },
+  });
+};
+
+export const updateCoupon = async (coupon: Coupon, data: any) => {
+  coupon.name = data.name;
+  coupon.percentage = data.percentage;
+  coupon.startDate = data.startDate;
+  coupon.endDate = data.endDate;
+
+  return await couponRepository.save(coupon);
+};

@@ -55,7 +55,7 @@ block admin_content
               td.date(value=coupon.startDate)
               td.date(value=coupon.endDate)
               td
-                a(href='#').text-success.px-2
+                a(data-bs-toggle="modal" data-bs-target="#modalUpdateCoupon" data-coupon=coupon).text-success.px-2.updateCoupon
                   i.fas.fa-pen.fs-24px
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
@@ -68,7 +68,7 @@ block admin_content
     .modal-dialog.modal-dialog-centered
       .modal-content
         .modal-header
-          h1#modalCreateCoupon.modal-title.fs-5 #{t('admin.category.addNewCategory')}
+          h1#modalCreateCoupon.modal-title.fs-5 #{t('admin.coupon.addNewCoupon')}
           button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
         .modal-body
           form
@@ -97,4 +97,38 @@ block admin_content
               input#endDateInput.form-control(type='date' required='' name='endDate')
               p(path='endDate').text-danger
             button#submitCreateCoupon.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.submit')}
-            
+  #modalUpdateCoupon.modal.fade(tabindex='-1' aria-labelledby='modalUpdateCoupon' aria-hidden='true')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header
+          h1#modalUpdateCoupon.modal-title.fs-5 #{t('admin.coupon.updateNewCoupon')}
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+        .modal-body
+          form
+            .mb-3
+              label.form-label(for='name') 
+                | #{t('admin.coupon.name')}
+                sup.text-danger *
+              input#nameInputUpdate.form-control(type='text' required='' name='name')
+              p(path='name').text-danger.error
+            .mb-3
+              label.form-label(for='percentage') 
+                | #{t('admin.coupon.percentage')} (%)
+                sup.text-danger *
+              input#percentageInputUpdate.form-control(type='number' required='' name='percentage')
+              p(path='percentage').text-danger.error
+            .mb-3
+              label.form-label(for='startDate')
+                | #{t('admin.coupon.startDate')}
+                sup.text-danger *
+              input#startDateInputUpdate.form-control(type='date' required='' name='startDate')
+              p(path='startDate').text-danger.error
+            .mb-3
+              label.form-label(for='endDate')
+                | #{t('admin.coupon.endDate')}
+                sup.text-danger *
+              input#endDateInputUpdate.form-control(type='date' required='' name='endDate')
+              p(path='endDate').text-danger.error
+            input#id.d-none
+            button#submitUpdateCoupon.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.submit')}
+        
