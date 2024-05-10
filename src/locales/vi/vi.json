@@ -131,7 +131,8 @@
     "quantityInvalid": "Quantity không hợp lệ!",
     "descriptionLengthError": "Mô tả phải từ 1 đến 255 ký tự",
     "nameExists": "Tên đã tồn tại!",
-    "cantUploadImages": "Không thể upload images!"
+    "cantUploadImages": "Không thể upload images!",
+    "orderUnprocessed": "Đơn hàng có chứa sản phẩm này chưa được xử lý!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -279,7 +280,9 @@
       "submit": "Submit",
       "updateProduct": "Cập nhật sản phẩm",
       "createProduct": "Tạo sản phẩm",
-      "quantity": "Số lượng"
+      "quantity": "Số lượng",
+      "inactiveProductSuccess": "Vô hiệu hóa sản phẩm thành công!",
+      "activeProductSuccess": "Kích hoạt sản phẩm thành công!"
     },
     "user": {
       "search": "Tìm kiếm",

@@ -1,15 +1,19 @@
 import asyncHandler from 'express-async-handler';
-import { checkIsAdmin, checkLoggedIn } from '../middlewares';
+import { checkIsAdmin, checkLoggedIn, checkValidId } from '../middlewares';
 import * as productService from '../services/product.service';
 import { NextFunction, Request, Response } from 'express';
-import { EntityStatus } from '../constants';
+import { EntityStatus, ErrorCode, Status } from '../constants';
 import * as categoryService from '../services/category.service';
 import { uploadImage } from '../middlewares/multer.middleware';
 import { validateCreateProduct } from '../middlewares/validate/product.validate';
 import { getTranslatedMessage } from '../utils/i18n';
+import { t } from 'i18next';
+import { Product } from '../entities/product.entity';
+import { Transactional } from 'typeorm-transactional';
+import * as orderService from '../services/order.service';
 
 export interface IAdminProductRequest extends Request {
-  product?: any;
+  product?: Product;
   files?: any[];
   errors?: any[];
 }
@@ -74,4 +78,97 @@ export const postCreateProduct = [
       ]});
     }
   }),
+];
+
+const checkExistsProduct = async (req: IAdminProductRequest, res: Response, next: NextFunction) => {
+  const product = await productService.getProductById(parseInt(req.params.id));
+  if (product === null) {
+    res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound', {id: req.params.id}) });
+  }
+
+  req.product = product;
+  next();
+};
+
+export const getUpdateProduct = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkValidId,
+  checkExistsProduct,
+  asyncHandler(async(req: IAdminProductRequest, res: Response) => {
+    const categories = await categoryService.getCategories();
+    return res.render('admin/productManagement/form', {categories, EntityStatus, product: req.product, isUpdate: true});
+  }),
+];
+
+class ProcessUpdateProduct {
+  @Transactional()
+  static async processUpdateProduct(req: IAdminProductRequest) {
+    const product = await productService.updateProduct(req.product, req.body);
+    await productService.deleteProductImages(product);
+    await productService.createProductImages(product, req.files);
+  }
+}
+
+export const postUpdateProduct = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkValidId,
+  checkExistsProduct,
+  uploadImage.array('images'),
+  validateCreateProduct,
+  checkExistsProductByName,
+  asyncHandler(async(req: IAdminProductRequest, res: Response) => {
+    if (req.files) {
+      req.body.status = req.body.status === EntityStatus.ACTIVE ? true : false;
+      req.body.category = await categoryService.getCategoryByName(req.body.category);
+      await ProcessUpdateProduct.processUpdateProduct(req);
+      return res.redirect('/admin/product');
+    } else {
+      const categories = await categoryService.getCategories(); 
+      return res.render('admin/productManagement/form', {categories, EntityStatus, errors: [
+        {
+          path: 'images',
+          msg: getTranslatedMessage('error.cantUploadImages', req.query.lng),
+        },
+      ]});
+    }
+  }),
+];
+
+export const inactiveProduct = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkExistsProduct,
+  async (req: IAdminProductRequest, res: Response) => {
+    const orders = await orderService.getOrdersByProduct(req.product);
+
+    if (orders) {
+      return res.send({
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.orderUnprocessed', req.query.lng),
+      });
+    } else {
+      await productService.changeStatusProduct(req.product, false);
+  
+      return res.send({
+        status: Status.SUCCESS,
+        message: getTranslatedMessage('admin.product.inactiveProductSuccess', req.query.lng),
+      });
+    }
+  },
+];
+
+export const activeProduct = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkExistsProduct,
+  async (req: IAdminProductRequest, res: Response) => {
+    await productService.changeStatusProduct(req.product, true);
+
+    return res.send({
+      status: Status.SUCCESS,
+      message: getTranslatedMessage('admin.product.activeProductSuccess', req.query.lng),
+    });
+  },
 ];

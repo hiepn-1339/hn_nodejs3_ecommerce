@@ -3,11 +3,8 @@ extends ../layoutAdmin
 block admin_content
   .row.mt-5
     .col-md-6.offset-md-3
-      if isUpdate
-        h1 #{t('admin.product.updateProduct')}
-      else 
-        h1 #{t('admin.product.createProduct')}
-      form(method='POST' enctype='multipart/form-data')
+      h1 #{t('admin.product.product')}
+      form(method='POST' enctype='multipart/form-data' actions='')
         .mb-3
           label.form-label(for='images')
             | #{t('admin.product.productImages')}
@@ -22,8 +19,12 @@ block admin_content
             | #{t('admin.product.category')}
             sup.text-danger *
           select#category.form-select(name='category')
-            each category in categories
-              option(value=category.name) #{category.name}
+            if product
+              each category in categories
+                option(value=category.name selected=(category.name === product.category.name)) #{category.name}
+            else 
+              each category in categories
+                option(value=category.name) #{category.name}
           if errors
             - let error= errors.find(e => e.path == 'category')
             if error
@@ -32,7 +33,7 @@ block admin_content
           label.form-label(for='name') 
             | #{t('admin.product.name')}
             sup.text-danger *
-          input#name.form-control(type='text' required name='name')
+          input#name.form-control(type='text' required name='name' value=(product && product.name ? product.name : ""))
           if errors
             - let error= errors.find(e => e.path == 'name')
             if error
@@ -41,7 +42,7 @@ block admin_content
           label.form-label(for='price') 
             | #{t('admin.product.price')} ($)
             sup.text-danger *
-          input#price.form-control(type='number' required name='price')
+          input#price.form-control(type='number' required name='price' value=(product && product.price ? product.price : 0))
           if errors
             - let error= errors.find(e => e.path == 'price')
             if error
@@ -50,7 +51,11 @@ block admin_content
           label.form-label(for='description')
             | #{t('admin.product.description')}
             sup.text-danger *
-          textarea#description.form-control(rows='3' required name="description")
+          if product
+            textarea#description.form-control(rows='3' required name="description")
+              | #{product ? product.description : ''}
+          else
+            textarea#description.form-control(rows='3' required name="description")
           if errors
             - let error= errors.find(e => e.path == 'description')
             if error
@@ -59,7 +64,7 @@ block admin_content
           label.form-label(for='quantity')
             | #{t('admin.product.quantity')}
             sup.text-danger *
-          input#quantity.form-control(required type='number' name='quantity')
+          input#quantity.form-control(required type='number' name='quantity' value=(product && product.quantity ? product.quantity : ""))
           if errors
             - let error= errors.find(e => e.path == 'quantity')
             if error

@@ -1,11 +1,12 @@
+import { ProductImage } from './../entities/productImage.entity';
 import { faker } from '@faker-js/faker';
 import { AppDataSource } from '../database/dataSource';
 import { Product } from '../entities/product.entity';
 import * as productService from '../services/product.service';
 import * as categoryService from '../services/category.service';
-import { ProductImage } from '../entities/productImage.entity';
 
 let connection;
+const productImageRepository = AppDataSource.getRepository(ProductImage);
 
 beforeAll(async () => {
   connection = await AppDataSource.initialize();
@@ -67,7 +68,7 @@ describe('getFeaturedProduct', () => {
 
 describe('getProductByName', () => {
   it('should return product with given name', async () => {
-    const name = 'Product 1'; 
+    const name = 'Cristobal.Jenkins'; 
     const product = await productService.getProductByName(name);
     expect(product.name).toEqual(name);
   });
@@ -92,7 +93,7 @@ describe('createProduct', () => {
       price: faker.number.int({min: 10, max: 100}),
       description: faker.lorem.paragraph(),
       quantity: faker.number.int({min: 1, max: 100}),
-      isActive: faker.datatype.boolean(),
+      status: faker.datatype.boolean(),
     };
 
     const product = await productService.createProduct(data);
@@ -102,7 +103,7 @@ describe('createProduct', () => {
     expect(product.price).toEqual(data.price);
     expect(product.description).toEqual(data.description);
     expect(product.quantity).toEqual(data.quantity);
-    expect(product.isActive).toEqual(data.isActive);
+    expect(product.isActive).toEqual(data.status);
   });
 });
 
@@ -128,3 +129,65 @@ describe('createProductImages', () => {
     });
   });
 });
+
+describe('updateProduct', () => {
+  it('should return a new product', async () => {
+    const randomId = faker.number.int({min: 1, max: 5});
+
+    const category = await categoryService.getCategoryById(randomId);
+
+    const data = {
+      name: faker.internet.displayName(),
+      category: category,
+      price: faker.number.int({min: 10, max: 100}),
+      description: faker.lorem.paragraph(),
+      quantity: faker.number.int({min: 1, max: 100}),
+      status: faker.datatype.boolean(),
+    };
+
+    const product = await productService.getProductById(randomId);
+
+    const newProduct = await productService.updateProduct(product, data);
+
+    expect(newProduct).toBeInstanceOf(Product);
+    expect(newProduct.name).toEqual(data.name);
+    expect(newProduct.price).toEqual(data.price);
+    expect(newProduct.description).toEqual(data.description);
+    expect(newProduct.quantity).toEqual(data.quantity);
+    expect(newProduct.isActive).toEqual(data.status);
+  });
+});
+
+describe('deleteProductImages', () => {
+  it('should delete all product images of a product', async () => {
+    const randomId = faker.number.int({min: 1, max: 5});
+    
+    const product = await productService.getProductById(randomId);
+
+    await productService.deleteProductImages(product);
+
+    const productImages = await productImageRepository.find({
+      where: {
+        product: product,
+      },
+    });
+
+    expect(productImages.length).toEqual(0);
+  });
+});
+
+describe('changeStatusProduct', () => {
+  it('should return a new product', async () => {
+    const randomId = faker.number.int({min: 1, max: 5});
+    
+    const product = await productService.getProductById(randomId);
+
+    const status = faker.datatype.boolean();
+
+    const newProduct = await productService.changeStatusProduct(product, status);
+
+    expect(newProduct).toBeInstanceOf(Product);
+    expect(newProduct.isActive).toEqual(status);
+  });
+});
+

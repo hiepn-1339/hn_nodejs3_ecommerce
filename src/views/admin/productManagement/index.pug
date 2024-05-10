@@ -74,7 +74,7 @@ block admin_content
           each product in products
             tr
               td.w-250px
-                a(href='#')
+                a(href=`/admin/product/${product.id}`)
                   img.h-60px.w-60px.avatar(src=product.images[0].url alt='Product')
                   |  #{product.name}
               td #{product.category.name}
@@ -89,8 +89,10 @@ block admin_content
                   span.status.text-danger &bull;
                   |  #{t('admin.user.inactive')}
               td
-                a(href='#').px-2.text-success
-                  i.fas.fa-pen.fs-24px
+                if product.isActive
+                  button.inactiveProduct.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.bg-gray(data-product-id=product.id) #{t('admin.user.inactive')}
+                else 
+                  button.activeProduct.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(data-product-id=product.id) #{t('admin.user.active')}
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
           each val in Array.from({length: pages}, (_, i) => i + 1)

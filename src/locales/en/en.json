@@ -131,7 +131,8 @@
     "quantityInvalid": "Quantity is invalid!",
     "descriptionLengthError": "The description must be between 1 and 255 characters",
     "nameExists": "Name already exists!",
-    "cantUploadImages": "Cant upload images!"
+    "cantUploadImages": "Cant upload images!",
+    "orderUnprocessed": "The order containing this product has not been processed yet!"
   },
   "profile": {
     "title": "Profile",
@@ -279,7 +280,9 @@
       "submit": "Submit",
       "updateProduct": "Update Product",
       "createProduct": "Create Product",
-      "quantity": "Quantity"
+      "quantity": "Quantity",
+      "inactiveProductSuccess": "Inactive Product Success!",
+      "activeProductSuccess": "Active Product Success!"
     },
     "user": {
       "search": "Search",

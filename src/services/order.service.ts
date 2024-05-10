@@ -1,4 +1,4 @@
-import { Brackets } from 'typeorm';
+import { Brackets, In } from 'typeorm';
 import { OrderStatus, Role } from '../constants';
 import { AppDataSource } from '../database/dataSource';
 import { CartItem } from '../entities/cartItem.entity';
@@ -162,4 +162,15 @@ export const approveOrder = async (order: Order) => {
   await Promise.all(updateProductQuantityPromises);
 
   return await changeStatusOrder(order, OrderStatus.APPROVED);
+};
+
+export const getOrdersByProduct = (product: Product) => {
+  return orderRepository.findBy({
+    items: {
+      product: {
+        id: product.id,
+      },
+    },
+    status: In([OrderStatus.PENDING, OrderStatus.APPROVED]),
+  });
 };
