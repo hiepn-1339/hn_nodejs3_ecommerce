@@ -3,26 +3,30 @@ extends ../layoutAdmin
 block admin_content 
   .table-responsive
     .d-flex.mb-3
-      div.w-50.ms-3
+      .w-50.ms-3
         label.form-label(for='keyword').pe-2
           | #{t('admin.coupon.search')}
         .input-group
-          input.form-control(type='search' placeholder='keywords' aria-describedby='search-icon-1')
-          span#search-icon-1.input-group-text.p-2
-            i.fa.fa-search
+          input#keyword.form-control(type='search' placeholder='search by name' aria-describedby='search-icon-1' value=(query ? query.keyword : ''))
+      .w-5.px-2 
+        span#searchReset.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fas.fa-minus-circle
+      .w-5.px-2 
+        span#adminSearchCoupon.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fa.fa-search
     .d-flex.mb-3
       div.w-25.px-3
         label.form-label(for='percentage').pe-2
           | #{t('admin.coupon.percentage')}
-        input#percentage.form-control(type='number' placeholder='Percentage' aria-describedby='search-icon-1')
+        input#percentage.form-control(type='number' placeholder='Percentage' aria-describedby='search-icon-1' value=(query ? query.percentage : ''))
       div.w-25.px-3
         label.form-label(for='startDate').pe-2
           | #{t('admin.coupon.startDate')}
-        input#startDate.form-control(type='date' aria-describedby='search-icon-1')
+        input#startDate.form-control(type='date' aria-describedby='search-icon-1' value=(query ? query.startDate : ''))
       div.w-25.px-3
         label.form-label(for='endDate').pe-2
           | #{t('admin.coupon.endDate')}
-        input#endDate.form-control(type='date' aria-describedby='search-icon-1')
+        input#endDate.form-control(type='date' aria-describedby='search-icon-1' value=(query ? query.endDate : ''))
     .table-wrapper
       .table-title
         .row
@@ -47,9 +51,9 @@ block admin_content
           each coupon in coupons
             tr
               td.w-250px #{coupon.name}
-              td #{coupon.percentage}
-              td #{coupon.startDate}
-              td #{coupon.endDate}
+              td #{coupon.percentage}%
+              td.date(value=coupon.startDate)
+              td.date(value=coupon.endDate)
               td
                 a(href='#').text-success.px-2
                   i.fas.fa-pen.fs-24px
@@ -57,8 +61,8 @@ block admin_content
                   i.fas.fa-trash.fs-24px
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
-          each val in Array.from({length: pageLength}, (_, i) => i + 1)
-            if val === page
-              a.active.rounded(href='#') #{val}
+          each val in Array.from({length: pages}, (_, i) => i + 1)
+            if val == page
+              a.page.active.rounded(value=val) #{val}
             else
-              a.rounded(href='#') #{val}
+              a.page.rounded(value=val) #{val}

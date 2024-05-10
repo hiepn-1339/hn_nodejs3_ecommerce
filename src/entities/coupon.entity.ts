@@ -1,10 +1,11 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, Index } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Order } from './order.entity';
 
 @Entity()
 export class Coupon extends BaseEntity {
   @Column({ nullable: false })
+  @Index({ fulltext: true })
   name: string | undefined;
 
   @Column({ nullable: false })

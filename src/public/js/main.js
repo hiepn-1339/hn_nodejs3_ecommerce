@@ -393,6 +393,38 @@
       window.location.href = newURL;
     });
 
+    $('#adminSearchCoupon').click(function() {
+      var keyword = $('#keyword').val();
+      var startDate = $('#startDate').val();
+      var endDate = $('#endDate').val();
+      var percentage = $('#percentage').val();
+
+      var query = {
+        page: 1,
+      };
+
+      if (keyword) {
+        query.keyword = keyword;
+      }
+      if (startDate) {
+        query.startDate = startDate;
+      }
+      if (endDate) {
+        query.endDate = endDate;
+      }
+      if (percentage) {
+        query.percentage = percentage;
+      }
+
+      const parsedURL = new URL(window.location.href);
+
+      const newSearchParams = new URLSearchParams(query);
+
+      const newURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname}?${newSearchParams}`;
+
+      window.location.href = newURL;
+    });
+
     $('.btn-minus').click(function(e) {
       e.preventDefault();
 

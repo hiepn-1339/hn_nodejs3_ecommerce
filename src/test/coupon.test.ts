@@ -28,3 +28,31 @@ describe('findCouponByName', () => {
     expect(coupon).toBeNull();
   });
 });
+
+describe('getCoupons', () => {
+  it('should return arrays of coupon', async () => {
+    const data = {
+      page: 1,
+      limit: 10,
+      keyword: 'abc',
+      percentage: 30,
+      startDate: new Date('2024-03-30'),
+      endDate: new Date('2024-05-30'),
+    };
+
+    const {coupons, count} = await couponService.getCoupons(data);
+
+    const words = data.keyword.toLocaleLowerCase().split(' ');
+
+    expect(count).toBeGreaterThanOrEqual(0);
+    expect(coupons).toBeInstanceOf(Array);
+    coupons.forEach(coupon => {
+      expect(coupon).toBeInstanceOf(Coupon);
+      expect(new Date(coupon.startDate).getTime()).toBeLessThanOrEqual(new Date(data.startDate).getTime());
+      expect(new Date(coupon.endDate).getTime()).toBeGreaterThanOrEqual(new Date(data.endDate).getTime());
+      expect(coupon.percentage).toEqual(data.percentage);
+      const nameContainsKeyword = words.some(word => coupon.name.toLocaleLowerCase().includes(word));
+      expect(nameContainsKeyword).toBe(true);
+    });
+  });
+});
