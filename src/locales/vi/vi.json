@@ -132,7 +132,14 @@
     "descriptionLengthError": "Mô tả phải từ 1 đến 255 ký tự",
     "nameExists": "Tên đã tồn tại!",
     "cantUploadImages": "Không thể upload images!",
-    "orderUnprocessed": "Đơn hàng có chứa sản phẩm này chưa được xử lý!"
+    "orderUnprocessed": "Đơn hàng có chứa sản phẩm này chưa được xử lý!",
+    "percentageInvalid": "Phần trăm không hợp lệ",
+    "startDateMustBeBeforeEndDate": "Ngày bắt đầu phải trước ngày kết thúc",
+    "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu",
+    "dateMustBeAfterCurrentDate": "Ngày phải sau ngày hiện tại",
+    "percentageMustBeNotEmpty": "Phần trăm không được trống!",
+    "startDateMustBeNotEmpty": "Ngày bắt đầu không được trống!",
+    "endDateMustBeNotEmpty": "Ngày kết thúc không được trống!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -258,7 +265,8 @@
       "exportToExcel": "Xuất ra Excel",
       "name": "Tên",
       "action": "Hành động",
-      "coupon": "Mã giảm giá"
+      "coupon": "Mã giảm giá",
+      "createSuccess": "Tạo mã giảm giá thành công!"
     },
     "product": {
       "search": "Tìm kiếm",

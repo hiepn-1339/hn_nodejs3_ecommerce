@@ -51,3 +51,22 @@ export const getCoupons = async (data: any) => {
 
   return {coupons, count};
 };
+
+export const getCouponByName = async (name: string) => {
+  return await couponRepository.findOne({
+    where: {
+      name,
+    },
+  });
+};
+
+export const createCoupon = async (data: any) => {
+  const coupon = couponRepository.create({
+    name: data.name,
+    percentage: data.percentage,
+    startDate: data.startDate,
+    endDate: data.endDate,
+  });
+
+  return await couponRepository.save(coupon);
+};

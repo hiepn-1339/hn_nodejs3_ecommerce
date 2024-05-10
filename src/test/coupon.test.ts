@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { AppDataSource } from '../database/dataSource';
 import { Coupon } from '../entities/coupon.entity';
 import * as couponService from '../services/coupon.service';
@@ -56,3 +57,38 @@ describe('getCoupons', () => {
     });
   });
 });
+
+describe('getCouponByName', () => {
+  it('should find a coupon by its name', async () => {
+    const coupon = await couponService.findCouponByName('sale-20%');
+
+    expect(coupon).toBeInstanceOf(Coupon);
+    expect(coupon.name).toEqual('sale-20%');
+  });
+
+  it('should return null if no coupon found with the given name', async () => {
+    const coupon = await couponService.findCouponByName('nonexistent-coupon');
+
+    expect(coupon).toBeNull();
+  });
+});
+
+describe('createCoupon', () => {
+  it('should return a new coupon', async () => {
+    const data = {
+      name: faker.internet.displayName(),
+      percentage: faker.number.int({min: 1, max: 100}),
+      startDate: faker.date.anytime(),
+      endDate: faker.date.anytime(),
+    };
+
+    const coupon = await couponService.createCoupon(data);
+
+    expect(coupon).toBeInstanceOf(Coupon);
+    expect(coupon.name).toEqual(data.name);
+    expect(coupon.percentage).toEqual(data.percentage);
+    expect(new Date(coupon.startDate).getTime()).toBeLessThanOrEqual(new Date(data.startDate).getTime());
+    expect(new Date(coupon.endDate).getTime()).toBeGreaterThanOrEqual(new Date(data.endDate).getTime());
+  });
+});
+
