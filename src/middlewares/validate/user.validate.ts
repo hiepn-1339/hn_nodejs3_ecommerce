@@ -8,6 +8,7 @@ import { UpdateUserDTO } from '../../dto/user/updateUser.dto';
 import { IAdminUserRequest } from '../../controllers/admin.user.controller';
 import { ForgotPasswordDTO } from '../../dto/user/forgotPassword.dto';
 import ResetPasswordDTO from '../../dto/user/resetPassword.dto';
+import ChangePasswordDTO from '../../dto/user/changePassword.dto';
 
 export const validateRegisterUser = async (req: Request, res: Response, next: NextFunction) => {
   const userDTO = new RegisterDTO(req.body);
@@ -97,6 +98,25 @@ export const validateResetPassword = async (req: IAdminUserRequest, res: Respons
     return res.render('resetPassword/index', {
       errors: errorMessages,
     });
+  }
+
+  next();
+};
+
+export const validateChangePassword = async (req: IAdminUserRequest, res: Response, next: NextFunction) => {
+  const changePasswordDTO = new ChangePasswordDTO(req.body);
+
+  const errors = await validate(changePasswordDTO);
+
+  if (errors.length > 0) {
+    const errorMessages = errors.map(error => ({
+      path: error.property,
+      msg: getTranslatedMessage(Object.values(error.constraints)[0], req.query.lng),
+    }));
+    res.render('changePassword/index', {
+      errors: errorMessages,
+    });
+    return;
   }
 
   next();

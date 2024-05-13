@@ -141,7 +141,8 @@
     "percentageMustBeNotEmpty": "Phần trăm không được trống!",
     "startDateMustBeNotEmpty": "Ngày bắt đầu không được trống!",
     "endDateMustBeNotEmpty": "Ngày kết thúc không được trống!",
-    "emailNotExists": "Email không tồn tại!"
+    "emailNotExists": "Email không tồn tại!",
+    "wrongPassword": "Sai mật khẩu!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -395,6 +396,10 @@
   "successResetPassword": {
     "successResetPassword": "Tạo lại mật khẩu thành công",
     "text": "Mật khẩu của bạn đã được tạo lại thành công. Bây giờ bạn có thể đăng nhập vào tài khoản của mình."
+  },
+  "successChangePassword": {
+    "successChangePassword": "Thay đổi mật khẩu thành công",
+    "text": "Mật khẩu của bạn đã được thay đổi thành công. Bây giờ bạn có thể đăng nhập vào tài khoản của mình."
   },
   "emailResetPassword": {
     "emailResetPassword": "Email Reset mật khẩu",

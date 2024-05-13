@@ -167,3 +167,9 @@ export const resetPassword = async (user: User, password: string) => {
 
   return await userRepository.save(user);
 };
+
+export const changePassword = async (user: User, password: string) => {
+  user.password = bcrypt.hashSync(password, 10);
+
+  return await userRepository.save(user);
+};

@@ -2,26 +2,38 @@ extends ../layout
 
 block content 
   include ../mixins/_breadcrumb
-  +breadcurmb(t('changePassword.changePassword'), [])
+  +breadcurmb('Change Password', [])
 
   .container-fluid.py-5
     .container.py-5
       .row
         .col-md-6.offset-md-3
-          form
+          form(method='POST')
             .mb-3
               label.form-label(for='oldPassword') 
                 | #{t('changePassword.oldPassword')}
                 sup.text-danger *
-              input#oldPassword.form-control(type='Password' required='')
+              input#oldPassword.form-control(type='Password' required='' name='oldPassword')
+              if errors
+                - let error= errors.find(e => e.path == 'oldPassword')
+                  if error
+                    p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='newPassword') 
                 | #{t('changePassword.newPassword')}
                 sup.text-danger *
-              input#newPassword.form-control(type='password' required='')
+              input#newPassword.form-control(type='password' required='' name='newPassword')
+              if errors
+                - let error= errors.find(e => e.path == 'newPassword')
+                  if error
+                    p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='newPasswordConfirm') 
                 | #{t('changePassword.newPasswordConfirm')}
                 sup.text-danger *
-              input#newPasswordConfirm.form-control(type='password' required='')
+              input#newPasswordConfirm.form-control(type='password' required='' name='newPasswordConfirm')
+              if errors
+                - let error= errors.find(e => e.path == 'newPasswordConfirm')
+                  if error
+                    p.text-danger #{error.msg}
             button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('changePassword.submit')}

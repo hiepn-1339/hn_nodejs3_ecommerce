@@ -328,3 +328,25 @@ describe('resetPassword', () => {
     expect(checkPassword).toEqual(true);
   });
 });
+
+describe('changePassword', () => {
+  it('should change the password', async () => {
+    const randomId = faker.number.int({min: 1, max: 5});
+
+    const user = await userRepository.findOne({
+      where: {
+        id: randomId,
+      },
+    });
+
+    const newPassword = faker.internet.displayName();
+
+    const checkUser = await userService.changePassword(user, newPassword);
+
+    const checkPassword = await bcrypt.compare(newPassword, checkUser.password);
+
+    expect(checkUser).toBeInstanceOf(User);
+    expect(checkUser.id).toEqual(user.id);
+    expect(checkPassword).toEqual(true);
+  });
+});
