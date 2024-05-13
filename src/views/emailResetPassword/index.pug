@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  .container-fluid.fruite.py-5
+    .container.py-5
+      .mx-auto.w-60.d-flex.justify-content-center.align-items-center.flex-column.mt-5
+        i.fas.fa-envelope.fs-200px.color-primary
+        h1.text-center #{t('emailResetPassword.emailResetPassword')}
+        p.text-center #{t('emailResetPassword.text', {email})}

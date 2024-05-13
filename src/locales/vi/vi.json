@@ -86,8 +86,8 @@
   },
   "resetPassword": {
     "resetPassword": "Đặt lại mật khẩu",
-    "password": "Mật khẩu",
-    "passwordConfirm": "Xác nhận mật khẩu",
+    "newPassword": "Mật khẩu mới",
+    "newPasswordConfirm": "Xác nhận mật khẩu mới",
     "submit": "Gửi"
   },
   "error": {
@@ -140,7 +140,8 @@
     "dateMustBeAfterCurrentDate": "Ngày phải sau ngày hiện tại",
     "percentageMustBeNotEmpty": "Phần trăm không được trống!",
     "startDateMustBeNotEmpty": "Ngày bắt đầu không được trống!",
-    "endDateMustBeNotEmpty": "Ngày kết thúc không được trống!"
+    "endDateMustBeNotEmpty": "Ngày kết thúc không được trống!",
+    "emailNotExists": "Email không tồn tại!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -372,6 +373,11 @@
       "approveOrder": "Duyệt Đơn hàng",
       "approveOrderMessage": "Đơn hàng của bạn đã được duyệt",
       "email": "Email"
+    },
+    "forgotPassword": {
+      "subject": "Quên mật khẩu",
+      "link": "Link",
+      "text": "Link reset password"
     }
   },
   "emailConfirm": {
@@ -385,5 +391,13 @@
   "failConfirm": {
     "failConfirm": "Xác nhận thất bại",
     "text": "Token kích hoạt không hợp lệ hoặc đã hết hạn!"
+  },
+  "successResetPassword": {
+    "successResetPassword": "Tạo lại mật khẩu thành công",
+    "text": "Mật khẩu của bạn đã được tạo lại thành công. Bây giờ bạn có thể đăng nhập vào tài khoản của mình."
+  },
+  "emailResetPassword": {
+    "emailResetPassword": "Email Reset mật khẩu",
+    "text": "Chúng tôi đã gửi link reset mật khẩu đến {{email}}. Sau khi nhận được email, hãy làm theo liên kết được cung cấp để hoàn tất việc đặt lại mật khẩu của bạn."
   }
 }

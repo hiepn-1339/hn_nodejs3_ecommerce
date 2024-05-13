@@ -6,6 +6,8 @@ import { getTranslatedMessage } from '../../utils/i18n';
 import { CreateUserDTO } from '../../dto/user/createUser.dto';
 import { UpdateUserDTO } from '../../dto/user/updateUser.dto';
 import { IAdminUserRequest } from '../../controllers/admin.user.controller';
+import { ForgotPasswordDTO } from '../../dto/user/forgotPassword.dto';
+import ResetPasswordDTO from '../../dto/user/resetPassword.dto';
 
 export const validateRegisterUser = async (req: Request, res: Response, next: NextFunction) => {
   const userDTO = new RegisterDTO(req.body);
@@ -58,6 +60,42 @@ export const validateUpdateUser = async (req: IAdminUserRequest, res: Response, 
     return res.render('admin/userManagement/form', {
       errors: errorMessages,
       genders: Object.keys(Gender), EntityStatus, roles: Object.keys(Role), isUpdate: true, user: req.user,
+    });
+  }
+
+  next();
+};
+
+export const validateForgotPassword = async (req: IAdminUserRequest, res: Response, next: NextFunction) => {
+  const forgotPasswordDTO = new ForgotPasswordDTO(req.body);
+
+  const errors = await validate(forgotPasswordDTO);
+
+  if (errors.length > 0) {
+    const errorMessages = errors.map(error => ({
+      path: error.property,
+      msg: getTranslatedMessage(Object.values(error.constraints)[0], req.query.lng),
+    }));
+    return res.render('forgotPassword/index', {
+      errors: errorMessages,
+    });
+  }
+
+  next();
+};
+
+export const validateResetPassword = async (req: IAdminUserRequest, res: Response, next: NextFunction) => {
+  const resetPasswordDTO = new ResetPasswordDTO(req.body);
+
+  const errors = await validate(resetPasswordDTO);
+
+  if (errors.length > 0) {
+    const errorMessages = errors.map(error => ({
+      path: error.property,
+      msg: getTranslatedMessage(Object.values(error.constraints)[0], req.query.lng),
+    }));
+    return res.render('resetPassword/index', {
+      errors: errorMessages,
     });
   }
 

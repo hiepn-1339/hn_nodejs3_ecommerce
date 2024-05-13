@@ -16,7 +16,7 @@ export const getOverview = [
 
     const month = currentDate.getMonth() + 1;
 
-    const orderData = await orderService.getCountAndTotalRevenueEachMonthInCurrentYear();
+    const orderData = await orderService.getCountAndTotalRevenueEachMonth();
 
     const monthOrder = orderData.find(data => data.month === month);
 

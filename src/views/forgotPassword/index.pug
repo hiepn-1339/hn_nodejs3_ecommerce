@@ -2,16 +2,20 @@ extends ../layout
 
 block content 
   include ../mixins/_breadcrumb
-  +breadcurmb(#{t('forgotPassword.forgotPassword')}, [])
+  +breadcurmb('Forgot Password', [])
 
   .container-fluid.py-5
     .container.py-5
       .row
         .col-md-6.offset-md-3
-          form
+          form(method='POST')
             .mb-3
               label.form-label(for='email') 
                 | #{t('forgotPassword.email')}
                 sup.text-danger *
-              input#email.form-control(type='email' required='')
+              input#email.form-control(type='email' required='' name="email")
+              if errors
+                - let error= errors.find(e => e.path == 'email')
+                  if error
+                    p.text-danger #{error.msg}
             button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('forgotPassword.submit')}

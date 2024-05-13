@@ -2,21 +2,29 @@ extends ../layout
 
 block content 
   include ../mixins/_breadcrumb
-  +breadcurmb(t('resetPassword.resetPassword'), [])
+  +breadcurmb('Reset Password', [])
 
   .container-fluid.py-5
     .container.py-5
       .row
         .col-md-6.offset-md-3
-          form
+          form(method='POST')
             .mb-3
               label.form-label(for='password') 
-                | #{t('resetPassword.password')}
+                | #{t('resetPassword.newPassword')}
                 sup.text-danger *
-              input#password.form-control(type='password' required='')
+              input#password.form-control(type='password' required='' name='password')
+              if errors
+                - let error = errors.find(e => e.path == 'password')
+                if error
+                  p.text-danger #{error.msg}
             .mb-3
               label.form-label(for='passwordConfirm') 
-                | #{t('resetPassword.passwordConfirm')}
+                | #{t('resetPassword.newPasswordConfirm')}
                 sup.text-danger *
-              input#passwordConfirm.form-control(type='password' required='')
+              input#passwordConfirm.form-control(type='password' required='' name='confirmPassword')
+              if errors
+                - let error = errors.find(e => e.path == 'confirmPassword')
+                if error
+                  p.text-danger #{error.msg}
             button.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(type='submit') #{t('resetPassword.submit')}
