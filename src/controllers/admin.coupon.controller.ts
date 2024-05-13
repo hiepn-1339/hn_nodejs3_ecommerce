@@ -1,10 +1,12 @@
 import asyncHandler from 'express-async-handler';
-import { checkIsAdmin, checkLoggedIn } from '../middlewares';
+import { checkIsAdmin, checkLoggedIn, checkValidId } from '../middlewares';
 import * as couponService from '../services/coupon.service';
+import * as orderService from '../services/order.service';
 import { NextFunction, Request, Response } from 'express';
 import { getTranslatedMessage } from '../utils/i18n';
-import { Status } from '../constants';
+import { ErrorCode, Status } from '../constants';
 import { validateCreateCoupon } from '../middlewares/validate/coupon.validate';
+import { t } from 'i18next';
 
 interface IAdminCouponRequest extends Request {
   coupon?: any;
@@ -24,6 +26,11 @@ export const getCoupons = [
 ];
 
 const checkExistsCouponByName = async(req: IAdminCouponRequest, res: Response, next: NextFunction) => {
+  if(req.coupon.name === req.body.name) {
+    next();
+    return;
+  }
+  
   const coupon = await couponService.getCouponByName(req.body.name);
 
   if (coupon) {
@@ -56,5 +63,45 @@ export const postCreateCoupon = [
     });
 
     return;
+  }),
+];
+
+const checkExistsCouponById = async (req: IAdminCouponRequest, res: Response, next: NextFunction) => {
+  const coupon = await couponService.getCouponById(parseInt(req.params.id));
+  if (coupon === null) {
+    res.render('error', { code: ErrorCode.NOT_FOUND, title: t('error.notFound'), message: t('error.notFound', {id: req.params.id}) });
+  }
+
+  req.coupon = coupon;
+  next();
+};
+
+export const postUpdateCoupon = [
+  checkLoggedIn,
+  checkIsAdmin,
+  checkValidId,
+  checkExistsCouponById,
+  validateCreateCoupon,
+  checkExistsCouponByName,
+  asyncHandler(async(req: IAdminCouponRequest, res: Response) => {
+    const orders = await orderService.getOrdersByCoupon(req.coupon);
+
+    if (orders) {
+      res.send({
+        status: Status.FAIL,
+        message: getTranslatedMessage('error.orderContainCouponUnprocessed', req.query.lng),
+      });
+      return;
+    } else {
+      await couponService.updateCoupon(req.coupon, req.body);
+  
+      res.send({
+        status: Status.SUCCESS,
+        message: getTranslatedMessage('admin.coupon.updateSuccess', req.query.lng),
+      });
+  
+      return;
+    }
+    
   }),
 ];

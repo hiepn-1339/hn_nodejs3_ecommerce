@@ -133,6 +133,7 @@
     "nameExists": "Name already exists!",
     "cantUploadImages": "Cant upload images!",
     "orderUnprocessed": "The order containing this product has not been processed yet!",
+    "orderContainCouponUnprocessed": "The order containing this coupon has been processed yet!",
     "percentageInvalid": "Percentage invalid",
     "startDateMustBeBeforeEndDate": "Start date must be before end date",
     "endDateMustBeAfterStartDate": "End date must be after start date",
@@ -262,11 +263,13 @@
       "endDate": "End Date",
       "couponManagement": "Coupon Management",
       "addNewCoupon": "Add New Coupon",
+      "updateNewCoupon": "Update New Coupon",
       "exportToExcel": "Export To Excel",
       "name": "Name",
       "action": "Action",
       "coupon": "Coupon",
-      "createSuccess": "Create coupon successfully!"
+      "createSuccess": "Create coupon successfully!",
+      "updateSuccess": "Update coupon successfully!"
     },
     "product": {
       "search": "Search",

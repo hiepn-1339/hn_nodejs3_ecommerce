@@ -92,3 +92,36 @@ describe('createCoupon', () => {
   });
 });
 
+describe('getCouponById', () => {
+  it('should find a coupon by its id', async () => {
+    const randomId = faker.number.int({min: 1, max:5});
+
+    const coupon = await couponService.getCouponById(randomId);
+
+    expect(coupon).toBeInstanceOf(Coupon);
+    expect(coupon.id).toEqual(randomId);
+  });
+});
+
+describe('updateCoupon', () => {
+  it('should return a new coupon', async () => {
+    const randomId = faker.number.int({min: 1, max:5});
+
+    const coupon = await couponService.getCouponById(randomId);
+    
+    const data = {
+      name: faker.internet.displayName(),
+      percentage: faker.number.int({min: 1, max: 100}),
+      startDate: faker.date.anytime(),
+      endDate: faker.date.anytime(),
+    };
+
+    const newCoupon = await couponService.updateCoupon(coupon, data);
+
+    expect(newCoupon).toBeInstanceOf(Coupon);
+    expect(newCoupon.name).toEqual(data.name);
+    expect(newCoupon.percentage).toEqual(data.percentage);
+    expect(new Date(newCoupon.startDate).getTime()).toBeLessThanOrEqual(new Date(data.startDate).getTime());
+    expect(new Date(newCoupon.endDate).getTime()).toBeGreaterThanOrEqual(new Date(data.endDate).getTime());
+  });
+});

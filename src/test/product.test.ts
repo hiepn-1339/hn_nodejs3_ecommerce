@@ -68,9 +68,9 @@ describe('getFeaturedProduct', () => {
 
 describe('getProductByName', () => {
   it('should return product with given name', async () => {
-    const name = 'Maci.Bashirian'; 
-    const product = await productService.getProductByName(name);
-    expect(product.name).toEqual(name);
+    const productTest = await productService.getProductById(1);
+    const product = await productService.getProductByName(productTest.name);
+    expect(product.name).toEqual(productTest.name);
   });
 
   it('should return null if no product found with given name', async () => {

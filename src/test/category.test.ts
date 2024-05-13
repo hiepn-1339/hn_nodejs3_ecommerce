@@ -48,12 +48,12 @@ describe('adminGetCategories', () => {
 
 describe('getCategoryByName', () => {
   it('should return a category', async () => {
-    const name = 'Vicky87';
+    const categoryTest = await categoryService.getCategoryById(1);
     
-    const category = await categoryService.getCategoryByName(name);
+    const category = await categoryService.getCategoryByName(categoryTest.name);
     
     expect(category).toBeInstanceOf(Category);
-    expect(category.name).toEqual(name);
+    expect(category.name).toEqual(categoryTest.name);
   });
 });
 

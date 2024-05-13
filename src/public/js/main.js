@@ -399,6 +399,88 @@
       });
     });
 
+    $('.updateCoupon').click(function(e) {
+      e.preventDefault();
+
+      $('.error').text('');
+
+      $('#id').val($(this).data('coupon').id);
+      $('#nameInputUpdate').val($(this).data('coupon').name);
+      $('#percentageInputUpdate').val($(this).data('coupon').percentage);
+      $('#startDateInputUpdate').val((new Date($(this).data('coupon').startDate)).toISOString().slice(0, 10));
+      $('#endDateInputUpdate').val((new Date($(this).data('coupon').endDate)).toISOString().slice(0, 10));
+    });
+
+    $('#submitUpdateCoupon').click((e) => {
+      e.preventDefault();
+
+      const id = $('#id').val();
+      const name = $('#nameInputUpdate').val();
+      const percentage = $('#percentageInputUpdate').val();
+      const startDate = $('#startDateInputUpdate').val();
+      const endDate = $('#endDateInputUpdate').val();
+
+      const data = {};
+
+      if (name) {
+        data.name = name;
+      }
+      if (percentage) {
+        data.percentage = percentage;
+      }
+      if (startDate) {
+        data.startDate = startDate;
+      }
+      if (endDate) {
+        data.endDate = endDate;
+      }
+
+      $('#loader').removeClass('d-none');
+      fetch(`/admin/coupon/${id}/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => response.text())
+      .then((data) => {
+        $('#loader').addClass('d-none');
+        data = JSON.parse(data);
+        let options;
+        if (data.status == 'Success') {
+          options = {
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          };
+
+          Swal.fire(options)
+          .then(() => {
+            window.location.reload();
+          });
+        }
+        if (data.status == 'Fail') {
+          if (data.message) {
+            options = {
+              title: data.status,
+              text: data.message,
+              icon: 'error',
+              confirmButtonText: 'OK',
+            };
+  
+            Swal.fire(options);
+          } else {
+            data.errors.forEach(error => {
+              const path = error.path;
+              $(`p[path='${path}']`).text(error.msg);
+            });
+          }
+        }
+      });
+    });
+
     $(document).ready(function() {
       $('.js-example-basic-multiple').select2();
     });

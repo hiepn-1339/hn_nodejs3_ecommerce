@@ -6,6 +6,7 @@ import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/orderItem.entity';
 import { Product } from '../entities/product.entity';
 import { User } from '../entities/user.entity';
+import { Coupon } from '../entities/coupon.entity';
 
 const orderRepository = AppDataSource.getRepository(Order);
 const orderItemRepository = AppDataSource.getRepository(OrderItem);
@@ -171,6 +172,13 @@ export const getOrdersByProduct = (product: Product) => {
         id: product.id,
       },
     },
+    status: In([OrderStatus.PENDING, OrderStatus.APPROVED]),
+  });
+};
+
+export const getOrdersByCoupon = (coupon: Coupon) => {
+  return orderRepository.findBy({
+    coupon: coupon,
     status: In([OrderStatus.PENDING, OrderStatus.APPROVED]),
   });
 };
