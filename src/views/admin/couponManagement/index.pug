@@ -33,7 +33,7 @@ block admin_content
           .col-sm-5
             h2.text-white #{t('admin.coupon.couponManagement')}
           .col-sm-7
-            a.btn.btn-secondary(href='#')
+            button.btn.btn-secondary(data-bs-toggle="modal" data-bs-target="#modalCreateCoupon")
               i.fas.fa-plus
               span #{t('admin.coupon.addNewCoupon')}
             a.btn.btn-secondary(href='#')
@@ -57,8 +57,6 @@ block admin_content
               td
                 a(href='#').text-success.px-2
                   i.fas.fa-pen.fs-24px
-                a(href='#').text-danger
-                  i.fas.fa-trash.fs-24px
       .col-12
         .pagination.d-flex.justify-content-center.mt-5
           each val in Array.from({length: pages}, (_, i) => i + 1)
@@ -66,3 +64,37 @@ block admin_content
               a.page.active.rounded(value=val) #{val}
             else
               a.page.rounded(value=val) #{val}
+  #modalCreateCoupon.modal.fade(tabindex='-1' aria-labelledby='modalCreateCoupon' aria-hidden='true')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header
+          h1#modalCreateCoupon.modal-title.fs-5 #{t('admin.category.addNewCategory')}
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+        .modal-body
+          form
+            .mb-3
+              label.form-label(for='name') 
+                | #{t('admin.coupon.name')}
+                sup.text-danger *
+              input#nameInput.form-control(type='text' required='' name='name')
+              p(path='name').text-danger
+            .mb-3
+              label.form-label(for='percentage') 
+                | #{t('admin.coupon.percentage')} (%)
+                sup.text-danger *
+              input#percentageInput.form-control(type='number' required='' name='percentage')
+              p(path='percentage').text-danger
+            .mb-3
+              label.form-label(for='startDate')
+                | #{t('admin.coupon.startDate')}
+                sup.text-danger *
+              input#startDateInput.form-control(type='date' required='' name='startDate')
+              p(path='startDate').text-danger
+            .mb-3
+              label.form-label(for='endDate')
+                | #{t('admin.coupon.endDate')}
+                sup.text-danger *
+              input#endDateInput.form-control(type='date' required='' name='endDate')
+              p(path='endDate').text-danger
+            button#submitCreateCoupon.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100 #{t('order.submit')}
+            

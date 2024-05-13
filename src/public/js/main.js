@@ -341,6 +341,64 @@
       });
     });
 
+    $('#submitCreateCoupon').click((e) => {
+      e.preventDefault();
+
+      const name = $('#nameInput').val();
+      const percentage = $('#percentageInput').val();
+      const startDate = $('#startDateInput').val();
+      const endDate = $('#endDateInput').val();
+
+      const data = {};
+
+      if (name) {
+        data.name = name;
+      }
+      if (percentage) {
+        data.percentage = percentage;
+      }
+      if (startDate) {
+        data.startDate = startDate;
+      }
+      if (endDate) {
+        data.endDate = endDate;
+      }
+
+      $('#loader').removeClass('d-none');
+      fetch('/admin/coupon/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => response.text())
+      .then((data) => {
+        $('#loader').addClass('d-none');
+        data = JSON.parse(data);
+        let options;
+        if (data.status == 'Success') {
+          options = {
+            title: data.status,
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          };
+
+          Swal.fire(options)
+          .then(() => {
+            window.location.reload();
+          });
+        }
+        if (data.status == 'Fail') {
+          data.errors.forEach(error => {
+            const path = error.path;
+            $(`p[path='${path}']`).text(error.msg);
+          });
+        }
+      });
+    });
+
     $(document).ready(function() {
       $('.js-example-basic-multiple').select2();
     });

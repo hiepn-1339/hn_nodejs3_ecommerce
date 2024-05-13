@@ -48,7 +48,7 @@ describe('adminGetCategories', () => {
 
 describe('getCategoryByName', () => {
   it('should return a category', async () => {
-    const name = 'category1';
+    const name = 'Vicky87';
     
     const category = await categoryService.getCategoryByName(name);
     
