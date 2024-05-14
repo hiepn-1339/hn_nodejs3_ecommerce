@@ -7,43 +7,45 @@ block admin_content
         label.form-label(for='keyword').pe-2
           | #{t('admin.order.search')}
         .input-group
-          input#keyword.form-control(type='search' placeholder='Search by name and address' aria-describedby='search-icon-1' name='keyword')
+          input#keyword.form-control(type='search' placeholder='Search by name and address' aria-describedby='search-icon-1' name='keyword' value=(query ? query.keyword : ''))
       div.w-25.px-3
         label.form-label(for='totalMin').pe-2
           | #{t('admin.order.totalMin')}
-        input#totalMin.form-control(type='number' placeholder='Total min' aria-describedby='search-icon-1' name='totalMin')
+        input#totalMin.form-control(type='number' placeholder='Total min' aria-describedby='search-icon-1' name='totalMin' value=(query ? query.totalMin : ''))
       div.w-25.px-3
         label.form-label(for='totalMax').pe-2
           | #{t('admin.order.totalMax')}
-        input#totalMax.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1' name='totalMax')
+        input#totalMax.form-control(type='number' placeholder='Total max' aria-describedby='search-icon-1' name='totalMax' value=(query ? query.totalMax : ''))
     .d-flex.mb-3
       div.w-25.px-3
         label.form-label(for='startDate').pe-2
           | #{t('order.startDate')}
-        input#startDate.form-control(type='date' aria-describedby='search-icon-1')
+        input#startDate.form-control(type='date' aria-describedby='search-icon-1' value=(query ? query.startDate : ''))
       div.w-25.px-3
         label.form-label(for='endDate').pe-2
           | #{t('order.endDate')}
-        input#endDate.form-control(type='date' aria-describedby='search-icon-1')
-      div.w-25.px-3
+        input#endDate.form-control(type='date' aria-describedby='search-icon-1' value=(query ? query.endDate : ''))
+      .w-20.px-3
         label.form-label(for='payment').pe-2
           | #{t('admin.order.paymentMethod')}
-        select#payment.form-select(name="paymentMethod")
-          option(disabled selected value=null) -- #{t('selectAnOption')} --
+        select#payment.form-select.js-example-basic-multiple(name="paymentMethods[]" multiple="multiple")
           each paymentMethod in paymentMethods
             - let method = paymentMethod.replaceAll('_', ' ')
-            option(value=paymentMethod) #{method}
-      div.w-20.px-3(name="status")
+            - let selected = query.paymentMethod ? query.paymentMethod.split(',').includes(`${paymentMethod}`) : false
+            option(value=paymentMethod selected=selected) #{method}
+      .w-20.px-3(name="status")
         label.form-label(for='status').pe-2
           | #{t('admin.order.status')}
-        select#status.form-select
-          option(disabled selected value=null) -- #{t('selectAnOption')} --
+        select#status.form-select.js-example-basic-multiple(name="statuses[]" multiple="multiple")
           - let statuses = Object.keys(OrderStatus)
           each status in statuses
-            option(value=status) #{status}
-      div.w-5
-        label.form-label.pe-2
-        span#searchAdminOrder.input-group-text.p-3.justify-content-center
+            - let selected = query.status ? query.status.split(',').includes(`${status}`) : false
+            option(value=status selected=selected) #{status}
+      .w-5.px-2 
+        span#searchReset.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fas.fa-minus-circle
+      .w-5.px-2 
+        span#searchAdminOrder.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
           i.fa.fa-search
     .table-wrapper
       .table-title
@@ -70,7 +72,7 @@ block admin_content
           each order in orders
             tr.h-100px
               td
-                a(href=`/order/${order.id}`) 
+                a(href=`/admin/order/${order.id}`) 
                   i.fas.fa-eye
               td #{order.id}
               td.date(value=order.createdAt)

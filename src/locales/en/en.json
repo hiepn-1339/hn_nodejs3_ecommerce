@@ -322,6 +322,21 @@
       "createUser": "Create User",
       "inactiveUserSuccess": "Inactive User Success!",
       "activeUserSuccess": "Active User Success!"
+    },
+    "overview": {
+      "monthOrders": "Month Orders",
+      "orders": "Total Orders",
+      "monthRevenue": "Month Revenue",
+      "revenue": "Revenue",
+      "recentOrders": "Recent Orders",
+      "date": "Date",
+      "id": "Id",
+      "total": "Total",
+      "paymentMethod": "Payment Method",
+      "status": "Status",
+      "action": "Action",
+      "detail": "Detail",
+      "overview": "Overview"
     }
   },
   "email": {

@@ -64,6 +64,78 @@
   }
 
   $(document).ready(function() {
+    var ctx1 = $('#count-orders').get(0).getContext('2d');
+    var ctx2 = $('#salse-revenue').get(0).getContext('2d');
+    const dataChart =JSON.parse($('#salse-revenue').attr('data-order-data'));
+    const labels = [];
+    const countOrder = [];
+    const total = [];
+    const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    dataChart.forEach(data => {
+      labels.push(data.month);
+      countOrder.push(data.data.count);
+      total.push(data.data.total);
+    });
+    var myChart1 = new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Order',
+            data: countOrder,
+            backgroundColor: 'rgba(0, 156, 255, .5)',
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            ticks: {
+              callback: function(val, index) {
+                return MONTHS[val-1];
+              },
+            },
+          },
+        },
+      },
+    });
+    var myChart2 = new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Revenue',
+            data: total,
+            backgroundColor: 'rgba(0, 156, 255, .3)',
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            ticks: {
+              callback: function(val, index) {
+                return '$' + val;
+              },
+            },
+          },
+          x: {
+            ticks: {
+              callback: function(val, index) {
+                return MONTHS[val-1];
+              },
+            },
+          },
+        },
+      },
+    });
+
     var pages = $('.page');
 
     pages.each(function() {

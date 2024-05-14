@@ -78,15 +78,13 @@ export const getOrders = async (user: User, data: any) => {
   }
 
   if (data.status) {
-    query.andWhere('order.status = :status', {
-      status: data.status,
-    });
+    const statuses = data.status.split(',');
+    query.andWhere('order.status IN (:...statuses)', { statuses });
   }
 
   if (data.paymentMethod) {
-    query.andWhere('order.payment_method = :paymentMethod', {
-      paymentMethod: data.paymentMethod,
-    });
+    const paymentMethods = data.paymentMethod.split(',');
+    query.andWhere('order.payment_method IN (:...paymentMethods)', { paymentMethods });
   }
 
   if (user.role !== Role.ADMIN) {
@@ -181,4 +179,50 @@ export const getOrdersByCoupon = (coupon: Coupon) => {
     coupon: coupon,
     status: In([OrderStatus.PENDING, OrderStatus.APPROVED]),
   });
+};
+
+export const getCountAndTotalRevenue = async (month?: number) => {
+  const query = orderRepository.createQueryBuilder('order');
+
+  let count = 0;
+  let orders = [];
+  let total = 0;
+
+  query.where('order.status IN (:status)', { status: [OrderStatus.APPROVED, OrderStatus.COMPLETED] });
+
+  if (month) {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear(); 
+  
+    query.andWhere('MONTH(order.createdAt) = :month', { month });
+    query.andWhere('YEAR(order.createdAt) = :year', { year });
+  
+    orders = await query.getMany();
+
+    count = orders.length;
+  } else {
+    orders = await query.getMany();
+
+    count = orders.length;
+  }
+
+  orders.forEach((order) => {
+    total += order.total;
+  });
+
+  return {count, total};
+};
+
+export const getCountAndTotalRevenueEachMonth = async () => {
+  const currentDate = new Date();
+  
+  const month = currentDate.getMonth() + 1;
+  
+  const promises = Array.from({ length: month }, (_, i) => {
+    const monthNumber = i + 1;
+    return getCountAndTotalRevenue(monthNumber)
+      .then(data => ({ month: monthNumber, data }));
+  });
+
+  return Promise.all(promises);
 };

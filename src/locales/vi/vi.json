@@ -322,6 +322,21 @@
       "createUser": "Tạo người dùng",
       "inactiveUserSuccess": "Vô hiệu hóa người dùng thành công!",
       "activeUserSuccess": "Kích hoạt người dùng thành công!"
+    },
+    "overview": {
+      "monthOrders": "Đơn hàng trong tháng",
+      "orders": "Tổng số đơn hàng",
+      "monthRevenue": "Doanh thu trong tháng",
+      "revenue": "Doanh thu",
+      "recentOrders": "Đơn hàng gần đây",
+      "date": "Ngày",
+      "id": "ID",
+      "total": "Tổng cộng",
+      "paymentMethod": "Phương thức thanh toán",
+      "status": "Trạng thái",
+      "action": "Hành động",
+      "detail": "Chi tiết",
+      "overview": "Tổng quan"
     }
   },
   "email": {

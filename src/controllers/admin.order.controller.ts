@@ -16,7 +16,7 @@ export const getOrders = [
 
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 
-    return res.render('admin/orderManagement/index', {orders, paymentMethods: Object.keys(PaymentMethod), OrderStatus, pages, page: req.query.page});
+    return res.render('admin/orderManagement/index', {orders, paymentMethods: Object.keys(PaymentMethod), OrderStatus, pages, page: req.query.page, query: req.query});
   }),
 ];
 
