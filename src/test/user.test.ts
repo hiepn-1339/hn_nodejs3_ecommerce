@@ -7,6 +7,7 @@ import * as userService from '../services/user.service';
 import * as cartService from '../services/cart.service';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import { IsNull, Not } from 'typeorm';
 
 let connection;
 let userRepository;
@@ -239,5 +240,91 @@ describe('changeStatusUser', () => {
 
     expect(newUser).toBeInstanceOf(User);
     expect(newUser.isActive).toEqual(isActive);
+  });
+});
+
+describe('forgotPassword', () => {
+  it('should update tokenResetPassword and tokenResetPasswordExpires', async () => {
+    const user = await userRepository.findOne({
+      where: {
+        tokenResetPassword: IsNull(),
+      },
+    });
+
+    const tokenResetPassword = await userService.forgotPassword(user);
+
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(tokenResetPassword)
+      .digest('hex');
+
+    const checkUser = await userRepository.findOne({
+      where: {
+        tokenResetPassword: hashedToken,
+      }, 
+    });
+
+    expect(checkUser.id).toEqual(user.id);
+  });
+});
+
+describe('checkValidTokenResetPassword function', () => {
+  let user: User;
+  let tokenResetPassword: string;
+  
+  beforeEach(async () => {
+    user = await userRepository.findOne({
+      where: {
+        tokenResetPassword: IsNull(),
+      },
+    });
+
+    tokenResetPassword = crypto.randomBytes(32).toString('hex');
+
+    user.tokenResetPassword = crypto
+      .createHash('sha256')
+      .update(tokenResetPassword)
+      .digest('hex');
+
+    user.tokenResetPasswordExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+    user = await userRepository.save(user);
+  });
+
+  it('should return user when token is valid and not expired', async () => {
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(tokenResetPassword)
+      .digest('hex');
+    const userValid = await userService.checkValidTokenResetPassword(hashedToken);
+    expect(userValid.email).toEqual(user.email);
+  });
+
+  it('should return null when token is invalid or expired', async () => {
+    const token = 'invalidToken';
+    const userInValid = await userService.checkValidTokenResetPassword(token);
+    expect(userInValid).toBeNull();
+  });
+});
+
+describe('resetPassword', () => {
+  it('should update password, tokenResetPassword and tokenResetPasswordExpires', async () => {
+    const user = await userRepository.findOne({
+      where: {
+        tokenResetPassword: Not(IsNull()),
+      },
+    });
+
+    const password = faker.internet.displayName();
+
+    const checkUser = await userService.resetPassword(user, password);
+
+    const checkPassword = await bcrypt.compare(password, checkUser.password);
+
+    expect(checkUser).toBeInstanceOf(User);
+    expect(checkUser.id).toEqual(user.id);
+    expect(checkUser.tokenResetPassword).toBeNull();
+    expect(checkUser.tokenResetPasswordExpires).toBeNull();
+    expect(checkPassword).toEqual(true);
   });
 });

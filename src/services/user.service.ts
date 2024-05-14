@@ -138,3 +138,32 @@ export const changeStatusUser = async (user: User, status: boolean) => {
 
   return await userRepository.save(user);
 };
+
+export const forgotPassword = async (user: User) => {
+  const {tokenActive, hashedToken} = generateTokenActive();
+
+  user.tokenResetPassword =  hashedToken;
+  user.tokenResetPasswordExpires = new Date(Date.now() + config.tokenExpirationTime * 60 * 1000);
+
+  await userRepository.save(user);
+
+  return tokenActive;
+};
+
+export const checkValidTokenResetPassword = async (token: string) => {
+  const now = new Date();
+  return await userRepository.findOne({
+    where: {
+      tokenResetPassword: token,
+      tokenResetPasswordExpires: MoreThan(now),
+    },
+  });
+};
+
+export const resetPassword = async (user: User, password: string) => {
+  user.password =  bcrypt.hashSync(password, 10);
+  user.tokenResetPassword = null;
+  user.tokenResetPasswordExpires = null;
+
+  return await userRepository.save(user);
+};

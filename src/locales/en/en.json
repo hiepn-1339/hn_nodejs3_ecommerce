@@ -86,8 +86,8 @@
   },
   "resetPassword": {
     "resetPassword": "Reset Password",
-    "password": "Password",
-    "passwordConfirm": "Password Confirm",
+    "newPassword": "New Password",
+    "newPasswordConfirm": "New Password Confirm",
     "submit": "Submit"
   },
   "error": {
@@ -140,7 +140,8 @@
     "dateMustBeAfterCurrentDate": "Date must be after current date",
     "percentageMustBeNotEmpty": "Percentage must be not empty!",
     "startDateMustBeNotEmpty": "Start date must be not empty!",
-    "endDateMustBeNotEmpty": "End date must be not empty!"
+    "endDateMustBeNotEmpty": "End date must be not empty!",
+    "emailNotExists": "Email not exists!"
   },
   "profile": {
     "title": "Profile",
@@ -372,6 +373,11 @@
       "approveOrder": "Approve Order",
       "approveOrderMessage": "Your order has been approved",
       "email": "Email"
+    },
+    "forgotPassword": {
+      "subject": "Forgot Password",
+      "link": "Link",
+      "text": "Link reset password"
     }
   },
   "emailConfirm": {
@@ -385,5 +391,13 @@
   "failConfirm": {
     "failConfirm": "Fail Confirm",
     "text": "Active Token is invalid or has expired!"
+  },
+  "successResetPassword": {
+    "successResetPassword": "Sucess Reset Password",
+    "text": "Your password has been successfully updated. You can now login to your account."
+  },
+  "emailResetPassword": {
+    "emailResetPassword": "Email Reset Password",
+    "text": "We have sent email to {{email}} to reset your password. After receiving the email, follow the link provided to reset your password."
   }
 }
