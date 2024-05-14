@@ -24,7 +24,7 @@ export class User extends BaseEntity {
   phone: string | undefined;
 
   @Column({ type: 'enum', enum: Gender, nullable: true })
-  gender: boolean | undefined;
+  gender: string | undefined;
 
   @Column({ type: 'date', nullable: true, name: 'date_of_birth' })
   dateOfBirth: Date | undefined;

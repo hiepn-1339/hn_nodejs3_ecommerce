@@ -30,6 +30,7 @@ const config: {
   bankNumber: string;
   rabbitmqHost: string;
   rabbitmqQueueMail: string;
+  emailAdmin: string;
 } = {
   port: Number(process.env.PORT) || 3000,
   dbHost: process.env.DB_HOST || '',
@@ -52,6 +53,7 @@ const config: {
   bankNumber: process.env.BANK_NUMBER || '',
   rabbitmqHost: process.env.RABBITMQ_HOST || '',
   rabbitmqQueueMail: process.env.RABBITMQ_QUEUE_MAIL || '',
+  emailAdmin: process.env.EMAIL_ADMIN || '',
 };
 
 export default config;

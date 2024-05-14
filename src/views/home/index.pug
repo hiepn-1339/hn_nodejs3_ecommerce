@@ -11,7 +11,7 @@ block content
           .row.g-4
             .col-lg-3
               .input-group.w-100.mx-auto.d-flex
-                input#keyword.form-control.p-3(type='search' placeholder='keywords' aria-describedby='search-icon-1')
+                input#keyword.form-control.p-3(type='search' placeholder='keywords' aria-describedby='search-icon-1' value=(query ? query.keyword : ''))
                 span#searchProduct.input-group-text.p-3
                   i.fa.fa-search
               .row.g-4
@@ -31,10 +31,10 @@ block content
                   .mb-3
                     label.form-label(for='minPrice') 
                       | #{t('home.minPrice')} 
-                    input#minPrice.mb-3.form-control(type='number' required='')
+                    input#minPrice.mb-3.form-control(type='number' required='' value=(query ? query.minPrice : 0))
                     label.form-label(for='maxPrice') 
                       | #{t('home.maxPrice')}
-                    input#maxPrice.form-control(type='number' required='')
+                    input#maxPrice.form-control(type='number' required='' value=(query ? query.maxPrice : 0))
             .col-lg-9
               .row.g-4.justify-content-start
                 each product in products
@@ -46,21 +46,26 @@ block content
                             img.img-fluid.w-100.rounded-top.h-215px(src=product.images[0].url alt='')
                       if product.category
                         .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.l-10px #{product.category.name}
-                      .p-4.border.border-secondary.border-top-0.rounded-bottom
+                      if product.quantity > 0
+                        .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.r-10px #{t('home.quantity')}: #{product.quantity}
+                      else
+                        .text-white.bg-secondary.px-3.py-1.rounded.position-absolute.t-10px.r-10px #{t('home.soldOut')}
+                      .p-4.border.border-secondary.border-top-0.rounded-bottom.h-240px 
                         a(href=`/product/${product.id}`)
                           h4 #{product.name}
                         p.description
                           | #{product.description}
                         .d-flex.justify-content-between.flex-lg-wrap
                           p.text-dark.fs-5.fw-bold.mb-0 $#{product.price} / kg
-                          if user
-                            button.addToCart.btn.border.border-secondary.rounded-pill.px-3.text-primary(type='submit' productId=product.id)
-                              i.fa.fa-shopping-bag.me-2.text-primary
-                              |  #{t('home.addToCart')}
-                          else
-                            a.btn.border.border-secondary.rounded-pill.px-3.text-primary(href='/auth/login')
-                              i.fa.fa-shopping-bag.me-2.text-primary
-                              |  #{t('home.addToCart')}
+                          if product.quantity > 0
+                            if user
+                              button.addToCart.btn.border.border-secondary.rounded-pill.px-3.text-primary(type='submit' productId=product.id)
+                                i.fa.fa-shopping-bag.me-2.text-primary
+                                |  #{t('home.addToCart')}
+                            else
+                              a.btn.border.border-secondary.rounded-pill.px-3.text-primary(href='/auth/login')
+                                i.fa.fa-shopping-bag.me-2.text-primary
+                                |  #{t('home.addToCart')}
                 .col-12
                   .pagination.d-flex.justify-content-center.mt-5
                     each val in Array.from({length: pages}, (_, i) => i + 1)

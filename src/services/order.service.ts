@@ -7,6 +7,10 @@ import { OrderItem } from '../entities/orderItem.entity';
 import { Product } from '../entities/product.entity';
 import { User } from '../entities/user.entity';
 import { Coupon } from '../entities/coupon.entity';
+import { t } from 'i18next';
+import { getTranslatedMessage } from '../utils/i18n';
+import config from '../config';
+import { sendMailDataToQueue } from '../utils/mail';
 
 const orderRepository = AppDataSource.getRepository(Order);
 const orderItemRepository = AppDataSource.getRepository(OrderItem);
@@ -155,6 +159,7 @@ export const approveOrder = async (order: Order) => {
     if (item.product.quantity < item.quantity) throw new Error(`${item.product.name} is not enough quantity`);
 
     item.product.quantity -= item.quantity;
+    item.product.quantitySold += item.quantity;
     await productRepository.save(item.product);
   });
 
@@ -225,4 +230,37 @@ export const getCountAndTotalRevenueEachMonth = async () => {
   });
 
   return Promise.all(promises);
+};
+
+export const sendEmailDataStatistic = async () => {
+  const totalOrder = {
+    total: 0,
+    count: 0,
+  };
+
+  const orderData = await getCountAndTotalRevenueEachMonth();
+
+  orderData.forEach(order => {
+    totalOrder.total += order.data.total;
+    totalOrder.count += order.data.count;
+  });
+
+  const emailData = {
+    template: 'statistics',
+    subject: t('email.statistic.subject'),
+    email: config.emailAdmin,
+    orderData,
+    totalOrder,
+    content: {
+      title: getTranslatedMessage('email.statistic.title', 'en'),
+      message: getTranslatedMessage('email.statistic.message', 'en'),
+      totalStatistic: getTranslatedMessage('email.statistic.totalStatistic', 'en'),
+      orders: getTranslatedMessage('email.statistic.orders', 'en'),
+      total: getTranslatedMessage('email.statistic.total', 'en'),
+      yearStatistic: getTranslatedMessage('email.statistic.yearStatistic', 'en'),
+      month: getTranslatedMessage('email.statistic.month', 'en'),
+    },
+  };
+  
+  await sendMailDataToQueue(emailData);
 };

@@ -12,6 +12,8 @@ import session from 'express-session';
 import { Role } from './constants';
 import { setPaginateQuery } from './middlewares';
 import { startWorkerSendMail } from './utils/mail';
+import cron from 'node-cron';
+import { sendEmailDataStatistic } from './services/order.service';
 
 const app: Express = express();
 
@@ -24,6 +26,10 @@ app.use(morgan('combined'));
 app.set('view engine', 'pug');
 
 startWorkerSendMail();
+
+cron.schedule('0 9 1 * *', () => {
+  sendEmailDataStatistic();
+});
 
 AppDataSource.initialize()
   .then(() => {

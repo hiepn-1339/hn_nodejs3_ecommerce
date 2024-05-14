@@ -50,7 +50,8 @@ block content
                   i.fa.fa-star
               p.mb-4
                 | #{product.description}
-              if user
+              p.mb-3 #{t('product.quantity')}: #{product.quantity}
+              if user && product.quantity > 0
                 .input-group.quantity.mb-5.w-100px
                   .input-group-btn
                     button.btn.btn-sm.btn-minus.rounded-circle.bg-light.border
@@ -98,7 +99,7 @@ block content
                     .rounded.w-100px.h-100px
                       if product.images[0]
                         img.img-fluid.rounded(src=product.images[0].url alt='Image')
-                    div
+                    .px-2
                       h6.mb-2 #{product.name}
                       .d-flex.mb-2
                         each val in Array.from({ length: Math.floor(product.ratingAvg) })

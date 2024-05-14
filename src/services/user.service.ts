@@ -75,18 +75,16 @@ export const getUsers = async (data: any) => {
     }));
   }
 
-  if (data.gender) {
-    query.andWhere('user.gender = :gender', {
-      gender: data.gender,
+  if (data.genders) {
+    const genders = data.genders.split(',');
+    query.andWhere('user.gender IN (:...genders)', { genders });
+  }
+
+  if (data.statuses) {
+    const statuses = data.statuses.split(',').map(status => {
+      return status === EntityStatus.ACTIVE;
     });
-  }
-
-  if (data.status === EntityStatus.ACTIVE) {
-    query.andWhere('user.isActive = true');
-  }
-
-  if (data.status === EntityStatus.INACTIVE) {
-    query.andWhere('user.isActive = false');
+    query.andWhere('user.is_active IN (:...statuses)', { statuses });
   }
 
   const count = await query.getCount();

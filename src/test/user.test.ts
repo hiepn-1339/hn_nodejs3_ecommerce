@@ -1,3 +1,4 @@
+import { EntityStatus } from './../constants/index';
 import { faker } from '@faker-js/faker';
 import { AppDataSource } from '../database/dataSource';
 import { User } from '../entities/user.entity';
@@ -142,8 +143,8 @@ describe('getUsers', () => {
   it('should return all users', async () => {
     const data = {
       keyword: 'Hai',
-      gender: 'MALE',
-      status: 'ACTIVE',
+      genders: 'MALE',
+      statuses: 'ACTIVE',
       page: 1,
       limit: 10,
     };
@@ -156,8 +157,8 @@ describe('getUsers', () => {
     expect(count).toBeGreaterThanOrEqual(0);
     users.forEach(user => {
       expect(user).toBeInstanceOf(User);
-      expect(user.gender).toEqual(data.gender);
-      expect(user.isActive).toEqual(true);
+      expect(data.genders.includes(user.gender)).toEqual(true);
+      expect(data.statuses.includes(user.isActive ? EntityStatus.ACTIVE : EntityStatus.INACTIVE)).toEqual(true);
       const nameContainsKeyword = words.some(word => user.name.toLocaleLowerCase().includes(word));
       const addressContainsKeyword = words.some(word => user.address.toLocaleLowerCase().includes(word));
       expect(nameContainsKeyword || addressContainsKeyword).toBe(true);

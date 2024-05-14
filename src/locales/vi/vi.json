@@ -25,14 +25,17 @@
     "price": "Giá",
     "addToCart": "Thêm vào giỏ hàng",
     "minPrice": "Giá thấp nhất ($)",
-    "maxPrice": "Giá cao nhất ($)"
+    "maxPrice": "Giá cao nhất ($)",
+    "quantity": "Số lượng",
+    "soldOut": "Hết hàng"
   },
   "product": {
     "category": "Danh mục",
     "reviews": "Đánh giá",
     "featuredProducts": "Sản phẩm nổi bật",
     "viewMore": "Xem thêm",
-    "product": "Sản phẩm"
+    "product": "Sản phẩm",
+    "quantity": "Số lượng"
   },
   "category": {
     "createSuccess": "Tạo category thành công!",
@@ -383,6 +386,16 @@
       "subject": "Quên mật khẩu",
       "link": "Link",
       "text": "Link reset password"
+    },
+    "statistic": {
+      "subject": "Thống kê",
+      "title": "Thống kê",
+      "message": "Thống kê",
+      "totalStatistic": "Thống kê tổng",
+      "orders": "Đơn hàng",
+      "total": "Tổng",
+      "yearStatistic": "Thống kê năm",
+      "month": "Tháng"
     }
   },
   "emailConfirm": {

@@ -216,7 +216,10 @@ $(document).ready(function () {
 
     const name = $('#coupon').val();
 
-    if (!name) return;
+    if (!name) {
+      $('#loader').addClass('d-none');
+      return;
+    }
 
     const data = {
       name,

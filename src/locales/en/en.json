@@ -25,14 +25,17 @@
     "price": "Price",
     "addToCart": "Add to cart",
     "minPrice": "Min Price ($)",
-    "maxPrice": "Max Price ($)"
+    "maxPrice": "Max Price ($)",
+    "quantity": "Quantity",
+    "soldOut": "Sold Out"
   },
   "product": {
     "category": "Category",
     "reviews": "Reviews",
     "featuredProducts": "Featured products",
     "viewMore": "View More",
-    "product": "Product"
+    "product": "Product",
+    "quantity": "Quantity"
   },
   "category": {
     "createSuccess": "Create cateogry successfully!",
@@ -383,6 +386,16 @@
       "subject": "Forgot Password",
       "link": "Link",
       "text": "Link reset password"
+    },
+    "statistic": {
+      "subject": "Statistic",
+      "title": "Statistic",
+      "message": "Statistic",
+      "totalStatistic": "Total Statistic",
+      "orders": "Orders",
+      "total": "Total",
+      "yearStatistic": "Year Statistic",
+      "month": "Month"
     }
   },
   "emailConfirm": {
