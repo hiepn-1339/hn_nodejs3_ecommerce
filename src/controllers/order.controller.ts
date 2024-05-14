@@ -11,7 +11,7 @@ import * as cartService from '../services/cart.service';
 import { uploadImage } from '../middlewares/multer.middleware';
 import { getTranslatedMessage } from '../utils/i18n';
 import { validateCreateOrder } from '../middlewares/validate/order.validate';
-import { sendEmail } from '../utils/mail';
+import { sendMailDataToQueue } from '../utils/mail';
 import { t } from 'i18next';
 import { OrderItem } from '../entities/orderItem.entity';
 import * as ratingService from '../services/rating.service';
@@ -85,6 +85,7 @@ class ProcessOrder {
     await cartService.deleteAllCartItems(req.user);
 
     const emailData = {
+      template: 'order',
       subject: getTranslatedMessage('email.order.subject', req.query.lng),
       email: req.user.email,
       order,
@@ -111,7 +112,7 @@ class ProcessOrder {
       },
     };
 
-    await sendEmail(emailData, 'order');
+    await sendMailDataToQueue(emailData);
 
     return res.render('order/success');
   }

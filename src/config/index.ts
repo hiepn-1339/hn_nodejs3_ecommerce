@@ -28,6 +28,8 @@ const config: {
   tokenExpirationTime: number;
   bankName: string;
   bankNumber: string;
+  rabbitmqHost: string;
+  rabbitmqQueueMail: string;
 } = {
   port: Number(process.env.PORT) || 3000,
   dbHost: process.env.DB_HOST || '',
@@ -48,6 +50,8 @@ const config: {
   tokenExpirationTime: Number(process.env.TOKEN_EXPIRATION_TIME) || 10,
   bankName: process.env.BANK_NAME || '',
   bankNumber: process.env.BANK_NUMBER || '',
+  rabbitmqHost: process.env.RABBITMQ_HOST || '',
+  rabbitmqQueueMail: process.env.RABBITMQ_QUEUE_MAIL || '',
 };
 
 export default config;
