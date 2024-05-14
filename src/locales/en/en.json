@@ -142,7 +142,8 @@
     "startDateMustBeNotEmpty": "Start date must be not empty!",
     "endDateMustBeNotEmpty": "End date must be not empty!",
     "emailNotExists": "Email not exists!",
-    "wrongPassword": "Wrong password!"
+    "wrongPassword": "Wrong password!",
+    "genderInvalid": "Gender invalid!"
   },
   "profile": {
     "title": "Profile",
@@ -154,7 +155,10 @@
     "gender": "Gender",
     "dateOfBirth": "Date Of Birth",
     "address": "Address",
-    "submit": "Submit"
+    "submit": "Submit",
+    "userDetail": "User Detail",
+    "saveChanges": "Save Changes",
+    "changePassword": "Change Password"
   },
   "checkout": {
     "checkout": "Checkout",

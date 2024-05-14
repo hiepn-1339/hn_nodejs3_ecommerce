@@ -173,3 +173,14 @@ export const changePassword = async (user: User, password: string) => {
 
   return await userRepository.save(user);
 };
+
+export const updateProfile = async (user: User, data: any) => {
+  user.name = data.name;
+  user.gender = data.gender;
+  user.phone = data.phone;
+  user.dateOfBirth = data.dateOfBirth;
+  user.avatar = data.avatar;
+  user.address = data.address;
+
+  return await userRepository.save(user);
+};

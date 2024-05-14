@@ -9,7 +9,7 @@ import { sendEmail } from '../utils/mail';
 import asyncHandler from 'express-async-handler';
 import crypto from 'crypto';
 import { getTranslatedMessage } from '../utils/i18n';
-import { validateChangePassword, validateForgotPassword, validateRegisterUser, validateResetPassword } from '../middlewares/validate/user.validate';
+import { validateChangePassword, validateForgotPassword, validateRegisterUser, validateResetPassword, validateUpdateProfile } from '../middlewares/validate/user.validate';
 import { checkLoggedIn } from '../middlewares';
 import bcrypt from 'bcrypt';
 
@@ -174,7 +174,8 @@ export const postResetPassword = [
 export const getChangePassword = [
   checkLoggedIn,
   (req: Request, res: Response) => {
-    return res.render('changePassword/index');
+    res.render('changePassword/index');
+    return;
   },
 ];
 
@@ -199,5 +200,26 @@ export const postChangePassword = [
     });
 
     return;
+  }),
+];
+
+export const getUpdateProfile = [
+  checkLoggedIn,
+  (req: IUserRequest, res: Response) => {
+    return res.render('profile/index', {genders: Object.keys(Gender)});
+  },
+];
+
+export const postUpdateProfile = [
+  checkLoggedIn,
+  uploadImage.single('avatar'),
+  validateUpdateProfile,
+  asyncHandler(async (req: IUserRequest, res: Response) => {
+    if (req.file) {
+      req.body.avatar = req.file.location;
+    }
+    await userService.updateProfile(req.user, req.body);
+
+    res.redirect('/user/profile');
   }),
 ];
