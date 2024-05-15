@@ -1078,7 +1078,7 @@
       reader.readAsDataURL(files[0]);
 
       reader.onloadend = function(){ 
-        uploadFile.closest('.imgUp').find('.imagePreview').css('background-image', 'url('+this.result+')');
+        uploadFile.closest('.imgUp').find('.img-account-profile').attr('src', this.result);
       };
     }
   });

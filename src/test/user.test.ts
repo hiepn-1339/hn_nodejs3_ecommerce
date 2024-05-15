@@ -350,3 +350,51 @@ describe('changePassword', () => {
     expect(checkPassword).toEqual(true);
   });
 });
+
+describe('updateProfile', () => {
+  let user;
+
+  beforeEach(async () => {
+    const randomId = faker.number.int({min: 1, max: 5});
+
+    user = await userRepository.findOne({
+      where: {
+        id: randomId,
+      },
+    });
+  });
+
+  it('should update profile', async () => {
+    const data = {
+      name: faker.internet.userName(),
+      phone: faker.phone.number(),
+      address: faker.location.secondaryAddress(),
+      gender: faker.helpers.enumValue(Gender),
+      dateOfBirth: faker.date.past(),
+      avatar: faker.internet.url(),
+    };
+
+    const newUser = await userService.updateProfile(user, data);
+
+    expect(newUser).toBeInstanceOf(User);
+    expect(newUser.name).toEqual(data.name);
+    expect(newUser.phone).toEqual(data.phone);
+    expect(newUser.address).toEqual(data.address);
+    expect(newUser.gender).toEqual(data.gender);
+    expect(newUser.dateOfBirth).toEqual(data.dateOfBirth);
+    expect(newUser.avatar).toEqual(data.avatar);
+  });
+
+  it('should throw an error when update fails', async () => {
+    const data = {
+      name: faker.number.int(),
+      phone: faker.phone.number(),
+      address: faker.number.int(),
+      gender: faker.number.int(),
+      dateOfBirth: faker.number.int(),
+      avatar: faker.number.int(),
+    };
+
+    await expect(userService.updateProfile(user, data)).rejects.toThrow();
+  });
+});

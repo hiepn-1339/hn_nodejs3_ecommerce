@@ -142,7 +142,8 @@
     "startDateMustBeNotEmpty": "Ngày bắt đầu không được trống!",
     "endDateMustBeNotEmpty": "Ngày kết thúc không được trống!",
     "emailNotExists": "Email không tồn tại!",
-    "wrongPassword": "Sai mật khẩu!"
+    "wrongPassword": "Sai mật khẩu!",
+    "genderInvalid": "Giới tính không hợp lệ!"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -154,7 +155,10 @@
     "gender": "Giới tính",
     "dateOfBirth": "Ngày sinh",
     "address": "Địa chỉ",
-    "submit": "Gửi"
+    "submit": "Gửi",
+    "userDetail": "Chi tiết",
+    "saveChanges": "Lưu thay Đổi",
+    "changePassword": "Thay đổi mật khẩu"
   },
   "checkout": {
     "checkout": "Thanh toán",

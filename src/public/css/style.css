@@ -515,6 +515,9 @@
 }
 .imgUp
 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom:15px;
   position:relative;
 }
@@ -669,11 +672,11 @@ table.table .avatar {
 }
 
 .w-0px {
-  width: 80px !important;
+  width: 0px !important;
 }
 
 .h-0px {
-  height: 80px !important;
+  height: 0px !important;
 }
 
 .t-10px {
@@ -949,4 +952,13 @@ table.table .avatar {
 .select2-selection {
   border-radius: 10px;
   padding: 0.375rem 0.75rem;
+}
+
+.img-account-profile {
+  height: 10rem;
+  width: 10rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
 }

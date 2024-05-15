@@ -10,6 +10,8 @@ router.post('/reset-password/:tokenResetPassword', userController.postResetPassw
 router.post('/register', userController.postRegister);
 router.get('/change-password', userController.getChangePassword);
 router.post('/change-password', userController.postChangePassword);
+router.get('/profile', userController.getUpdateProfile);
+router.post('/profile', userController.postUpdateProfile);
 router.get('/active/:tokenActive', userController.getActive);
 
 export default router;
