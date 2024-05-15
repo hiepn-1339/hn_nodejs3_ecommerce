@@ -9,7 +9,9 @@ import { sendEmail } from '../utils/mail';
 import asyncHandler from 'express-async-handler';
 import crypto from 'crypto';
 import { getTranslatedMessage } from '../utils/i18n';
-import { validateForgotPassword, validateRegisterUser, validateResetPassword } from '../middlewares/validate/user.validate';
+import { validateChangePassword, validateForgotPassword, validateRegisterUser, validateResetPassword } from '../middlewares/validate/user.validate';
+import { checkLoggedIn } from '../middlewares';
+import bcrypt from 'bcrypt';
 
 interface IUserRequest extends Request {
   user?: User;
@@ -165,6 +167,37 @@ export const postResetPassword = [
     await userService.resetPassword(req.user, req.body.password);
 
     res.render('successResetPassword/index'); 
+    return;
+  }),
+];
+
+export const getChangePassword = [
+  checkLoggedIn,
+  (req: Request, res: Response) => {
+    return res.render('changePassword/index');
+  },
+];
+
+export const postChangePassword = [
+  checkLoggedIn,
+  validateChangePassword,
+  asyncHandler(async (req: any, res: Response) => {
+    if (!await bcrypt.compare(req.body.oldPassword, req.user.password)) {
+      res.render('changePassword/index', {
+        errors: [{
+          path: 'oldPassword',
+          msg: getTranslatedMessage('error.wrongPassword', req.query.lng),
+        }],
+      });
+      return;
+    }
+
+    await userService.changePassword(req.user, req.body.newPassword);
+
+    req.session.destroy(() => {
+      res.redirect('/auth/login');
+    });
+
     return;
   }),
 ];

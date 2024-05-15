@@ -141,7 +141,8 @@
     "percentageMustBeNotEmpty": "Percentage must be not empty!",
     "startDateMustBeNotEmpty": "Start date must be not empty!",
     "endDateMustBeNotEmpty": "End date must be not empty!",
-    "emailNotExists": "Email not exists!"
+    "emailNotExists": "Email not exists!",
+    "wrongPassword": "Wrong password!"
   },
   "profile": {
     "title": "Profile",
@@ -394,6 +395,10 @@
   },
   "successResetPassword": {
     "successResetPassword": "Sucess Reset Password",
+    "text": "Your password has been successfully updated. You can now login to your account."
+  },
+  "successChangePassword": {
+    "successChangePassword": "Sucess Change Password",
     "text": "Your password has been successfully updated. You can now login to your account."
   },
   "emailResetPassword": {
