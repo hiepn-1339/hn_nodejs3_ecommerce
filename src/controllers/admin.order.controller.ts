@@ -5,7 +5,7 @@ import { Response } from 'express';
 import { OrderStatus, PaymentMethod, Status } from '../constants';
 import { IOrderRequest, checkExistsOrder } from './order.controller';
 import { getTranslatedMessage } from '../utils/i18n';
-import { sendEmail } from '../utils/mail';
+import { sendMailDataToQueue } from '../utils/mail';
 import { t } from 'i18next';
 
 export const getOrders = [
@@ -51,6 +51,7 @@ export const approveOrder = [
       }
 
       const emailData = {
+        template: 'approveOrder',
         subject: t('email.order.subject'),
         email: req.order.user.email,
         order,
@@ -61,7 +62,7 @@ export const approveOrder = [
         },
       };
       
-      await sendEmail(emailData, 'approveOrder');
+      await sendMailDataToQueue(emailData);
     }
     res.send(data);
 
@@ -92,6 +93,7 @@ export const rejectOrder = [
     if (data.status === Status.SUCCESS) {
       const order = await orderService.changeStatusOrder(req.order, OrderStatus.REJECTED);
       const emailData = {
+        template: 'rejectOrder',
         subject: t('email.order.subject'),
         email: req.order.user.email,
         order,
@@ -103,7 +105,7 @@ export const rejectOrder = [
         },
       };
   
-      await sendEmail(emailData, 'rejectOrder');
+      await sendMailDataToQueue(emailData);
     }
 
     res.send(data);
@@ -132,6 +134,7 @@ export const completeOrder = [
     if (data.status === Status.SUCCESS) {
       const order = await orderService.changeStatusOrder(req.order, OrderStatus.COMPLETED);
       const emailData = {
+        template: 'rejectOrder',
         subject: t('email.order.subject'),
         email: req.order.user.email,
         order,
@@ -142,7 +145,7 @@ export const completeOrder = [
         },
       };
   
-      await sendEmail(emailData, 'rejectOrder');
+      await sendMailDataToQueue(emailData);
     }
 
     res.send(data);

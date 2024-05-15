@@ -11,6 +11,7 @@ import routes from './routes';
 import session from 'express-session';
 import { Role } from './constants';
 import { setPaginateQuery } from './middlewares';
+import { startWorkerSendMail } from './utils/mail';
 
 const app: Express = express();
 
@@ -21,6 +22,8 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.use(morgan('combined'));
 app.set('view engine', 'pug');
+
+startWorkerSendMail();
 
 AppDataSource.initialize()
   .then(() => {

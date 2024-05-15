@@ -5,7 +5,7 @@ import { User } from '../entities/user.entity';
 import * as userService from '../services/user.service';
 import * as cartService from '../services/cart.service';
 import { t } from 'i18next';
-import { sendEmail } from '../utils/mail';
+import { sendMailDataToQueue } from '../utils/mail';
 import asyncHandler from 'express-async-handler';
 import crypto from 'crypto';
 import { getTranslatedMessage } from '../utils/i18n';
@@ -46,6 +46,7 @@ export const postRegister = [
       )}/user/active/${tokenActive}`;
 
       const emailData = {
+        template: 'activeAccount',
         subject: t('email.active.subject'),
         email: user.email,
         content: {
@@ -59,7 +60,7 @@ export const postRegister = [
         },
       };
 
-      await sendEmail(emailData, 'activeAccount');
+      await sendMailDataToQueue(emailData);
 
       await cartService.createCart(user);
       return res.render('emailConfirm/index', {email: user.email});
@@ -109,6 +110,7 @@ export const postForgotPassword = [
       )}/user/reset-password/${tokenResetPassword}`;
 
       const emailData = {
+        template: 'forgotPassword',
         subject: t('email.forgotPassword.subject'),
         email: existsUser.email,
         content: {
@@ -118,7 +120,7 @@ export const postForgotPassword = [
         },
       };
 
-      await sendEmail(emailData, 'forgotPassword');
+      await sendMailDataToQueue(emailData);
 
       return res.render('emailResetPassword/index', {email: existsUser.email});
     } else {
