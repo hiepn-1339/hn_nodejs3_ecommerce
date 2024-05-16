@@ -53,6 +53,12 @@ export const getProducts = async (data: any) => {
     query.andWhere('product.is_active IN (:...statuses)', { statuses });
   }
 
+  if (data.isActive === EntityStatus.ACTIVE) {
+    query.andWhere('product.isActive = :isActive', {
+      isActive: data.isActive === EntityStatus.ACTIVE || false,
+    });
+  }
+
   query.leftJoinAndSelect('product.category', 'category')
        .leftJoinAndSelect('product.images', 'product_image');
 

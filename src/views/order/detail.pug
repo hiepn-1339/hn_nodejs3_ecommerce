@@ -2,20 +2,43 @@ extends ../layout
 
 block content 
   include ../mixins/_breadcrumb
-  +breadcurmb(t('order.order'), [
-    {
-      href: '/',
-      text: t('header.home')
-    },
-    {
-      href: '/order',
-      text: t('order.order')
-    },
-  ])
+  if isAdmin
+    +breadcurmb(t('order.order'), [
+      {
+        href: '/',
+        text: t('header.home')
+      },
+      {
+        href: '/admin/order',
+        text: t('order.order')
+      },
+    ])
+  else 
+    +breadcurmb(t('order.order'), [
+      {
+        href: '/',
+        text: t('header.home')
+      },
+      {
+        href: '/order',
+        text: t('order.order')
+      },
+    ])
 
   .container-fluid.py-5
     .container.py-5
-      h1.mb-4 #{t('checkout.title')}
+      .d-flex.justify-content-between
+        h1.mb-4 #{t('checkout.title')}
+        if order.status === OrderStatus.PENDING
+          .text-white.pending-bg-color.px-3.py-1.rounded.d-flex.justify-content-center.align-items-center #{order.status}
+        if order.status === OrderStatus.COMPLETED
+          .text-white.complete-bg-color.px-3.py-1.rounded.d-flex.justify-content-center.align-items-center #{order.status}
+        if order.status === OrderStatus.APPROVED
+          .text-white.approved-bg-color.px-3.py-1.rounded.d-flex.justify-content-center.align-items-center #{order.status}
+        if order.status === OrderStatus.REJECTED
+          .text-white.rejected-bg-color.px-3.py-1.rounded.d-flex.justify-content-center.align-items-center #{order.status}
+        if order.status === OrderStatus.CANCELED
+          .text-white.canceled-bg-color.px-3.py-1.rounded.d-flex.justify-content-center.align-items-center #{order.status}
       form(method='POST' enctype='multipart/form-data' actions='/checkout')
         .row.g-5
           .col-md-12.col-lg-6.col-xl-7
@@ -111,3 +134,26 @@ block content
                       td.py-5(colspan='2')
                         .py-3
                           a(href=order.proof download).mb-0 #{t('order.download')}
+              if order.status === OrderStatus.PENDING
+                .d-flex 
+                  button.approveOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.approved-bg-color.me-2(data-order-id=order.id) #{t('admin.order.approve')}
+                  button.rejectOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.rejected-bg-color(data-bs-toggle="modal" data-bs-target="#modalRejectOrder" data-order-id=order.id) #{t('admin.order.reject')}
+              else if order.status === OrderStatus.APPROVED
+                button.completeOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100.complete-bg-color(data-bs-toggle="modal" data-bs-target="#modalCancelOrder" data-order-id=order.id) #{t('admin.order.complete')}
+
+  #modalRejectOrder.modal.fade(tabindex='-1' aria-labelledby='modalRejectOrder' aria-hidden='true')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header
+          h1#modalRejectOrder.modal-title.fs-5 #{t('email.order.reasonReject')}
+            sup.text-danger *
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+        .modal-body.star-widget
+          form()
+            .textarea
+              textarea#reasonReject(cols='50' placeholder='reason reject' name='reasonReject' required='')
+              p#errorReason.text-danger.d-none #{t('error.invalidReason')}
+            input#orderId.d-none(name='orderId')
+            .btn
+              button#submitRejectOrder.btn.btn-primary.border-0.border-secondary.py-3.px-4.rounded-pill.text-white.w-100(data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading...") #{t('order.submit')}
+

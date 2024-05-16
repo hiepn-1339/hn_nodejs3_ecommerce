@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as productService from '../services/product.service';
 import * as categoryService from '../services/category.service';
 import * as ratingService from '../services/rating.service';
-import { ErrorCode } from '../constants';
+import { EntityStatus, ErrorCode } from '../constants';
 import { Product } from '../entities/product.entity';
 import { t } from 'i18next';
 import { checkValidId } from '../middlewares';
@@ -23,10 +23,11 @@ const checkExistsProduct = async (req: IProductRequest, res: Response, next: Nex
 };
 
 export const getHome = asyncHandler(async(req: Request, res: Response) => {
+  req.query.isActive = EntityStatus.ACTIVE;
   const { count, products } = await productService.getProducts(req.query);
   const pages = count / parseInt(req.query.limit as string) + 1;
   const categories = await categoryService.getCategories();
-  return res.render('home/index', {products, categories, page: req.query.page, pages});
+  return res.render('home/index', {products, categories, page: req.query.page, pages, query: req.query});
 });
 
 export const getDetailProduct = [

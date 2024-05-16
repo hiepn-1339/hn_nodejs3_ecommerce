@@ -3,25 +3,30 @@ extends ../layoutAdmin
 block admin_content 
   .table-responsive
     .d-flex.mb-3
-      div.w-50.ms-3
+      div.w-45.ms-3
         label.form-label(for='keyword').pe-2
           | #{t('admin.user.search')}
         .input-group
-          input#keyword.form-control(type='search' placeholder='Search by name and address' aria-describedby='search-icon-1')
+          input#keyword.form-control(type='search' placeholder='Search by name and address' aria-describedby='search-icon-1' value=(query ? query.keyword : ''))
       div.w-25.px-3
         label.form-label(for='gender').pe-2
           | #{t('admin.user.gender')}
-        select#gender.form-select
-          option(disabled selected value=null) -- #{t('selectAnOption')} --
+        select#gender.form-select.js-example-basic-multiple(name="genders[]" multiple="multiple")
+          - let genders = Object.keys(Gender)
           each gender in genders
-            option(value=gender) #{gender}
+            - let selected = query.genders ? query.genders.split(',').includes(`${gender}`) : false
+            option(value=gender selected=selected) #{gender}
       div.w-20.px-2
         label.form-label(for='status').pe-2
           | #{t('admin.user.status')}
-        select#status.form-select
-          option(disabled selected value=null) -- #{t('selectAnOption')} --
+        select#status.form-select.js-example-basic-multiple(name="statuses[]" multiple="multiple")
+          - let statuses = Object.keys(EntityStatus)
           each status in statuses
-            option(value=status) #{status}
+            - let selected = query.statuses ? query.statuses.split(',').includes(`${status}`) : false
+            option(value=status selected=selected) #{status}
+      .w-5.px-2 
+        span#searchReset.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
+          i.fas.fa-minus-circle
       .w-5.px-2 
         span#searchUser.search-icon-1.input-group-text.p-10px.mt-30px.justify-content-center
           i.fa.fa-search

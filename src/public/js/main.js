@@ -64,78 +64,6 @@
   }
 
   $(document).ready(function() {
-    var ctx1 = $('#count-orders').get(0).getContext('2d');
-    var ctx2 = $('#salse-revenue').get(0).getContext('2d');
-    const dataChart =JSON.parse($('#salse-revenue').attr('data-order-data'));
-    const labels = [];
-    const countOrder = [];
-    const total = [];
-    const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    dataChart.forEach(data => {
-      labels.push(data.month);
-      countOrder.push(data.data.count);
-      total.push(data.data.total);
-    });
-    var myChart1 = new Chart(ctx1, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Order',
-            data: countOrder,
-            backgroundColor: 'rgba(0, 156, 255, .5)',
-            fill: true,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            ticks: {
-              callback: function(val, index) {
-                return MONTHS[val-1];
-              },
-            },
-          },
-        },
-      },
-    });
-    var myChart2 = new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Revenue',
-            data: total,
-            backgroundColor: 'rgba(0, 156, 255, .3)',
-            fill: true,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            ticks: {
-              callback: function(val, index) {
-                return '$' + val;
-              },
-            },
-          },
-          x: {
-            ticks: {
-              callback: function(val, index) {
-                return MONTHS[val-1];
-              },
-            },
-          },
-        },
-      },
-    });
-
     var pages = $('.page');
 
     pages.each(function() {
@@ -144,6 +72,82 @@
 
       $(this).attr('href', url);
     });
+    
+    try {
+      var ctx1 = $('#count-orders').get(0).getContext('2d');
+      var ctx2 = $('#salse-revenue').get(0).getContext('2d');
+      const dataChart =JSON.parse($('#salse-revenue').attr('data-order-data'));
+      const labels = [];
+      const countOrder = [];
+      const total = [];
+      const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      dataChart.forEach(data => {
+        labels.push(data.month);
+        countOrder.push(data.data.count);
+        total.push(data.data.total);
+      });
+      var myChart1 = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Order',
+              data: countOrder,
+              backgroundColor: 'rgba(0, 156, 255, .5)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              ticks: {
+                callback: function(val, index) {
+                  return MONTHS[val-1];
+                },
+              },
+            },
+          },
+        },
+      });
+      var myChart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Revenue',
+              data: total,
+              backgroundColor: 'rgba(0, 156, 255, .3)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              ticks: {
+                callback: function(val, index) {
+                  return '$' + val;
+                },
+              },
+            },
+            x: {
+              ticks: {
+                callback: function(val, index) {
+                  return MONTHS[val-1];
+                },
+              },
+            },
+          },
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
     $('#placeOrder').click(function() {
       $('#loader').removeClass('d-none');
@@ -154,6 +158,34 @@
     dates.each(function() {
       $(this).text(formatDate($(this).attr('value')));
     });
+
+    try {
+      const url = window.location.href;
+
+      let sidebarActive = 'sidebar';
+      if (url.includes('overview')) {
+        sidebarActive += 'Overview'; 
+      }
+      if (url.includes('user')) {
+        sidebarActive += 'User'; 
+      }
+      if (url.includes('product')) {
+        sidebarActive += 'Product'; 
+      }
+      if (url.includes('category')) {
+        sidebarActive += 'Category'; 
+      }
+      if (url.includes('coupon')) {
+        sidebarActive += 'Coupon'; 
+      }
+      if (url.includes('order')) {
+        sidebarActive += 'Order'; 
+      }
+
+      $(`#${sidebarActive}`).addClass('sidebar-active');
+    } catch (error) {
+      
+    }
 
     setSelectedLng();
 
@@ -229,8 +261,8 @@
 
     $('#searchUser').click(function() {
       var keyword = $('#keyword').val();
-      var gender = $('#gender').val();
-      var status = $('#status').val();
+      var genders = $('#gender').val();
+      var statuses = $('#status').val();
 
       var query = {
         page: 1,
@@ -239,11 +271,11 @@
       if (keyword) {
         query.keyword = keyword;
       }
-      if (gender) {
-        query.gender = gender;
+      if (genders) {
+        query.genders = genders;
       }
-      if (status) {
-        query.status = status;
+      if (statuses) {
+        query.statuses = statuses;
       }
 
       const parsedURL = new URL(window.location.href);

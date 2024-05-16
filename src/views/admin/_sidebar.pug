@@ -1,19 +1,19 @@
 mixin sidebar()
-  a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/overview')
+  a#sidebarOverview.px-3.py-2.navigation-table-admin.text-primary(href='/admin/overview')
     i.fas.fa-tachometer-alt.fa-2x
     |  #{t('admin.overview.overview')}
-  a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/user')
+  a#sidebarUser.px-3.py-2.navigation-table-admin.text-primary(href='/admin/user')
     i.fas.fa-user.fa-2x
     |  #{t('admin.user.user')}
-  a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/category')
+  a#sidebarCategory.px-3.py-2.navigation-table-admin.text-primary(href='/admin/category')
     i.fas.fa-list.fa-2x
     |  #{t('admin.category.category')}
-  a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/coupon')
+  a#sidebarCoupon.px-3.py-2.navigation-table-admin.text-primary(href='/admin/coupon')
     i.fas.fa-percentage.fa-2x
     |  #{t('admin.coupon.coupon')}
-  a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/product')
+  a#sidebarProduct.px-3.py-2.navigation-table-admin.text-primary(href='/admin/product')
     i.fab.fa-product-hunt.fa-2x
     |  #{t('admin.product.product')}
-  a.px-3.py-2.navigation-table-admin.text-primary(href='/admin/order')
+  a#sidebarOrder.px-3.py-2.navigation-table-admin.text-primary(href='/admin/order')
     i.fas.fa-file-invoice.fa-2x
     |  #{t('admin.order.order')}

@@ -22,7 +22,7 @@ export const getUsers = [
 
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 
-    return res.render('admin/userManagement/index', {users, genders: Object.keys(Gender), statuses: Object.keys(EntityStatus), pages, page: req.query.page});
+    return res.render('admin/userManagement/index', {users, Gender, EntityStatus, pages, page: req.query.page, query: req.query});
   }),
 ];
 

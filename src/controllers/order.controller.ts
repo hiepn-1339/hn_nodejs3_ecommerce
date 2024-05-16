@@ -146,7 +146,7 @@ export const getOrders = [
 
     const pages = Math.ceil(count / parseInt(req.query.limit as string));
 
-    return res.render('order/index', {orders, paymentMethods: Object.keys(PaymentMethod), OrderStatus, pages, page: req.query.page});
+    return res.render('order/index', {orders, paymentMethods: Object.keys(PaymentMethod), OrderStatus, pages, page: req.query.page, query: req.query});
   }),
 ];
 
@@ -173,7 +173,7 @@ export const getOrder = [
       subtotal += item.price * item.quantity;
     });
 
-    return res.render('order/detail', {subtotal, coupon: req.order.coupon, items: orderItems, order: req.order });
+    return res.render('order/detail', {subtotal, coupon: req.order.coupon, items: orderItems, order: req.order, OrderStatus });
   }),
 ];
 
